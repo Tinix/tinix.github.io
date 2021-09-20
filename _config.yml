@@ -10,7 +10,7 @@ email: dtinivella@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
  Also known as Tinix , Degree in Computer Science FaMAF,Writer Software, Math Fan, Ruby , Python, Elixir FreeBSD, I like have Mate, 4 lang​​, but all that means almost nothing..
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "http://danieltinivella.com" # the base hostname & protocol for your site
+url: "https://tinix.github.io" # the base hostname & protocol for your site
 twitter_username: Tinix
 github_username:  Tinix
 gitlab_username:  Tinix
