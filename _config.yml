@@ -1,0 +1,38 @@
+---
+layout: post
+title: Tinix's Distorted View of the Code.
+comments: true
+
+
+tags: [jekyll, disqus, ruby, rails, programmings, Java, DevOps, FreeBSD , Linux, postgreSQL, MySQL,]
+# Site settings
+email: dtinivella@gmail.com
+description: > # this means to ignore newlines until "baseurl:"
+ Also known as Tinix , Degree in Computer Science FaMAF,Writer Software, Math Fan, Ruby , Python, Elixir FreeBSD, I like have Mate, 4 lang​​, but all that means almost nothing..
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "http://danieltinivella.com" # the base hostname & protocol for your site
+twitter_username: Tinix
+github_username:  Tinix
+gitlab_username:  Tinix
+
+
+
+# Jekyll-Pagination
+gems: [jekyll-paginate]
+paginate: 5
+
+
+# Build settings
+markdown: kramdown
+
+# Port
+port: 3000
+
+# Admin-Jekyll
+jekyll_admin:
+  hidden_links:
+      #- posts
+      #- pages
+      #- staticfiles
+      #- datafiles
+      #    - configuration

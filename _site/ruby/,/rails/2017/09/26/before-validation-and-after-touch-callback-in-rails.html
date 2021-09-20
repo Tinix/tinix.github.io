@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<link href='//fonts.googleapis.com/css?family=Lato:400,700|Raleway:400,700|Comfortaa:700' rel='stylesheet' type='text/css'>
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Before_validation and  after_touch callbacks in Rails</title>
+  <meta name="description" content="Rails provide us with some pre-defined methods or hooks which can be invoked after or before the execution of a certain method in the object life cycle.Callb...">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:3000/ruby/,/rails/2017/09/26/before-validation-and-after-touch-callback-in-rails.html">
+  <link rel="alternate" type="application/rss+xml" title="Tinix&#39;s Distorted View of the Code." href="http://localhost:3000/feed.xml">
+</head>
+
+  <body>
+      <script id="dsq-count-scr" src="//tinixgit.disqus.com/count.js" async></script>
+
+    <header class="site-header" role="banner">
+    <!-- <div class="img-responsive">
+      <img src="/fondo_ruby.jpg" height="100%"; alt="head_background">
+    </div> -->
+    </div>
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">Tinix&#39;s Distorted View of the Code.</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+          <a class="page-link" href="/about/">About</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Before_validation and  after_touch callbacks in Rails</h1>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>Rails provide us with some pre-defined methods or hooks which can be invoked after or before the execution of a certain method in the object life cycle.
+Callbacks are called in certain moments of object’s life cycle which we will get to know in this blog.
+Today we will be studying about three callbacks as follows :
+before_validation
+As the name suggests, this method is called before validation of all the fields of the form.
+For example, there is a registration form which has an email field, so as soon as the user will fill the email field and submit the form before the value gets saved into the database we have to make sure that all characters in the email should be down case.
+So in this case, we will invoke a before_validation callback in which we will define a method to be called before the create method is called.
+In this method, we will convert the whole string into down case and after that, the create method will be called like this.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>class Employee &lt; ApplicationRecord
+  
+  before_validation :normalize_email, on: :create
+ 
+  # :on takes an array as well
+  
+  def create
+    ...
+  end 
+  protected
+    def normalize_email
+      self.email = email.downcase.titleize
+    end
+end
+</code></pre>
+</div>
+
+<p>after_touch
+Whenever an object is being touched the after_touch callback is called .
+For example
+We create an employee object and as soon as we touch the object the after_touch callback is invoked.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>class Employee &lt; ApplicationRecord
+  
+  after_touch do |employee|
+    puts "The object has been touched"
+  end
+end
+ 
+&gt;&gt; e = Employee.create(name: 'Tom')
+=&gt; #&lt;Employee id: 1, name: "Tom", created_at: "2013-11-25 12:17:49", updated_at: "2013-11-25 12:17:49"&gt;
+ 
+&gt;&gt; e.touch
+The object has been touched
+=&gt; true
+</code></pre>
+</div>
+
+<p>So hope this article was helpful to understand both the callbacks.</p>
+
+        
+<div id="disqus_thread"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+    /*
+    var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        
+        s.src = '//tinixgit.disqus.com/embed.js';
+        
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">Comments powered by Disqus.</a></noscript>
+ <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+  
+
+
+
+  </div>
+
+</article>
+
+
+      </div>
+    </main>
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Tinix&#39;s Distorted View of the Code.</h2>
+    <p>Thoughts notes and other things more...</p>
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <!-- <li>Tinix&#39;s Distorted View of the Code.</li> -->
+          <li><a href="mailto:dtinivella@gmail.com">dtinivella@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+         
+          
+          <li>
+            <a href="https://github.com/Tinix"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">Tinix</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/Tinix"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">Tinix</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://gitlab.com/Tinix"><span class="icon icon--gitlab"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="15%" fill="#30353e"/><path fill="#e24329" d="M84 215l43-133c2-7 12-7 14 0l115 353L371 82c2-7 12-7 14 0l43 133"/><path fill="#fc6d26" d="M256 435L84 215h100.4zm71.7-220H428L256 435l71.6-220z"/><path fill="#fca326" d="M84 215l-22 67c-2 6 0 13 6 16l188 137zm344 0l22 67c2 6 0 13-6 16L256 435z"/></svg></span>
+  <span class="username">Tinix</span></a>
+
+          </li>
+          
+         
+        </ul>
+      </div>
+
+      <!-- Begin Stat for Default  -->
+<script type="text/javascript">
+var sc_project=9629919;
+var sc_invisible=1;
+var sc_security="fd5bb5c2";
+var scJsHost = (("https:" == document.location.protocol) ?
+"https://secure." : "http://www.");
+document.write("<sc"+"ript type='text/javascript' src='" +
+scJsHost+
+"statcounter.com/counter/counter.js'></"+"script>");
+</script>
+<noscript><div class="statcounter"><a title="shopify visitor
+statistics" href="http://statcounter.com/shopify/"
+target="_blank"><img class="statcounter"
+src="http://c.statcounter.com/9629919/0/fd5bb5c2/1/"
+alt="shopify visitor statistics"></a></div></noscript>
+<!-- End of Stat for Default -->
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+  (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+  m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+  (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+  ym(56423338, "init", {
+       clickmap:true,
+       trackLinks:true,
+       accurateTrackBounce:true
+  });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/56423338" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+      <div class="footer-col footer-col-3">
+         <p>
+    &copy; 2003-2017 Daniel Tinivella . All rights reserved.<br/>
+    DanielTinivella.com is powered by <a href="http://jekyllrb.com">Jekyll</a> and <a href="http://disqus.com">Disqus</a>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

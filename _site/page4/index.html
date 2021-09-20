@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<link href='//fonts.googleapis.com/css?family=Lato:400,700|Raleway:400,700|Comfortaa:700' rel='stylesheet' type='text/css'>
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Tinix&#39;s Distorted View of the Code.</title>
+  <meta name="description" content="Also known as Tinix , Degree in Computer Science FaMAF,Writer Software, Math Fan, Ruby , Python, Elixir FreeBSD, I like have Mate, 4 lang​​, but all that means almost nothing..
+">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:3000/page4/">
+  <link rel="alternate" type="application/rss+xml" title="Tinix&#39;s Distorted View of the Code." href="http://localhost:3000/feed.xml">
+</head>
+
+  <body>
+      <script id="dsq-count-scr" src="//tinixgit.disqus.com/count.js" async></script>
+
+    <header class="site-header" role="banner">
+    <!-- <div class="img-responsive">
+      <img src="/fondo_ruby.jpg" height="100%"; alt="head_background">
+    </div> -->
+    </div>
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">Tinix&#39;s Distorted View of the Code.</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+          <a class="page-link" href="/about/">About</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- This loops through the paginated posts -->
+
+  <script id="dsq-count-scr" src="//tinixgit.disqus.com/count.js" async></script>
+
+
+  <h1><a href="/ruby/2017/06/12/rvm-setting-the-default-ruby.html">RVM Setting the default Ruby</a></h1>
+  <p class="author">
+    <span class="date">2017-06-12 04:32:02 +0000</span>
+  </p>
+  <div class="content">
+    <p>If you would like to make one specific Ruby be the default ruby that is selected when you open a new terminal shell, use the –default flag:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">rvm</span> <span class="o">--</span><span class="n">default</span> <span class="n">use</span> <span class="mi">2</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">1</span>
+
+<span class="err">$</span> <span class="n">ruby</span> <span class="o">-</span><span class="n">v</span>
+
+<span class="n">ruby</span> <span class="mi">2</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">1</span><span class="n">p76</span> <span class="p">(</span><span class="mi">2014</span><span class="o">-</span><span class="mo">02</span><span class="o">-</span><span class="mi">24</span> <span class="n">revision</span> <span class="mi">45161</span><span class="p">)</span> <span class="p">[</span><span class="n">x86_64</span><span class="o">-</span><span class="n">darwin12</span><span class="o">.</span><span class="mi">0</span><span class="p">]</span></code></pre></figure>
+
+<p>The next time you open a window Ruby 2.1.1 will be the selected ruby.</p>
+
+<p>To switch back to your system ruby:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">rvm</span> <span class="n">use</span> <span class="nb">system</span>
+
+<span class="err">$</span> <span class="n">ruby</span> <span class="o">-</span><span class="n">v</span>
+
+<span class="n">ruby</span> <span class="mi">2</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">0</span><span class="n">p451</span> <span class="p">(</span><span class="mi">2014</span><span class="o">-</span><span class="mo">02</span><span class="o">-</span><span class="mi">24</span> <span class="n">revision</span> <span class="mi">45167</span><span class="p">)</span> <span class="p">[</span><span class="n">universal</span><span class="p">.</span><span class="nf">x86_64</span><span class="o">-</span><span class="n">darwin13</span><span class="p">]</span></code></pre></figure>
+
+<p>To switch at any time to the ruby you have selected as default:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">rvm</span> <span class="n">default</span>
+
+<span class="err">$</span> <span class="n">ruby</span> <span class="o">-</span><span class="n">v</span>
+
+<span class="n">ruby</span> <span class="mi">2</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">1</span><span class="n">p76</span> <span class="p">(</span><span class="mi">2014</span><span class="o">-</span><span class="mo">02</span><span class="o">-</span><span class="mi">24</span> <span class="n">revision</span> <span class="mi">45161</span><span class="p">)</span> <span class="p">[</span><span class="n">x86_64</span><span class="o">-</span><span class="n">darwin12</span><span class="o">.</span><span class="mi">0</span><span class="p">]</span></code></pre></figure>
+
+<p>To show what ruby is currently the selected default, if any, do:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">rvm</span> <span class="n">list</span>
+
+<span class="n">rvm</span> <span class="n">rubies</span>
+
+ <span class="o">*</span> <span class="n">ruby</span><span class="o">-</span><span class="mi">1</span><span class="o">.</span><span class="mi">9</span><span class="o">.</span><span class="mi">3</span><span class="o">-</span><span class="n">p484</span> <span class="p">[</span> <span class="n">x86_64</span> <span class="p">]</span>
+   <span class="n">ruby</span><span class="o">-</span><span class="mi">2</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">p481</span> <span class="p">[</span> <span class="n">x86_64</span> <span class="p">]</span>
+<span class="o">=&gt;</span> <span class="n">ruby</span><span class="o">-</span><span class="mi">2</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">1</span> <span class="p">[</span> <span class="n">x86_64</span> <span class="p">]</span>
+
+<span class="c1"># =&gt; - current</span>
+<span class="c1"># =* - current &amp;&amp; default</span>
+<span class="c1">#  * - default</span></code></pre></figure>
+
+<p>If you wish to switch back to your system ruby as default, remember that RVM does not “manage” the system ruby and is “hands off”.</p>
+
+<p>This means to set the “system” ruby as default, you reset RVM’s defaults as follows.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">rvm</span> <span class="n">reset</span></code></pre></figure>
+
+<p>Note that “default” is merely implemented as an alias with an especially significant name.</p>
+
+<p>If you encounter an error such as “RVM is not a function, selecting rubies with ‘rvm use …’ will not work.”, try using the alias action instead:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">rvm</span> <span class="k">alias</span> <span class="n">create</span> <span class="n">default</span> <span class="mi">2</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">1</span></code></pre></figure>
+
+
+  </div>
+
+  <h1><a href="/jekyll/2017/06/07/A-silly-idea-to-compare-jekyll-vs-octopress.html">A silly idea to compare Jekyll vs Octopress</a></h1>
+  <p class="author">
+    <span class="date">2017-06-07 11:16:07 -0300</span>
+  </p>
+  <div class="content">
+    <p>Before switching to Jekyll, I tried out Octopress, a blogging framework built on top of Jekyll….
+I was really surprised to find out how much I disliked the experience with Octopress.
+I had an impression that it is a hacker friendly, simple and extensible blog platform, but it was the opposite of that. There are many layers of abstraction, themes are pretty complicated, it comes with many … pre-installed plugins out of the box, dozen depedencies (ruby gems), it uses Sass by default and so on. A fresh copy of Octopress blog consists of staggering 29 directories and 144 files it’s too much..!!</p>
+
+<p>Octopress works almost ok if you are willing to invest plenty of time to customize it or need to build something complex, but it wasn’t my particular use case. The complexity of Octopress defeats the whole purpose of a simple, generated static site. But you know what is “hacker friendly, simple and extensible blog platform”? That’s Jekyll! Jekyll is dead simple and practical. It was a pleasure to setup and customize the default theme. It took less than an hour to have a fully customized blog just the way I wanted. So I am staying with Jekyll this time. The directory structure is really simple and you start with the bare essentials, a simple layout and a CSS file. That’s it!</p>
+
+<p>I tend to prefer simplicity and unix-like philosophy when it comes to choose every day tools for specific tasks. I can always extend, build and combine on top of that, when the time comes.</p>
+
+<p>you can install jekyll with a simple command :</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">gem</span> <span class="n">install</span> <span class="n">jekyll</span></code></pre></figure>
+
+<p>Check out the <a href="http://jekyllrb.com/docs/home">Jekyll docs</a> for more info on how to get the most out of Jekyll. File all bugs/feature requests at <a href="https://github.com/jekyll/jekyll">Jekyll’s GitHub repo</a>. If you have questions, you can ask them on <a href="https://talk.jekyllrb.com/">Jekyll Talk</a>.</p>
+
+
+  </div>
+
+  <h1><a href="/git/2017/01/27/viewing-the-git-log.html">Viewing the Git log</a></h1>
+  <p class="author">
+    <span class="date">2017-01-27 11:52:19 -0300</span>
+  </p>
+  <div class="content">
+    <p>This list isn’t complete, but the commands shown here are the handful that I use on a day-to-day basis. They should all work in a recent version of git on Linux or macOS (I don’t have access to a Windows computer anymore, but if you know something I don’t, please leave a comment and I’ll amend this article).</p>
+
+<ul>
+  <li><strong><code class="highlighter-rouge">git log</code></strong>: On its own, <code class="highlighter-rouge">git log</code> displays a list of commits and their commit messages in reverse chronological order (most recent commits at the top).</li>
+  <li><strong><code class="highlighter-rouge">git log --reverse</code></strong>: Display the output in reverse, so the earliest commits appear at the top of the output.</li>
+  <li><strong><code class="highlighter-rouge">git log --oneline</code></strong>: Passing <code class="highlighter-rouge">--oneline</code> results in a terse, two-column list of commit titles and SHA identifiers.</li>
+  <li><strong><code class="highlighter-rouge">git log -p</code></strong>: Passing the <code class="highlighter-rouge">-p</code> flag adds a full patch, or diff, to each commit–the code you added and removed.</li>
+  <li><strong><code class="highlighter-rouge">git log -p &lt;filename&gt;</code></strong>: Passing a file name restricts log output to changes to that file (for example, <code class="highlighter-rouge">git log -p app/models/user.rb</code>). You can remove the <code class="highlighter-rouge">-p</code> flag if you don’t care about the code changes in each commit, or use <code class="highlighter-rouge">--oneline</code> instead to get a quick list. I find that I’m almost always interested in the actual code changes, though. If there’s a chance that git could confuse the filename for a branch name, include <code class="highlighter-rouge">--</code> to disambiguate (<code class="highlighter-rouge">git log -p -- app/models/user.rb</code>).</li>
+  <li><strong><code class="highlighter-rouge">git log -p -S &lt;query&gt;</code></strong>: Use the <code class="highlighter-rouge">-S</code> flag (also known as the <em>git pickaxe</em>) along with a search term to restrict log output to code changes matching the search (for example, <code class="highlighter-rouge">git log -p -S password</code>). Again, this will work without <code class="highlighter-rouge">-p</code>, or with <code class="highlighter-rouge">--oneline</code>, but this is how I typically use it.</li>
+  <li><strong><code class="highlighter-rouge">git log -p --grep &lt;query&gt;</code></strong>: The <code class="highlighter-rouge">--grep</code> flag searches only the commit messages for the provided query. Wrap the query in quotes if it contains spaces. (You and your team are hopefully <a href="http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html">writing useful commit messages</a>!)</li>
+  <li><strong><code class="highlighter-rouge">git log &lt;commit1&gt;..&lt;commit2&gt;</code></strong>: Restrict output to only the differences between two specific commits by passing them with a <code class="highlighter-rouge">..</code> (and no spaces) between them. This works with SHA identifiers (<code class="highlighter-rouge">git log 660bfa2..922b5d2</code>) as well as branch names (<code class="highlighter-rouge">git log rails-4.1..rails-4.2</code>). Leave either side blank to imply the current branch (<code class="highlighter-rouge">git log rails-4.2..</code>). Use with <code class="highlighter-rouge">-p</code>, <code class="highlighter-rouge">-S</code>, and <code class="highlighter-rouge">--grep</code> as outlined above to filter the results further.</li>
+  <li><strong><code class="highlighter-rouge">git log --stat</code></strong>: Add a brief list of the files that were altered in each commit, with a count of lines that were added or removed. As you may have guessed by now, <code class="highlighter-rouge">--stat</code> can be used alongside the other flags listed here to narrow results.</li>
+  <li><strong><code class="highlighter-rouge">git log --no-merges</code></strong>: Omit merge commits from the log output (use <code class="highlighter-rouge">--merges</code> to show <em>only</em> merge commits). I don’t use these as often.</li>
+</ul>
+
+<p>As I mentioned, this is just a list of the tools I use most often to look at the git log. If you want to learn more, Atlassian’s article on <a href="https://www.atlassian.com/git/tutorials/git-log">advanced git logging</a> is a great next step.</p>
+
+  </div>
+
+  <h1><a href="/emacs,%20freebsd/2016/04/09/projectile-makes-your-emacs-very-fast.html">Projectile makes your Emacs very fast!</a></h1>
+  <p class="author">
+    <span class="date">2016-04-09 12:49:07 -0300</span>
+  </p>
+  <div class="content">
+    <p>Projectile makes your Emacs very fast…!!!
+after installing projectile in Emacs…
+It was easier to search and fin files within directories quicky
+projectile replaces command palette of Sublime Text Editor!</p>
+
+<p>You Know … I recommend Projectile !!
+for more info visit :</p>
+
+<p><a href="http://github.com/bbatsov/projectile">Projectile Repo Github</a></p>
+
+<iframe width="560" height="315" src="//www.youtube.com/embed/qpv9i_I4jYU" frameborder="0"> </iframe>
+
+<p>See you next Article ..!!
+Tinix!</p>
+
+
+  </div>
+
+  <h1><a href="/freebsd,/jekyll/,/programming,/emacs/2016/03/28/install-and-config-emacs-neotree.html">Install and config neotree on Emacs</a></h1>
+  <p class="author">
+    <span class="date">2016-03-28 00:00:00 -0300</span>
+  </p>
+  <div class="content">
+    <p>Installation</p>
+
+<p>Melpa</p>
+
+<p>You can install the plugin using the packages on melpa.</p>
+
+<p>Make sure you have something like the following in your Emacs startup file (~/.emacs.d/init.el, or ~/.emacs):</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">    <span class="p">(</span><span class="n">add</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">list</span> <span class="s1">'package-archives
+                 '</span><span class="p">(</span><span class="s2">"melpa"</span> <span class="o">.</span> <span class="s2">"http://melpa.org/packages/"</span><span class="p">))</span></code></pre></figure>
+
+<p>To make that take effect, either evaluate that elisp expression or restart Emacs.</p>
+
+<p>Then use M-x package-list-packages, select neotree from the list by pressing i, then press x to execute the changes. At that point, the package will be installed.</p>
+
+<p>Source</p>
+
+<p>Clone project:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">cd</span> <span class="sr">/some/</span><span class="n">path</span>
+<span class="err">$</span> <span class="n">git</span> <span class="nb">clone</span> <span class="n">https</span><span class="ss">:/</span><span class="o">/</span><span class="n">github</span><span class="p">.</span><span class="nf">com</span><span class="o">/</span><span class="n">jaypei</span><span class="o">/</span><span class="n">emacs</span><span class="o">-</span><span class="n">neotree</span><span class="p">.</span><span class="nf">git</span> <span class="n">neotree</span>
+<span class="err">$</span> <span class="n">cd</span> <span class="n">neotree</span>
+<span class="err">$</span> <span class="n">git</span> <span class="n">checkout</span> <span class="n">dev</span></code></pre></figure>
+
+<p>Add config to emacs:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">(</span><span class="n">add</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">list</span> <span class="s1">'load-path "/some/path/neotree")
+(require '</span><span class="n">neotree</span><span class="p">)</span>
+<span class="p">(</span><span class="n">global</span><span class="o">-</span><span class="n">set</span><span class="o">-</span><span class="n">key</span> <span class="p">[</span><span class="n">f12</span><span class="p">]</span> <span class="err">'</span><span class="n">neotree</span><span class="o">-</span><span class="n">toggle</span><span class="p">)</span></code></pre></figure>
+
+<p>Open (toggle) NeoTree:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="no">F12</span><span class="o">&gt;</span></code></pre></figure>
+
+<p>Screenshots</p>
+
+<!-- _include/neotree.html -->
+
+<div class="image-wrapper">
+  
+    <img src="http://localhost:3000/images/neotree-1.png" alt="emacs-neotree" />
+    
+  
+  <p class="image-caption">emacs-neotree is running!</p>
+  
+</div>
+
+
+  </div>
+
+<br>
+<!--Pagination links  -->
+
+<div class="btn btn-default">
+  
+  <a href="/page3">&laquo; Prev</a>
+  
+
+  
+  
+  <a href="/page3">1</a>
+  
+  
+  
+  <a href="/page2">2</a>
+  
+  
+  
+  <a href="/page3">3</a>
+  
+  
+  
+  <em>4</em>
+  
+  
+  
+  <a href="/page5">5</a>
+  
+  
+
+  
+  <a href="/page5">Next &raquo;</a>
+  
+</div>
+
+<br>
+<hr>
+  <p class="rss-subscribe">subscribe <a href="/feed.xml">via RSS</a></p>
+
+
+      </div>
+    </main>
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Tinix&#39;s Distorted View of the Code.</h2>
+    <p>Thoughts notes and other things more...</p>
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <!-- <li>Tinix&#39;s Distorted View of the Code.</li> -->
+          <li><a href="mailto:dtinivella@gmail.com">dtinivella@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+         
+          
+          <li>
+            <a href="https://github.com/Tinix"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">Tinix</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/Tinix"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">Tinix</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://gitlab.com/Tinix"><span class="icon icon--gitlab"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="15%" fill="#30353e"/><path fill="#e24329" d="M84 215l43-133c2-7 12-7 14 0l115 353L371 82c2-7 12-7 14 0l43 133"/><path fill="#fc6d26" d="M256 435L84 215h100.4zm71.7-220H428L256 435l71.6-220z"/><path fill="#fca326" d="M84 215l-22 67c-2 6 0 13 6 16l188 137zm344 0l22 67c2 6 0 13-6 16L256 435z"/></svg></span>
+  <span class="username">Tinix</span></a>
+
+          </li>
+          
+         
+        </ul>
+      </div>
+
+      <!-- Begin Stat for Default  -->
+<script type="text/javascript">
+var sc_project=9629919;
+var sc_invisible=1;
+var sc_security="fd5bb5c2";
+var scJsHost = (("https:" == document.location.protocol) ?
+"https://secure." : "http://www.");
+document.write("<sc"+"ript type='text/javascript' src='" +
+scJsHost+
+"statcounter.com/counter/counter.js'></"+"script>");
+</script>
+<noscript><div class="statcounter"><a title="shopify visitor
+statistics" href="http://statcounter.com/shopify/"
+target="_blank"><img class="statcounter"
+src="http://c.statcounter.com/9629919/0/fd5bb5c2/1/"
+alt="shopify visitor statistics"></a></div></noscript>
+<!-- End of Stat for Default -->
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+  (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+  m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+  (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+  ym(56423338, "init", {
+       clickmap:true,
+       trackLinks:true,
+       accurateTrackBounce:true
+  });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/56423338" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+      <div class="footer-col footer-col-3">
+         <p>
+    &copy; 2003-2017 Daniel Tinivella . All rights reserved.<br/>
+    DanielTinivella.com is powered by <a href="http://jekyllrb.com">Jekyll</a> and <a href="http://disqus.com">Disqus</a>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>
