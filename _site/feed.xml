@@ -4,10 +4,10 @@
     <title>Tinix's Distorted View of the Code.</title>
     <description>Also known as Tinix , Degree in Computer Science FaMAF,Writer Software, Math Fan, Ruby , Python, Elixir FreeBSD, I like have Mate, 4 lang​​, but all that means almost nothing..
 </description>
-    <link>http://localhost:3000/</link>
-    <atom:link href="http://localhost:3000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 20 Sep 2021 21:00:04 -0300</pubDate>
-    <lastBuildDate>Mon, 20 Sep 2021 21:00:04 -0300</lastBuildDate>
+    <link>http://localhost:3001/</link>
+    <atom:link href="http://localhost:3001/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Tue, 21 Sep 2021 19:08:28 -0300</pubDate>
+    <lastBuildDate>Tue, 21 Sep 2021 19:08:28 -0300</lastBuildDate>
     <generator>Jekyll v3.3.1</generator>
     
       <item>
@@ -142,8 +142,8 @@
 &lt;span class=&quot;no&quot;&gt;C&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;       &lt;span class=&quot;c1&quot;&gt;#=&amp;gt; ArgumentError&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 </description>
         <pubDate>Mon, 20 Sep 2021 20:39:07 -0300</pubDate>
-        <link>http://localhost:3000/ruby/2021/09/20/what-is-proc-in-ruby.html</link>
-        <guid isPermaLink="true">http://localhost:3000/ruby/2021/09/20/what-is-proc-in-ruby.html</guid>
+        <link>http://localhost:3001/ruby/2021/09/20/what-is-proc-in-ruby.html</link>
+        <guid isPermaLink="true">http://localhost:3001/ruby/2021/09/20/what-is-proc-in-ruby.html</guid>
         
         
         <category>ruby</category>
@@ -307,8 +307,8 @@ So…&lt;/p&gt;
 &lt;hr /&gt;
 </description>
         <pubDate>Tue, 25 Feb 2020 00:35:08 -0300</pubDate>
-        <link>http://localhost:3000/ruby/2020/02/25/flash-messages-in-rails.html</link>
-        <guid isPermaLink="true">http://localhost:3000/ruby/2020/02/25/flash-messages-in-rails.html</guid>
+        <link>http://localhost:3001/ruby/2020/02/25/flash-messages-in-rails.html</link>
+        <guid isPermaLink="true">http://localhost:3001/ruby/2020/02/25/flash-messages-in-rails.html</guid>
         
         
         <category>ruby</category>
@@ -317,7 +317,7 @@ So…&lt;/p&gt;
     
       <item>
         <title>Install Docker on Ubuntu 18.10</title>
-        <description>&lt;p&gt;&lt;img src=&quot;http://localhost:3000/images/instalar-docker-en-Ubuntu.jpg&quot; alt=&quot;useful image&quot; /&gt;&lt;/p&gt;
+        <description>&lt;p&gt;&lt;img src=&quot;http://localhost:3001/images/instalar-docker-en-Ubuntu.jpg&quot; alt=&quot;useful image&quot; /&gt;&lt;/p&gt;
 &lt;h2 id=&quot;lets-install-docker&quot;&gt;let’s install Docker&lt;/h2&gt;
 &lt;p&gt;Step 1: Update Local Database
 Update the local database with the command:&lt;/p&gt;
@@ -383,8 +383,8 @@ The GPG key is a security feature.&lt;/p&gt;
 &lt;hr /&gt;
 </description>
         <pubDate>Wed, 19 Feb 2020 00:22:50 -0300</pubDate>
-        <link>http://localhost:3000/docker/2020/02/19/install-docker-on-ubuntu-1810.html</link>
-        <guid isPermaLink="true">http://localhost:3000/docker/2020/02/19/install-docker-on-ubuntu-1810.html</guid>
+        <link>http://localhost:3001/docker/2020/02/19/install-docker-on-ubuntu-1810.html</link>
+        <guid isPermaLink="true">http://localhost:3001/docker/2020/02/19/install-docker-on-ubuntu-1810.html</guid>
         
         
         <category>docker</category>
@@ -393,7 +393,7 @@ The GPG key is a security feature.&lt;/p&gt;
     
       <item>
         <title>Ruby vs Elixir ,  Rails vs Phoenix - part 2</title>
-        <description>&lt;p&gt;&lt;img src=&quot;http://localhost:3000/images/phoenix-vs-rails.png&quot; alt=&quot;useful image&quot; /&gt;&lt;/p&gt;
+        <description>&lt;p&gt;&lt;img src=&quot;http://localhost:3001/images/phoenix-vs-rails.png&quot; alt=&quot;useful image&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Dev Tools
 rake vs. mix
@@ -456,8 +456,8 @@ In Ruby, there is rake, in Elixir there is mix.&lt;/p&gt;
 
 </description>
         <pubDate>Fri, 28 Sep 2018 16:52:56 -0300</pubDate>
-        <link>http://localhost:3000/elixir/2018/09/28/ruby-vs-elixir-rails-vs-phoenix-part-2.html</link>
-        <guid isPermaLink="true">http://localhost:3000/elixir/2018/09/28/ruby-vs-elixir-rails-vs-phoenix-part-2.html</guid>
+        <link>http://localhost:3001/elixir/2018/09/28/ruby-vs-elixir-rails-vs-phoenix-part-2.html</link>
+        <guid isPermaLink="true">http://localhost:3001/elixir/2018/09/28/ruby-vs-elixir-rails-vs-phoenix-part-2.html</guid>
         
         
         <category>elixir</category>
@@ -466,7 +466,7 @@ In Ruby, there is rake, in Elixir there is mix.&lt;/p&gt;
     
       <item>
         <title>Ruby vs Elixir ,  Rails vs Phoenix - part 1</title>
-        <description>&lt;p&gt;&lt;img src=&quot;http://localhost:3000/images/ruby-elixir.png&quot; alt=&quot;useful image&quot; /&gt;&lt;/p&gt;
+        <description>&lt;p&gt;&lt;img src=&quot;http://localhost:3001/images/ruby-elixir.png&quot; alt=&quot;useful image&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;This is not a, “Which is better?”, post. It is more a way to help other developers, like myself, who have a background in Rails development and are interested in Elixir and Phoenix.&lt;/p&gt;
 
@@ -536,8 +536,8 @@ In Ruby, there is rake, in Elixir there is mix.&lt;/p&gt;
 
 </description>
         <pubDate>Fri, 28 Sep 2018 16:52:56 -0300</pubDate>
-        <link>http://localhost:3000/elixir/2018/09/28/ruby-vs-elixir-rails-vs-phoenix-part-1.html</link>
-        <guid isPermaLink="true">http://localhost:3000/elixir/2018/09/28/ruby-vs-elixir-rails-vs-phoenix-part-1.html</guid>
+        <link>http://localhost:3001/elixir/2018/09/28/ruby-vs-elixir-rails-vs-phoenix-part-1.html</link>
+        <guid isPermaLink="true">http://localhost:3001/elixir/2018/09/28/ruby-vs-elixir-rails-vs-phoenix-part-1.html</guid>
         
         
         <category>elixir</category>
@@ -568,8 +568,8 @@ In Ruby, there is rake, in Elixir there is mix.&lt;/p&gt;
 &lt;p&gt;As you can see, you need to create an object via a find_by_&lt;something&gt;, in my case id and write it to u. After that I change the password key to a_stupid_pa$$word along with the password_confirmation. I then write it to the database via u.save.&lt;/something&gt;&lt;/p&gt;
 </description>
         <pubDate>Tue, 07 Aug 2018 16:47:20 -0300</pubDate>
-        <link>http://localhost:3000/ruby/2018/08/07/updating-a-rails-password-via-the-rails-console.html</link>
-        <guid isPermaLink="true">http://localhost:3000/ruby/2018/08/07/updating-a-rails-password-via-the-rails-console.html</guid>
+        <link>http://localhost:3001/ruby/2018/08/07/updating-a-rails-password-via-the-rails-console.html</link>
+        <guid isPermaLink="true">http://localhost:3001/ruby/2018/08/07/updating-a-rails-password-via-the-rails-console.html</guid>
         
         
         <category>ruby</category>
@@ -600,8 +600,8 @@ In Ruby, there is rake, in Elixir there is mix.&lt;/p&gt;
 &lt;p&gt;SPC T s and select theme and enter&lt;/p&gt;
 </description>
         <pubDate>Mon, 26 Feb 2018 19:01:21 -0300</pubDate>
-        <link>http://localhost:3000/spacemacs/2018/02/26/spacemacs-toggle-transparency.html</link>
-        <guid isPermaLink="true">http://localhost:3000/spacemacs/2018/02/26/spacemacs-toggle-transparency.html</guid>
+        <link>http://localhost:3001/spacemacs/2018/02/26/spacemacs-toggle-transparency.html</link>
+        <guid isPermaLink="true">http://localhost:3001/spacemacs/2018/02/26/spacemacs-toggle-transparency.html</guid>
         
         
         <category>spacemacs</category>
@@ -686,8 +686,8 @@ To install or update nvm, you can use the install script using cURL:&lt;/p&gt;
 &lt;p&gt;problem solved..!!!&lt;/p&gt;
 </description>
         <pubDate>Thu, 01 Feb 2018 11:48:03 -0300</pubDate>
-        <link>http://localhost:3000/npm/2018/02/01/how-to-install-latest-nodejs-npm-on-debian.html</link>
-        <guid isPermaLink="true">http://localhost:3000/npm/2018/02/01/how-to-install-latest-nodejs-npm-on-debian.html</guid>
+        <link>http://localhost:3001/npm/2018/02/01/how-to-install-latest-nodejs-npm-on-debian.html</link>
+        <guid isPermaLink="true">http://localhost:3001/npm/2018/02/01/how-to-install-latest-nodejs-npm-on-debian.html</guid>
         
         
         <category>npm</category>
@@ -752,8 +752,8 @@ To install or update nvm, you can use the install script using cURL:&lt;/p&gt;
 &lt;p&gt;I’d like this… original post by &lt;a href=&quot;https://www.engineyard.com/blog/ruby-for-rails-blocks&quot;&gt;https://www.engineyard.com/blog/ruby-for-rails-blocks&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Tue, 30 Jan 2018 12:06:31 -0300</pubDate>
-        <link>http://localhost:3000/ruby/2018/01/30/ruby-for-rails-blocks.html</link>
-        <guid isPermaLink="true">http://localhost:3000/ruby/2018/01/30/ruby-for-rails-blocks.html</guid>
+        <link>http://localhost:3001/ruby/2018/01/30/ruby-for-rails-blocks.html</link>
+        <guid isPermaLink="true">http://localhost:3001/ruby/2018/01/30/ruby-for-rails-blocks.html</guid>
         
         
         <category>ruby</category>
@@ -904,8 +904,8 @@ We learned what is attr_accessor in Rails and how to use it with Rails .&lt;/li&
 
 </description>
         <pubDate>Mon, 29 Jan 2018 20:15:02 -0300</pubDate>
-        <link>http://localhost:3000/ruby/2018/01/29/what-is-attr-accessor-in-rails.html</link>
-        <guid isPermaLink="true">http://localhost:3000/ruby/2018/01/29/what-is-attr-accessor-in-rails.html</guid>
+        <link>http://localhost:3001/ruby/2018/01/29/what-is-attr-accessor-in-rails.html</link>
+        <guid isPermaLink="true">http://localhost:3001/ruby/2018/01/29/what-is-attr-accessor-in-rails.html</guid>
         
         
         <category>ruby</category>
