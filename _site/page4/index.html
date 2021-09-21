@@ -82,6 +82,98 @@
   <script id="dsq-count-scr" src="//tinixgit.disqus.com/count.js" async></script>
 
 
+  <h1><a href="/ruby/2017/07/19/working-with-grep-in-ruby.html">Working with GREP in Ruby</a></h1>
+  <p class="author">
+    <span class="date">2017-07-19 03:32:51 +0000</span>
+  </p>
+  <div class="content">
+    <!-- _include/grep.html -->
+
+<div class="image-wrapper">
+  
+    <img src="http://localhost:3000/images/grep.jpg" alt="using GREP method in RUBY" />
+    
+  
+  <p class="image-caption">Using grep in RUBY..!!!</p>
+  
+</div>
+
+<p>As we know that ruby contains a lot of built in modules, in which one of this is the Enumerable module. So before preceddingon what GREP is and How it works, first lets study a little info about Enumerable module.</p>
+
+<p>The Enumerable module provide us a lot of traversal and searching methods which also gives us the ability to do sorting.
+This module basically provides us simpler methods to manipulate collections with the help of searching, traversing and sorting.
+The class provides the each method which yields all the successive members of the collection.
+Enumerable module is included in the class as follows:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="n">dogs</span>
+  <span class="kp">include</span> <span class="no">Enumerable</span>
+  <span class="k">def</span> <span class="nf">breeds</span>
+    <span class="p">.</span><span class="nf">.</span>
+  <span class="k">end</span>
+
+  <span class="p">.</span><span class="nf">.</span>
+<span class="k">end</span></code></pre></figure>
+
+<p>GRIP
+First of all GREP is a powerful UNIX command.
+GREP is a fantastic and a very useful method which comes along with the enumerable module in Ruby.
+Using GREP is very handy and useful when it comes to manipulate collections instead of using a map or select methods.
+Along with, Grep is very useful in customizing the filtering, lets see how we can customize the filters. Firstly, put the categorization logic as case equal(“===”) in a class once it is done after that the instance of that class will be easily filtered out from an Enumerable object using GREP method.
+In the ruby methods of enumerable, we use “select” method for filtering and use “map” method for bulk transforming, but grep act as a combination of both these methods.</p>
+
+<p>How does GREP work?
+To filter the elements in an enumerable object most of the time Select method is usedand it is done by passing a block in it, lets see an example how it is done:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="s2">"man"</span><span class="p">,</span> <span class="s2">"van"</span><span class="p">,</span> <span class="s2">"can"</span><span class="p">,</span> <span class="s2">"dude"</span><span class="p">,</span> <span class="s2">"pan"</span><span class="p">,</span> <span class="s2">"fat"</span><span class="p">].</span><span class="nf">select</span><span class="p">{</span><span class="o">|</span><span class="n">word</span><span class="o">|</span> <span class="n">word</span><span class="p">.</span><span class="nf">include?</span><span class="p">(</span><span class="s2">"an"</span><span class="p">)}</span></code></pre></figure>
+
+<p>This is a result in</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="s2">"man"</span><span class="p">,</span><span class="s2">"van"</span><span class="p">,</span><span class="s2">"can"</span><span class="p">,</span><span class="s2">"pan"</span><span class="p">]</span></code></pre></figure>
+
+<p>The same thing with less complicated code and syntax can be achieved with this very useful method GREP as follows</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="s2">"man"</span><span class="p">,</span> <span class="s2">"van"</span><span class="p">,</span> <span class="s2">"can"</span><span class="p">,</span> <span class="s2">"dude"</span><span class="p">,</span> <span class="s2">"pan"</span><span class="p">,</span> <span class="s2">"fat"</span><span class="p">].</span><span class="nf">grep</span><span class="p">(</span><span class="sr">/an/</span><span class="p">)</span></code></pre></figure>
+
+<p>which will also return the same result as above but now with a less complicated code.
+In the above example, what GREP did was it traversed through the array on which it was fired and it took out all the elements which had ‘an’ in them and gave us the resulting array.
+Grep returns an array for each element in the enum in which the pattern is exactly equal to the elements passed in the array.
+Grep works with regular expressions and all the other objects such as class and ranges.</p>
+
+<p>Example of GREP are as follows:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">2000</span><span class="p">].</span><span class="nf">grep</span><span class="p">(</span><span class="mi">2</span><span class="p">.</span><span class="nf">.</span><span class="mi">200</span><span class="p">)</span>
+ <span class="c1"># this will result in  </span>
+ <span class="c1"># =&gt; [2, 20, 200]</span></code></pre></figure>
+
+<p>In the above example what grep did was it traversed through the array and picked up all the numbers between 2 to 200 and gave us the resulting array.</p>
+
+<p>Lets see one more example</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="s1">'a'</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="s1">'b'</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="s1">'c'</span><span class="p">].</span><span class="nf">grep</span><span class="p">(</span><span class="no">Integer</span><span class="p">)</span>
+ <span class="c1"># This will result in</span>
+ <span class="c1"># =&gt; [4,5,6]</span></code></pre></figure>
+
+<p>the same exampple for string :</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="s1">'a'</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="s1">'b'</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="s1">'c'</span><span class="p">].</span><span class="nf">grep</span><span class="p">(</span><span class="no">String</span><span class="p">)</span>
+ <span class="c1"># This will result in</span>
+ <span class="c1"># =&gt; ["a", "b", "c"]</span></code></pre></figure>
+
+<p>and another example with join</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="s1">'a'</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="s1">'b'</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="s1">'c'</span><span class="p">].</span><span class="nf">grep</span><span class="p">(</span><span class="no">String</span><span class="p">).</span><span class="nf">join</span>
+ <span class="o">=&gt;</span> <span class="s2">"abc"</span>
+<span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="s1">'a'</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="s1">'b'</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="s1">'c'</span><span class="p">].</span><span class="nf">grep</span><span class="p">(</span><span class="no">String</span><span class="p">).</span><span class="nf">join</span><span class="p">(</span><span class="s1">','</span><span class="p">)</span>
+ <span class="o">=&gt;</span> <span class="s2">"a,b,c"</span>
+ </code></pre></figure>
+
+<p>In this above example what grep did was it pulled out all the integers from the main array on which we fired the method and gave us all the integers in the resulting array.
+So, now I hope that the people reading this article would be through with what is GREP, How its used and how useful and handy it is when it comes to manipulate collections.</p>
+
+<p>If you have any inputs or queries please feel free to post in comment section below</p>
+
+  </div>
+
   <h1><a href="/ruby/2017/06/12/rvm-setting-the-default-ruby.html">RVM Setting the default Ruby</a></h1>
   <p class="author">
     <span class="date">2017-06-12 04:32:02 +0000</span>
@@ -207,61 +299,6 @@ for more info visit :</p>
 
 <p>See you next Article ..!!
 Tinix!</p>
-
-
-  </div>
-
-  <h1><a href="/freebsd,/jekyll/,/programming,/emacs/2016/03/28/install-and-config-emacs-neotree.html">Install and config neotree on Emacs</a></h1>
-  <p class="author">
-    <span class="date">2016-03-28 00:00:00 -0300</span>
-  </p>
-  <div class="content">
-    <p>Installation</p>
-
-<p>Melpa</p>
-
-<p>You can install the plugin using the packages on melpa.</p>
-
-<p>Make sure you have something like the following in your Emacs startup file (~/.emacs.d/init.el, or ~/.emacs):</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">    <span class="p">(</span><span class="n">add</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">list</span> <span class="s1">'package-archives
-                 '</span><span class="p">(</span><span class="s2">"melpa"</span> <span class="o">.</span> <span class="s2">"http://melpa.org/packages/"</span><span class="p">))</span></code></pre></figure>
-
-<p>To make that take effect, either evaluate that elisp expression or restart Emacs.</p>
-
-<p>Then use M-x package-list-packages, select neotree from the list by pressing i, then press x to execute the changes. At that point, the package will be installed.</p>
-
-<p>Source</p>
-
-<p>Clone project:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">cd</span> <span class="sr">/some/</span><span class="n">path</span>
-<span class="err">$</span> <span class="n">git</span> <span class="nb">clone</span> <span class="n">https</span><span class="ss">:/</span><span class="o">/</span><span class="n">github</span><span class="p">.</span><span class="nf">com</span><span class="o">/</span><span class="n">jaypei</span><span class="o">/</span><span class="n">emacs</span><span class="o">-</span><span class="n">neotree</span><span class="p">.</span><span class="nf">git</span> <span class="n">neotree</span>
-<span class="err">$</span> <span class="n">cd</span> <span class="n">neotree</span>
-<span class="err">$</span> <span class="n">git</span> <span class="n">checkout</span> <span class="n">dev</span></code></pre></figure>
-
-<p>Add config to emacs:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">(</span><span class="n">add</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">list</span> <span class="s1">'load-path "/some/path/neotree")
-(require '</span><span class="n">neotree</span><span class="p">)</span>
-<span class="p">(</span><span class="n">global</span><span class="o">-</span><span class="n">set</span><span class="o">-</span><span class="n">key</span> <span class="p">[</span><span class="n">f12</span><span class="p">]</span> <span class="err">'</span><span class="n">neotree</span><span class="o">-</span><span class="n">toggle</span><span class="p">)</span></code></pre></figure>
-
-<p>Open (toggle) NeoTree:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="no">F12</span><span class="o">&gt;</span></code></pre></figure>
-
-<p>Screenshots</p>
-
-<!-- _include/neotree.html -->
-
-<div class="image-wrapper">
-  
-    <img src="http://localhost:3000/images/neotree-1.png" alt="emacs-neotree" />
-    
-  
-  <p class="image-caption">emacs-neotree is running!</p>
-  
-</div>
 
 
   </div>
