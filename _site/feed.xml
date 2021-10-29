@@ -6,8 +6,8 @@
 </description>
     <link>http://localhost:3000/</link>
     <atom:link href="http://localhost:3000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 29 Oct 2021 00:27:33 -0300</pubDate>
-    <lastBuildDate>Fri, 29 Oct 2021 00:27:33 -0300</lastBuildDate>
+    <pubDate>Fri, 29 Oct 2021 00:34:26 -0300</pubDate>
+    <lastBuildDate>Fri, 29 Oct 2021 00:34:26 -0300</lastBuildDate>
     <generator>Jekyll v3.3.1</generator>
     
       <item>
@@ -85,6 +85,14 @@
         &lt;span class=&quot;n&quot;&gt;fmt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Println&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ae&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;prob&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;go&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;run&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;errors&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;go&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;f1&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;worked: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;f1&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;failed: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;can&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'t work with 42
+f2 worked: 10
+f2 failed: 42 - can'&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;work&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;it&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;42&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;can&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;work&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;it&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;See this &lt;a href=&quot;http://blog.golang.org/2011/07/error-handling-and-go.html&quot;&gt;great pos&lt;/a&gt;t on the Go blog for more on error handling.&lt;/p&gt;
 </description>
