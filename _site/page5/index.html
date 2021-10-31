@@ -84,6 +84,28 @@
   <script id="dsq-count-scr" src="//tinixgit.disqus.com/count.js" async></script>
 
 
+  <h1><a href="/jekyll/2017/06/07/A-silly-idea-to-compare-jekyll-vs-octopress.html">A silly idea to compare Jekyll vs Octopress</a></h1>
+  <p class="author">
+    <span class="date">2017-06-07 11:16:07 -0300</span>
+  </p>
+  <div class="content">
+    <p>Before switching to Jekyll, I tried out Octopress, a blogging framework built on top of Jekyll….
+I was really surprised to find out how much I disliked the experience with Octopress.
+I had an impression that it is a hacker friendly, simple and extensible blog platform, but it was the opposite of that. There are many layers of abstraction, themes are pretty complicated, it comes with many … pre-installed plugins out of the box, dozen depedencies (ruby gems), it uses Sass by default and so on. A fresh copy of Octopress blog consists of staggering 29 directories and 144 files it’s too much..!!</p>
+
+<p>Octopress works almost ok if you are willing to invest plenty of time to customize it or need to build something complex, but it wasn’t my particular use case. The complexity of Octopress defeats the whole purpose of a simple, generated static site. But you know what is “hacker friendly, simple and extensible blog platform”? That’s Jekyll! Jekyll is dead simple and practical. It was a pleasure to setup and customize the default theme. It took less than an hour to have a fully customized blog just the way I wanted. So I am staying with Jekyll this time. The directory structure is really simple and you start with the bare essentials, a simple layout and a CSS file. That’s it!</p>
+
+<p>I tend to prefer simplicity and unix-like philosophy when it comes to choose every day tools for specific tasks. I can always extend, build and combine on top of that, when the time comes.</p>
+
+<p>you can install jekyll with a simple command :</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">gem</span> <span class="n">install</span> <span class="n">jekyll</span></code></pre></figure>
+
+<p>Check out the <a href="http://jekyllrb.com/docs/home">Jekyll docs</a> for more info on how to get the most out of Jekyll. File all bugs/feature requests at <a href="https://github.com/jekyll/jekyll">Jekyll’s GitHub repo</a>. If you have questions, you can ask them on <a href="https://talk.jekyllrb.com/">Jekyll Talk</a>.</p>
+
+
+  </div>
+
   <h1><a href="/git/2017/01/27/viewing-the-git-log.html">Viewing the Git log</a></h1>
   <p class="author">
     <span class="date">2017-01-27 11:52:19 -0300</span>
@@ -216,42 +238,6 @@ I’m sorry I explain wrong, now I understand,
 I get the original source code
 should ask the company and then compile
 the company currently has packages running for mac, windows and linux, but not for FreeBSD</p>
-
-  </div>
-
-  <h1><a href="/jekyll,/freebsd,/gemsrubygems,/libv8/2016/03/12/problem-solved-with-gem-install-libv8-on-FreeBSD-10.2.html">Problem solved with gem install libv8 on FreeBSD 10.2</a></h1>
-  <p class="author">
-    <span class="date">2016-03-12 15:22:25 -0300</span>
-  </p>
-  <div class="content">
-    <p>This is the output of running the command ‘gem install libv8’:</p>
-
-<p>the result is :
-…….
-An error occurred while installing libv8 (3.16.14.13), and Bundler cannot continue.
-Make sure that <code class="highlighter-rouge">gem install libv8 -v ‘3.16.14.13’</code> succeeds before bundling.</p>
-
-<p>problem solved :</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">sudo</span> <span class="n">gem</span> <span class="n">install</span> <span class="n">libv8</span> <span class="o">-</span><span class="n">v</span> <span class="s1">'3.16.14.13'</span> <span class="o">--</span> <span class="o">--</span><span class="n">with</span><span class="o">-</span><span class="nb">system</span><span class="o">-</span><span class="n">v8</span></code></pre></figure>
-
-<p>then</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">Building</span> <span class="n">native</span> <span class="n">extensions</span> <span class="ss">with: </span><span class="s1">'--with-system-v8'</span>
-<span class="no">This</span> <span class="n">could</span> <span class="n">take</span> <span class="n">a</span> <span class="k">while</span><span class="p">.</span><span class="nf">.</span><span class="o">.</span>
-<span class="no">Successfully</span> <span class="n">installed</span> <span class="n">libv8</span><span class="o">-</span><span class="mi">3</span><span class="o">.</span><span class="mi">16</span><span class="o">.</span><span class="mi">14</span><span class="o">.</span><span class="mi">13</span>
-<span class="no">Parsing</span> <span class="n">documentation</span> <span class="k">for</span> <span class="n">libv8</span><span class="o">-</span><span class="mi">3</span><span class="o">.</span><span class="mi">16</span><span class="o">.</span><span class="mi">14</span><span class="o">.</span><span class="mi">13</span>
-<span class="no">Installing</span> <span class="n">ri</span> <span class="n">documentation</span> <span class="k">for</span> <span class="n">libv8</span><span class="o">-</span><span class="mi">3</span><span class="o">.</span><span class="mi">16</span><span class="o">.</span><span class="mi">14</span><span class="o">.</span><span class="mi">13</span>
-<span class="no">Done</span> <span class="n">installing</span> <span class="n">documentation</span> <span class="k">for</span> <span class="n">libv8</span> <span class="n">after</span> <span class="mi">1</span> <span class="n">seconds</span>
-<span class="mi">1</span> <span class="n">gem</span> <span class="n">installed</span></code></pre></figure>
-
-<p>and finally again running …bundle install</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="vg">$bundle</span> <span class="n">install</span></code></pre></figure>
-
-<p>Hope that helps!</p>
-
-<p>cheers Tinix!</p>
 
   </div>
 

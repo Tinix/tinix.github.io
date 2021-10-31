@@ -84,6 +84,69 @@
   <script id="dsq-count-scr" src="//tinixgit.disqus.com/count.js" async></script>
 
 
+  <h1><a href="/ruby/2021/10/31/ruby-equality-tests.html">Ruby Equality tests</a></h1>
+  <p class="author">
+    <span class="date">2021-10-31 19:21:59 -0300</span>
+  </p>
+  <div class="content">
+    <p>The Object class defines three equality-test methods: ==, eql?, and equal?. At the Object level, all equality-test methods do the same thing: they tell you whether two
+objects are exactly the same object. Here they are in action:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="no">Object</span><span class="p">.</span><span class="nf">new</span>
+<span class="o">=&gt;</span> <span class="c1">#&lt;Object:0x00000101258af8&gt;</span>
+<span class="o">&gt;&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="no">Object</span><span class="p">.</span><span class="nf">new</span>
+<span class="o">=&gt;</span> <span class="c1">#&lt;Object:0x00000101251d70&gt;</span>
+<span class="o">&gt;&gt;</span> <span class="n">a</span> <span class="o">==</span> <span class="n">a</span>
+<span class="o">=&gt;</span> <span class="kp">true</span>
+<span class="o">&gt;&gt;</span> <span class="n">a</span> <span class="o">==</span> <span class="n">b</span>
+<span class="o">=&gt;</span> <span class="kp">false</span>
+<span class="o">&gt;&gt;</span> <span class="n">a</span> <span class="o">!=</span> <span class="n">b</span>
+<span class="o">=&gt;</span> <span class="kp">true</span>
+<span class="o">&gt;&gt;</span> <span class="n">a</span><span class="p">.</span><span class="nf">eql?</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="o">=&gt;</span> <span class="kp">true</span>
+<span class="o">&gt;&gt;</span> <span class="n">a</span><span class="p">.</span><span class="nf">eql?</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="o">=&gt;</span> <span class="kp">false</span>
+<span class="o">&gt;&gt;</span> <span class="n">a</span><span class="p">.</span><span class="nf">equal?</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="o">=&gt;</span> <span class="kp">true</span>
+<span class="o">&gt;&gt;</span> <span class="n">a</span><span class="p">.</span><span class="nf">equal?</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="o">=&gt;</span> <span class="kp">false</span></code></pre></figure>
+
+<p>All three of the positive equality-test methods give the same results in these examples: 
+when you test a against a, the result is true, and when you test a against b, the result is false. (The not-equal or negative equality test method != is the inverse of the ==
+method; in fact, if you define ==, your objects will automatically have the != method.)
+We have plenty of ways to establish that a is a but not b.</p>
+
+<h5 id="but-there-isnt-much-point-in-having-three-tests-that-do-the-same-thing">But there isn’t much point in having three tests that do the same thing.</h5>
+<p>Further down the road, in classes other than Object, == and/or eql? are typically redefined to do meaningful work for different objects. For example, String redefines == and eql? to return whether the value of the strings being compared are identical. Two strings
+can have the same value but in fact be different objects. The equal? method retains its Object definition and checks if two strings are exactly the same object. Let’s look at string equality in action:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&gt;&gt;</span> <span class="n">string1</span> <span class="o">=</span> <span class="s2">"text"</span>
+<span class="o">=&gt;</span> <span class="s2">"text"</span>
+<span class="o">&gt;&gt;</span> <span class="n">string2</span> <span class="o">=</span> <span class="s2">"text"</span>
+<span class="o">=&gt;</span> <span class="s2">"text"</span>
+<span class="o">&gt;&gt;</span> <span class="n">string1</span> <span class="o">==</span> <span class="n">string2</span>
+<span class="o">=&gt;</span> <span class="kp">true</span>
+<span class="o">&gt;&gt;</span> <span class="n">string1</span><span class="p">.</span><span class="nf">eql?</span><span class="p">(</span><span class="n">string2</span><span class="p">)</span>
+<span class="o">=&gt;</span> <span class="kp">true</span>
+<span class="o">&gt;&gt;</span> <span class="n">string1</span><span class="p">.</span><span class="nf">equal?</span><span class="p">(</span><span class="n">string2</span><span class="p">)</span>
+<span class="o">=&gt;</span> <span class="kp">false</span></code></pre></figure>
+
+<p>As you can see, the strings are == and eql?, but not equal?. Ruby recommends against redefining equal? so that it can always be used to determine object identity.</p>
+
+<p>Why do we have == and eql? if they’re synonymous at the Object level? Because it gives us more flexibility as we subclass Object. Because we don’t redefine equal?, we
+have the option to redefine either == or eql? and compare objects in different ways.</p>
+
+<p>For example, in the Numeric class (a superclass of Integer and Float), == performs type conversion before making a comparison but eql? doesn’t:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&gt;&gt;</span> <span class="mi">5</span> <span class="o">==</span> <span class="mi">5</span><span class="o">.</span><span class="mi">0</span>
+<span class="o">=&gt;</span> <span class="kp">true</span>
+<span class="o">&gt;&gt;</span> <span class="mi">5</span><span class="p">.</span><span class="nf">eql?</span> <span class="mi">5</span><span class="o">.</span><span class="mi">0</span>
+<span class="o">=&gt;</span> <span class="kp">false</span></code></pre></figure>
+
+<p>Ruby gives you a suite of tools for object comparisons, and not always just comparison for equality.</p>
+
+  </div>
+
   <h1><a href="/ruby/2021/10/31/ruby-rails-remember-a-method-name.html">Ruby remember a method name</a></h1>
   <p class="author">
     <span class="date">2021-10-31 01:19:49 -0300</span>
@@ -522,78 +585,6 @@ So…</p>
 <p>Now it’s your turn to put this into practice by writing some code.</p>
 
 <p>Thanks for reading!</p>
-
-<hr />
-
-  </div>
-
-  <h1><a href="/docker/2020/02/19/install-docker-on-ubuntu-1810.html">Install Docker on Ubuntu 18.10</a></h1>
-  <p class="author">
-    <span class="date">2020-02-19 00:22:50 -0300</span>
-  </p>
-  <div class="content">
-    <p><img src="http://localhost:3000/images/instalar-docker-en-Ubuntu.jpg" alt="useful image" /></p>
-<h2 id="lets-install-docker">let’s install Docker</h2>
-<p>Step 1: Update Local Database
-Update the local database with the command:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span></code></pre></figure>
-
-<p>Step 2: Download Dependencies
-You’ll need to run these commands to allow your operating system to access the Docker repositories over HTTPS.</p>
-
-<p>In the terminal window, type:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">tinix</span><span class="vi">@yandex</span><span class="ss">:/</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">apt</span><span class="o">-</span><span class="n">transport</span><span class="o">-</span><span class="n">https</span> <span class="n">ca</span><span class="o">-</span><span class="n">certificates</span> <span class="n">curl</span> <span class="n">software</span><span class="o">-</span><span class="n">properties</span><span class="o">-</span><span class="n">common</span></code></pre></figure>
-
-<p>To clarify, here’s a brief breakdown of each command:</p>
-
-<ul>
-  <li>apt-transport-https: Allows the package manager to transfer files and data over https</li>
-  <li>ca-certificates: Allows the system (and web browser) to check security certificates</li>
-  <li>curl: This is a tool for transferring data</li>
-  <li>software-properties-common: Adds scripts for managing software</li>
-</ul>
-
-<p>Step 3: Add Docker’s GPG Key
-The GPG key is a security feature.</p>
-
-<p>To ensure that the software you’re installing is authentic, enter:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">tinix</span><span class="vi">@yandex</span><span class="ss">:/</span><span class="err">$</span> <span class="n">curl</span> <span class="o">-</span><span class="n">fsSL</span> <span class="n">https</span><span class="ss">:/</span><span class="o">/</span><span class="n">download</span><span class="p">.</span><span class="nf">docker</span><span class="p">.</span><span class="nf">com</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">ubuntu</span><span class="o">/</span><span class="n">gpg</span> <span class="o">|</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">key</span> <span class="n">add</span> <span class="o">-</span></code></pre></figure>
-
-<h1 id="add-the-repository">Add the repository</h1>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">tinix</span><span class="vi">@yandex</span><span class="ss">:/</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">add</span><span class="o">-</span><span class="n">apt</span><span class="o">-</span><span class="n">repository</span> <span class="s2">"deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"</span></code></pre></figure>
-
-<h1 id="update-again">Update again</h1>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">tinix</span><span class="vi">@yandex</span><span class="ss">:/</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span></code></pre></figure>
-
-<h1 id="install-docker">install docker</h1>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"> <span class="n">tinix</span><span class="vi">@yandex</span><span class="ss">:/</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">docker</span><span class="o">-</span><span class="n">ce</span></code></pre></figure>
-
-<h1 id="start-with-the-system">start with the system</h1>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">tinix</span><span class="vi">@yandex</span><span class="ss">:/</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">enable</span> <span class="n">docker</span></code></pre></figure>
-
-<h1 id="add-new-user">add new user</h1>
-<p>for example check you user</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">tinix</span><span class="vi">@yandex</span><span class="ss">:/</span><span class="err">$</span> <span class="n">whoami</span>
-<span class="n">tinix</span>
-<span class="err">$</span> <span class="n">sudo</span> <span class="n">usermod</span> <span class="o">-</span><span class="n">aG</span> <span class="n">docker</span> <span class="n">tinix</span></code></pre></figure>
-
-<h1 id="leave-session">leave session</h1>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">tinix</span><span class="vi">@yandex</span><span class="ss">:/</span><span class="err">$</span> <span class="nb">exit</span></code></pre></figure>
-
-<h1 id="start-again-with-the-new-user-and-check">start again with the new user and check</h1>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">tinix</span><span class="vi">@yandex</span><span class="ss">:/</span><span class="err">$</span> <span class="n">docker</span> <span class="n">run</span> <span class="n">hello</span><span class="o">-</span><span class="n">world</span></code></pre></figure>
-
-<p>that’s all folks..!!</p>
 
 <hr />
 
