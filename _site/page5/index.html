@@ -84,6 +84,30 @@
   <script id="dsq-count-scr" src="//tinixgit.disqus.com/count.js" async></script>
 
 
+  <h1><a href="/git/2017/01/27/viewing-the-git-log.html">Viewing the Git log</a></h1>
+  <p class="author">
+    <span class="date">2017-01-27 11:52:19 -0300</span>
+  </p>
+  <div class="content">
+    <p>This list isn’t complete, but the commands shown here are the handful that I use on a day-to-day basis. They should all work in a recent version of git on Linux or macOS (I don’t have access to a Windows computer anymore, but if you know something I don’t, please leave a comment and I’ll amend this article).</p>
+
+<ul>
+  <li><strong><code class="highlighter-rouge">git log</code></strong>: On its own, <code class="highlighter-rouge">git log</code> displays a list of commits and their commit messages in reverse chronological order (most recent commits at the top).</li>
+  <li><strong><code class="highlighter-rouge">git log --reverse</code></strong>: Display the output in reverse, so the earliest commits appear at the top of the output.</li>
+  <li><strong><code class="highlighter-rouge">git log --oneline</code></strong>: Passing <code class="highlighter-rouge">--oneline</code> results in a terse, two-column list of commit titles and SHA identifiers.</li>
+  <li><strong><code class="highlighter-rouge">git log -p</code></strong>: Passing the <code class="highlighter-rouge">-p</code> flag adds a full patch, or diff, to each commit–the code you added and removed.</li>
+  <li><strong><code class="highlighter-rouge">git log -p &lt;filename&gt;</code></strong>: Passing a file name restricts log output to changes to that file (for example, <code class="highlighter-rouge">git log -p app/models/user.rb</code>). You can remove the <code class="highlighter-rouge">-p</code> flag if you don’t care about the code changes in each commit, or use <code class="highlighter-rouge">--oneline</code> instead to get a quick list. I find that I’m almost always interested in the actual code changes, though. If there’s a chance that git could confuse the filename for a branch name, include <code class="highlighter-rouge">--</code> to disambiguate (<code class="highlighter-rouge">git log -p -- app/models/user.rb</code>).</li>
+  <li><strong><code class="highlighter-rouge">git log -p -S &lt;query&gt;</code></strong>: Use the <code class="highlighter-rouge">-S</code> flag (also known as the <em>git pickaxe</em>) along with a search term to restrict log output to code changes matching the search (for example, <code class="highlighter-rouge">git log -p -S password</code>). Again, this will work without <code class="highlighter-rouge">-p</code>, or with <code class="highlighter-rouge">--oneline</code>, but this is how I typically use it.</li>
+  <li><strong><code class="highlighter-rouge">git log -p --grep &lt;query&gt;</code></strong>: The <code class="highlighter-rouge">--grep</code> flag searches only the commit messages for the provided query. Wrap the query in quotes if it contains spaces. (You and your team are hopefully <a href="http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html">writing useful commit messages</a>!)</li>
+  <li><strong><code class="highlighter-rouge">git log &lt;commit1&gt;..&lt;commit2&gt;</code></strong>: Restrict output to only the differences between two specific commits by passing them with a <code class="highlighter-rouge">..</code> (and no spaces) between them. This works with SHA identifiers (<code class="highlighter-rouge">git log 660bfa2..922b5d2</code>) as well as branch names (<code class="highlighter-rouge">git log rails-4.1..rails-4.2</code>). Leave either side blank to imply the current branch (<code class="highlighter-rouge">git log rails-4.2..</code>). Use with <code class="highlighter-rouge">-p</code>, <code class="highlighter-rouge">-S</code>, and <code class="highlighter-rouge">--grep</code> as outlined above to filter the results further.</li>
+  <li><strong><code class="highlighter-rouge">git log --stat</code></strong>: Add a brief list of the files that were altered in each commit, with a count of lines that were added or removed. As you may have guessed by now, <code class="highlighter-rouge">--stat</code> can be used alongside the other flags listed here to narrow results.</li>
+  <li><strong><code class="highlighter-rouge">git log --no-merges</code></strong>: Omit merge commits from the log output (use <code class="highlighter-rouge">--merges</code> to show <em>only</em> merge commits). I don’t use these as often.</li>
+</ul>
+
+<p>As I mentioned, this is just a list of the tools I use most often to look at the git log. If you want to learn more, Atlassian’s article on <a href="https://www.atlassian.com/git/tutorials/git-log">advanced git logging</a> is a great next step.</p>
+
+  </div>
+
   <h1><a href="/emacs,%20freebsd/2016/04/09/projectile-makes-your-emacs-very-fast.html">Projectile makes your Emacs very fast!</a></h1>
   <p class="author">
     <span class="date">2016-04-09 12:49:07 -0300</span>
@@ -228,18 +252,6 @@ Make sure that <code class="highlighter-rouge">gem install libv8 -v ‘3.16.14.1
 <p>Hope that helps!</p>
 
 <p>cheers Tinix!</p>
-
-  </div>
-
-  <h1><a href="/jekyll/update/2016/03/12/jekyll-start.html">Jekyll start</a></h1>
-  <p class="author">
-    <span class="date">2016-03-12 15:22:25 -0300</span>
-  </p>
-  <div class="content">
-    <p>starting with Jekyll and quickly writing some code to work, not much time is insufficient to afford to have a blog ..
-Jekyll is very siemple and its code is not so far clean ..is ..
-NEXT see how the next post</p>
-
 
   </div>
 

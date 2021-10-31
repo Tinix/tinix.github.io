@@ -6,9 +6,68 @@
 </description>
     <link>http://localhost:3000/</link>
     <atom:link href="http://localhost:3000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 29 Oct 2021 00:34:26 -0300</pubDate>
-    <lastBuildDate>Fri, 29 Oct 2021 00:34:26 -0300</lastBuildDate>
+    <pubDate>Sun, 31 Oct 2021 01:45:57 -0300</pubDate>
+    <lastBuildDate>Sun, 31 Oct 2021 01:45:57 -0300</lastBuildDate>
     <generator>Jekyll v3.3.1</generator>
+    
+      <item>
+        <title>Ruby remember a method name</title>
+        <description>&lt;p&gt;Trying to remember a method name or just discover what you can call on an object? Ruby has you covered! Check out examples below&lt;/p&gt;
+
+&lt;h4 id=&quot;list-all-methods&quot;&gt;List all methods&lt;/h4&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;no&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;methods&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h4 id=&quot;list-all-direct-methods-except-object-class-methods&quot;&gt;List all direct methods except Object class methods&lt;/h4&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;no&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;methods&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;methods&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h4 id=&quot;list-all-direct-methods--not-comming-from-a-parent-class-&quot;&gt;List all direct methods ( not comming from a parent class )&lt;/h4&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;no&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;methods&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h4 id=&quot;list-all-instance-methods&quot;&gt;List all instance methods&lt;/h4&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;no&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;instance_methods&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h4 id=&quot;list-all-direct-instance-methods&quot;&gt;List all direct instance methods&lt;/h4&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;no&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;instance_methods&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h4 id=&quot;list-all-methods-and-then-grep-on-them&quot;&gt;List all methods and then grep on them&lt;/h4&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;no&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;methods&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;grep&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/find/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:find_for_database_authentication&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+ &lt;span class=&quot;ss&quot;&gt;:find_for_authentication&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+ &lt;span class=&quot;ss&quot;&gt;:find_first_by_auth_conditions&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+ &lt;span class=&quot;ss&quot;&gt;:find_or_initialize_with_error_by&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+ &lt;span class=&quot;ss&quot;&gt;:find_or_initialize_with_errors&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+ &lt;span class=&quot;ss&quot;&gt;:_find_callbacks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+ &lt;span class=&quot;ss&quot;&gt;:_find_callbacks&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+ &lt;span class=&quot;ss&quot;&gt;:after_find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+ &lt;span class=&quot;ss&quot;&gt;:finder_needs_type_condition?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+ &lt;span class=&quot;ss&quot;&gt;:find_by!&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+ &lt;span class=&quot;ss&quot;&gt;:cached_find_by_statement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+ &lt;span class=&quot;ss&quot;&gt;:find_by&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+ &lt;span class=&quot;ss&quot;&gt;:initialize_find_by_cache&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+ &lt;span class=&quot;ss&quot;&gt;:find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+ &lt;span class=&quot;ss&quot;&gt;:find_or_create_by&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+ &lt;span class=&quot;ss&quot;&gt;:find_or_create_by!&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+ &lt;span class=&quot;ss&quot;&gt;:find_or_initialize_by&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+ &lt;span class=&quot;ss&quot;&gt;:create_or_find_by&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+ &lt;span class=&quot;ss&quot;&gt;:create_or_find_by!&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+ &lt;span class=&quot;ss&quot;&gt;:find_each&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+ &lt;span class=&quot;ss&quot;&gt;:find_in_batches&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+ &lt;span class=&quot;ss&quot;&gt;:find_by_sql&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+</description>
+        <pubDate>Sun, 31 Oct 2021 01:19:49 -0300</pubDate>
+        <link>http://localhost:3000/ruby/2021/10/31/ruby-rails-remember-a-method-name.html</link>
+        <guid isPermaLink="true">http://localhost:3000/ruby/2021/10/31/ruby-rails-remember-a-method-name.html</guid>
+        
+        
+        <category>ruby</category>
+        
+      </item>
     
       <item>
         <title>Go Errors</title>
@@ -106,7 +165,7 @@ f2 failed: 42 - can'&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt; 
       </item>
     
       <item>
-        <title>What is Proc</title>
+        <title>What is Proc in Ruby</title>
         <description>&lt;p&gt;A Proc object is an encapsulation of a block of code, which can be stored in a local variable, passed to a method or another Proc, and can be called. Proc is an essential concept in Ruby and a core of its functional programming features.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;square&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Proc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
@@ -786,72 +845,6 @@ To install or update nvm, you can use the install script using cURL:&lt;/p&gt;
         
         
         <category>npm</category>
-        
-      </item>
-    
-      <item>
-        <title>Ruby for Rails: Blocks</title>
-        <description>&lt;p&gt;This post is the first in a series of blog posts about Ruby for Rails beginners. These are specifically for Rails developers who want to solidify their grasp of the Ruby language.&lt;/p&gt;
-
-&lt;p&gt;More than a decade ago, I started learning Rails before I knew any Ruby. Rails is written in Ruby of course, so when writing Rails code you are writing Ruby code. But at the beginning, I didn’t fully understand how Ruby worked. And that’s fine. A lot of people started learning Rails and picked up Ruby along the way.&lt;/p&gt;
-
-&lt;p&gt;The “Ruby for Rails” series will help you learn Ruby to make you a better Rails programmer.&lt;/p&gt;
-
-&lt;p&gt;In this blog post, we’ll talk about blocks. Ruby blocks can be confusing to beginners but it’s important that you learn them because you’ll keep on using them on your Rails application.&lt;/p&gt;
-
-&lt;p&gt;One of the first code you’ll see with blocks is with loops.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;each&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
-  &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;The block is inside &lt;strong style=&quot;color: #C00;&quot;&gt;do&lt;/strong&gt; and &lt;strong style=&quot;color: #C00;&quot;&gt;end&lt;/strong&gt;. This code displays the numbers 1 to 10. When you read it, it kind of makes sense. From 1 to 10, for each i, puts i. If you have experience with other programming languages, you might think this is just a more complicated way to do loops.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong style=&quot;color: #C00;&quot;&gt;each&lt;/strong&gt; isn’t only for numbers. You can also iterate through an array.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Alice&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Bob&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Eve&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;each&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
-  &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;This code iterates through each element and prints the name. In Rails, you commonly use each when iterating through your model.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;no&quot;&gt;Post&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;all&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;each&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
-  &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;title&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Say you have a Post model with a title. When you call  &lt;strong style=&quot;color: #C00;&quot;&gt;each&lt;/strong&gt;  on  &lt;strong style=&quot;color: #C00;&quot;&gt;Post.all&lt;/strong&gt; , you iterate on each of those posts and the value is assigned to **post **which is inside  &lt;code class=&quot;highlighter-rouge&quot;&gt;||&lt;/code&gt; . Since &lt;strong style=&quot;color: #C00;&quot;&gt;post&lt;/strong&gt;  is a Post object, you can call  &lt;strong style=&quot;color: #C00;&quot;&gt;post.title&lt;/strong&gt;  inside the block.&lt;/p&gt;
-
-&lt;p&gt;The examples so far show that blocks can be used to iterate through some objects. But the iteration is a by product of the &lt;strong style=&quot;color: #C00;&quot;&gt;each&lt;/strong&gt; method. Blocks aren’t just for iteration. Here’s another common code in Rails.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sx&quot;&gt;%= form_with Post.new do |form| %&amp;gt;
-  &amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;form&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;text_field&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:title&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sx&quot;&gt;%= form.text_area :body %&amp;gt;
-&amp;lt;% end %&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;table&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;We use &lt;strong style=&quot;color: #C00;&quot;&gt;&amp;lt;%%&amp;gt;&lt;/strong&gt;  because this code appears on ERB templates. form_with is used to display an HTML form. Here, we call the &lt;strong style=&quot;color: #C00;&quot;&gt;form_with&lt;/strong&gt; method and passes the Post.new parameter. form_with yields an object which we assign to form. You can use any variable inside&lt;/td&gt;
-      &lt;td&gt; &lt;/td&gt;
-      &lt;td&gt;. We could have used f here instead of form.&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;In the examples above that used each, we yield each of the objects we’re iterating through. In form_with, we yield exactly one object which is the FormBuilder associated with the model. Inside the block you can use FormBuilder’s methods to generate fields like &lt;strong style=&quot;color: #C00;&quot;&gt;text_field, text_area, check_box, button,&lt;/strong&gt;  etc.&lt;/p&gt;
-
-&lt;p&gt;All the fields inside the block are captured and displayed inside the HTML &lt;strong style=&quot;color: #C00;&quot;&gt;form&lt;/strong&gt;  element.&lt;/p&gt;
-
-&lt;p&gt;These are just a few examples of blocks. You’ll see more when writing Rails code. So don’t get blocked out when coding!&lt;/p&gt;
-
-&lt;p&gt;I’d like this… original post by &lt;a href=&quot;https://www.engineyard.com/blog/ruby-for-rails-blocks&quot;&gt;https://www.engineyard.com/blog/ruby-for-rails-blocks&lt;/a&gt;&lt;/p&gt;
-</description>
-        <pubDate>Tue, 30 Jan 2018 12:06:31 -0300</pubDate>
-        <link>http://localhost:3000/ruby/2018/01/30/ruby-for-rails-blocks.html</link>
-        <guid isPermaLink="true">http://localhost:3000/ruby/2018/01/30/ruby-for-rails-blocks.html</guid>
-        
-        
-        <category>ruby</category>
         
       </item>
     

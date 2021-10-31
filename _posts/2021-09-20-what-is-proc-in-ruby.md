@@ -1,5 +1,5 @@
 ---
-title: What is Proc
+title: What is Proc in Ruby
 layout: post
 date: '2021-09-20 20:39:07'
 categories: ruby

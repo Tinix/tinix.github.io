@@ -9,11 +9,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Tinix&#39;s different point of view.</title>
-  <meta name="description" content="Also known as Tinix , Degree in Computer Science FaMAF,Writer Software, Math Fan, Ruby , Python, Elixir FreeBSD, I like have Mate, 4 lang​​, but all that means almost nothing..
-">
+  <title>Ruby remember a method name</title>
+  <meta name="description" content="Trying to remember a method name or just discover what you can call on an object? Ruby has you covered! Check out examples below">
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://localhost:3000/page6/">
+  <link rel="canonical" href="http://localhost:3000/ruby/2021/10/31/ruby-rails-remember-a-method-name.html">
   <link rel="alternate" type="application/rss+xml" title="Tinix&#39;s different point of view." href="http://localhost:3000/feed.xml">
 </head>
 
@@ -71,95 +70,93 @@
 
     <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Ruby remember a method name</h1>
+  </header>
 
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<!-- This loops through the paginated posts -->
+  <div class="post-content" itemprop="articleBody">
+    <p>Trying to remember a method name or just discover what you can call on an object? Ruby has you covered! Check out examples below</p>
 
-  <script id="dsq-count-scr" src="//tinixgit.disqus.com/count.js" async></script>
+<h4 id="list-all-methods">List all methods</h4>
 
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">User</span><span class="p">.</span><span class="nf">methods</span></code></pre></figure>
 
-  <h1><a href="/jekyll/update/2016/03/12/jekyll-start.html">Jekyll start</a></h1>
-  <p class="author">
-    <span class="date">2016-03-12 15:22:25 -0300</span>
-  </p>
-  <div class="content">
-    <p>starting with Jekyll and quickly writing some code to work, not much time is insufficient to afford to have a blog ..
-Jekyll is very siemple and its code is not so far clean ..is ..
-NEXT see how the next post</p>
+<h4 id="list-all-direct-methods-except-object-class-methods">List all direct methods except Object class methods</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">User</span><span class="p">.</span><span class="nf">methods</span> <span class="o">-</span> <span class="no">Object</span><span class="p">.</span><span class="nf">methods</span></code></pre></figure>
+
+<h4 id="list-all-direct-methods--not-comming-from-a-parent-class-">List all direct methods ( not comming from a parent class )</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">User</span><span class="p">.</span><span class="nf">methods</span><span class="p">(</span><span class="kp">false</span><span class="p">)</span></code></pre></figure>
+
+<h4 id="list-all-instance-methods">List all instance methods</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">User</span><span class="p">.</span><span class="nf">instance_methods</span></code></pre></figure>
+
+<h4 id="list-all-direct-instance-methods">List all direct instance methods</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">User</span><span class="p">.</span><span class="nf">instance_methods</span><span class="p">(</span><span class="kp">false</span><span class="p">)</span></code></pre></figure>
+
+<h4 id="list-all-methods-and-then-grep-on-them">List all methods and then grep on them</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">User</span><span class="p">.</span><span class="nf">methods</span><span class="p">.</span><span class="nf">grep</span><span class="p">(</span><span class="sr">/find/</span><span class="p">)</span>
+<span class="o">=&gt;</span> <span class="p">[</span><span class="ss">:find_for_database_authentication</span><span class="p">,</span>
+ <span class="ss">:find_for_authentication</span><span class="p">,</span>
+ <span class="ss">:find_first_by_auth_conditions</span><span class="p">,</span>
+ <span class="ss">:find_or_initialize_with_error_by</span><span class="p">,</span>
+ <span class="ss">:find_or_initialize_with_errors</span><span class="p">,</span>
+ <span class="ss">:_find_callbacks</span><span class="p">,</span>
+ <span class="ss">:_find_callbacks</span><span class="o">=</span><span class="p">,</span>
+ <span class="ss">:after_find</span><span class="p">,</span>
+ <span class="ss">:finder_needs_type_condition?</span><span class="p">,</span>
+ <span class="ss">:find_by!</span><span class="p">,</span>
+ <span class="ss">:cached_find_by_statement</span><span class="p">,</span>
+ <span class="ss">:find_by</span><span class="p">,</span>
+ <span class="ss">:initialize_find_by_cache</span><span class="p">,</span>
+ <span class="ss">:find</span><span class="p">,</span>
+ <span class="ss">:find_or_create_by</span><span class="p">,</span>
+ <span class="ss">:find_or_create_by!</span><span class="p">,</span>
+ <span class="ss">:find_or_initialize_by</span><span class="p">,</span>
+ <span class="ss">:create_or_find_by</span><span class="p">,</span>
+ <span class="ss">:create_or_find_by!</span><span class="p">,</span>
+ <span class="ss">:find_each</span><span class="p">,</span>
+ <span class="ss">:find_in_batches</span><span class="p">,</span>
+ <span class="ss">:find_by_sql</span><span class="p">]</span></code></pre></figure>
+
+        
+<div id="disqus_thread"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+    /*
+    var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        
+        s.src = '//tinixgit.disqus.com/embed.js';
+        
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">Comments powered by Disqus.</a></noscript>
+ <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+  
+
 
 
   </div>
 
-  <h1><a href="/jekyll/update/2016/03/12/welcome-to-jekyll.html">Welcome to Jekyll!</a></h1>
-  <p class="author">
-    <span class="date">2016-03-12 12:31:25 -0300</span>
-  </p>
-  <div class="content">
-    <p>You’ll find this post in your <code class="highlighter-rouge">_posts</code> directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run <code class="highlighter-rouge">jekyll serve</code>, which launches a web server and auto-regenerates your site when a file is updated.</p>
-
-<p>To add new posts, simply add a file in the <code class="highlighter-rouge">_posts</code> directory that follows the convention <code class="highlighter-rouge">YYYY-MM-DD-name-of-post.ext</code> and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.</p>
-
-<p>Jekyll also offers powerful support for code snippets:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">print_hi</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
-  <span class="nb">puts</span> <span class="s2">"Hi, </span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">"</span>
-<span class="k">end</span>
-<span class="n">print_hi</span><span class="p">(</span><span class="s1">'Tom'</span><span class="p">)</span>
-<span class="c1">#=&gt; prints 'Hi, Tom' to STDOUT.</span></code></pre></figure>
-
-<p>Check out the <a href="http://jekyllrb.com/docs/home">Jekyll docs</a> for more info on how to get the most out of Jekyll. File all bugs/feature requests at <a href="https://github.com/jekyll/jekyll">Jekyll’s GitHub repo</a>. If you have questions, you can ask them on <a href="https://talk.jekyllrb.com/">Jekyll Talk</a>.</p>
-
-
-  </div>
-
-<br>
-<!--Pagination links  -->
-
-<div class="btn btn-default">
-  
-  <a href="/page5">&laquo; Prev</a>
-  
-
-  
-  
-  <a href="/page5">1</a>
-  
-  
-  
-  <a href="/page2">2</a>
-  
-  
-  
-  <a href="/page3">3</a>
-  
-  
-  
-  <a href="/page4">4</a>
-  
-  
-  
-  <a href="/page5">5</a>
-  
-  
-  
-  <em>6</em>
-  
-  
-
-  
-  <span>Next &raquo;</span>
-  
-</div>
-
-<br>
-<hr>
-  <p class="rss-subscribe">subscribe <a href="/feed.xml">via RSS</a></p>
+</article>
 
 
       </div>
