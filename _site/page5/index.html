@@ -84,6 +84,66 @@
   <script id="dsq-count-scr" src="//tinixgit.disqus.com/count.js" async></script>
 
 
+  <h1><a href="/ruby/2017/06/12/rvm-setting-the-default-ruby.html">RVM Setting the default Ruby</a></h1>
+  <p class="author">
+    <span class="date">2017-06-12 04:32:02 +0000</span>
+  </p>
+  <div class="content">
+    <p>If you would like to make one specific Ruby be the default ruby that is selected when you open a new terminal shell, use the –default flag:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">rvm</span> <span class="o">--</span><span class="n">default</span> <span class="n">use</span> <span class="mi">2</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">1</span>
+
+<span class="err">$</span> <span class="n">ruby</span> <span class="o">-</span><span class="n">v</span>
+
+<span class="n">ruby</span> <span class="mi">2</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">1</span><span class="n">p76</span> <span class="p">(</span><span class="mi">2014</span><span class="o">-</span><span class="mo">02</span><span class="o">-</span><span class="mi">24</span> <span class="n">revision</span> <span class="mi">45161</span><span class="p">)</span> <span class="p">[</span><span class="n">x86_64</span><span class="o">-</span><span class="n">darwin12</span><span class="o">.</span><span class="mi">0</span><span class="p">]</span></code></pre></figure>
+
+<p>The next time you open a window Ruby 2.1.1 will be the selected ruby.</p>
+
+<p>To switch back to your system ruby:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">rvm</span> <span class="n">use</span> <span class="nb">system</span>
+
+<span class="err">$</span> <span class="n">ruby</span> <span class="o">-</span><span class="n">v</span>
+
+<span class="n">ruby</span> <span class="mi">2</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">0</span><span class="n">p451</span> <span class="p">(</span><span class="mi">2014</span><span class="o">-</span><span class="mo">02</span><span class="o">-</span><span class="mi">24</span> <span class="n">revision</span> <span class="mi">45167</span><span class="p">)</span> <span class="p">[</span><span class="n">universal</span><span class="p">.</span><span class="nf">x86_64</span><span class="o">-</span><span class="n">darwin13</span><span class="p">]</span></code></pre></figure>
+
+<p>To switch at any time to the ruby you have selected as default:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">rvm</span> <span class="n">default</span>
+
+<span class="err">$</span> <span class="n">ruby</span> <span class="o">-</span><span class="n">v</span>
+
+<span class="n">ruby</span> <span class="mi">2</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">1</span><span class="n">p76</span> <span class="p">(</span><span class="mi">2014</span><span class="o">-</span><span class="mo">02</span><span class="o">-</span><span class="mi">24</span> <span class="n">revision</span> <span class="mi">45161</span><span class="p">)</span> <span class="p">[</span><span class="n">x86_64</span><span class="o">-</span><span class="n">darwin12</span><span class="o">.</span><span class="mi">0</span><span class="p">]</span></code></pre></figure>
+
+<p>To show what ruby is currently the selected default, if any, do:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">rvm</span> <span class="n">list</span>
+
+<span class="n">rvm</span> <span class="n">rubies</span>
+
+ <span class="o">*</span> <span class="n">ruby</span><span class="o">-</span><span class="mi">1</span><span class="o">.</span><span class="mi">9</span><span class="o">.</span><span class="mi">3</span><span class="o">-</span><span class="n">p484</span> <span class="p">[</span> <span class="n">x86_64</span> <span class="p">]</span>
+   <span class="n">ruby</span><span class="o">-</span><span class="mi">2</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">p481</span> <span class="p">[</span> <span class="n">x86_64</span> <span class="p">]</span>
+<span class="o">=&gt;</span> <span class="n">ruby</span><span class="o">-</span><span class="mi">2</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">1</span> <span class="p">[</span> <span class="n">x86_64</span> <span class="p">]</span>
+
+<span class="c1"># =&gt; - current</span>
+<span class="c1"># =* - current &amp;&amp; default</span>
+<span class="c1">#  * - default</span></code></pre></figure>
+
+<p>If you wish to switch back to your system ruby as default, remember that RVM does not “manage” the system ruby and is “hands off”.</p>
+
+<p>This means to set the “system” ruby as default, you reset RVM’s defaults as follows.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">rvm</span> <span class="n">reset</span></code></pre></figure>
+
+<p>Note that “default” is merely implemented as an alias with an especially significant name.</p>
+
+<p>If you encounter an error such as “RVM is not a function, selecting rubies with ‘rvm use …’ will not work.”, try using the alias action instead:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">rvm</span> <span class="k">alias</span> <span class="n">create</span> <span class="n">default</span> <span class="mi">2</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">1</span></code></pre></figure>
+
+
+  </div>
+
   <h1><a href="/jekyll/2017/06/07/A-silly-idea-to-compare-jekyll-vs-octopress.html">A silly idea to compare Jekyll vs Octopress</a></h1>
   <p class="author">
     <span class="date">2017-06-07 11:16:07 -0300</span>
@@ -205,39 +265,6 @@ Tinix!</p>
   
 </div>
 
-
-  </div>
-
-  <h1><a href="/freebsd,/jekyll/,/programming,/yandex/browser/2016/03/19/build-ports-from-package-rpm-or-deb.html">Build ports from package rpm or deb</a></h1>
-  <p class="author">
-    <span class="date">2016-03-19 00:00:00 -0300</span>
-  </p>
-  <div class="content">
-    <p>This is situation : my original bad idea is a build package Yandex Browser , actualy running for mac , windows and Linux but not for FreeBSD, these were some response of this whole project…</p>
-
-<p>Tinix asked  :
-Someone built a ports from a rpm or deb package? I have not the slightest idea, but surely someone could guide me…
-I have a project, something not finished running FreeBSD is a benefit for the whole community
-thank you very much.
-Tinix.</p>
-
-<p>Reply:
-An RPM or DEB is similar to our pkg(8). That is to say, somebody took the original, upstream, source and built an RPM or DEB binary package from it. Instead of trying to crowbar a RedHat or Debian Linux pre-compiled binary package into FreeBSD you should take the original source and create a FreeBSD pre-compiled binary pkg(8).</p>
-
-<p>other Reply:
-What do you mean saying “someone built a ports from a rpm or deb package”? New ports are created taking original source and then patching them to work on FreeBSD.
-If you want to port a new program to FreeBSD you should start from sources, not from already compiled binaries.
-Instead, if you want to install rpm or deb packages, there are both archive/rpm4 and archive/dpkg in ports. However I don’t see the point of using them, if not with linux compatibility.
-EDIT: SirDice sorry, I posted before seeing your reply :oops:</p>
-
-<p>and other reply:
-That’s how the Linux ports are built on FreeBSD. They take a .rpm or .deb (binary distribution, not source) of the software in question and extract that file to the work directory of the port and then after fixing what has to be fixed a pkg package is created from the extracted files. Take a look at for example emulators/linux_base-c6 for how it’s done.</p>
-
-<p>Tinix reply:
-I’m sorry I explain wrong, now I understand,
-I get the original source code
-should ask the company and then compile
-the company currently has packages running for mac, windows and linux, but not for FreeBSD</p>
 
   </div>
 

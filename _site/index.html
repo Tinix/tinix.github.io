@@ -84,6 +84,134 @@
   <script id="dsq-count-scr" src="//tinixgit.disqus.com/count.js" async></script>
 
 
+  <h1><a href="/elixir/2021/11/10/elixir-maps.html">Elixir  - Maps</a></h1>
+  <p class="author">
+    <span class="date">2021-11-10 18:16:18 -0300</span>
+  </p>
+  <div class="content">
+    <h2 id="maps">Maps</h2>
+<p>Whenever you need a key-value store, maps are the “go to” data structure in Elixir. A map is created using the <code class="highlighter-rouge">%{}</code> syntax:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">iex</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="sx">%{:a =&gt; 1, 2 =&gt; :b}</span>
+<span class="sx">%{2 =&gt; :b, :a =&gt; 1}</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">map</span><span class="p">[</span><span class="ss">:a</span><span class="p">]</span>
+<span class="mi">1</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">map</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="ss">:b</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">map</span><span class="p">[</span><span class="ss">:c</span><span class="p">]</span>
+<span class="kp">nil</span></code></pre></figure>
+
+<p>Compared to keyword lists, we can already see two differences:</p>
+
+<ul>
+  <li>Maps allow any value as a key.</li>
+  <li>Maps’ keys do not follow any ordering.</li>
+</ul>
+
+<p>In contrast to keyword lists, maps are very useful with pattern matching. When a map is used in a pattern, it will always match on a subset of the given value:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">iex</span><span class="o">&gt;</span> <span class="sx">%{}</span> <span class="o">=</span> <span class="sx">%{:a =&gt; 1, 2 =&gt; :b}</span>
+<span class="sx">%{2 =&gt; :b, :a =&gt; 1}</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="sx">%{:a =&gt; a}</span> <span class="o">=</span> <span class="sx">%{:a =&gt; 1, 2 =&gt; :b}</span>
+<span class="sx">%{2 =&gt; :b, :a =&gt; 1}</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">a</span>
+<span class="mi">1</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="sx">%{:c =&gt; c}</span> <span class="o">=</span> <span class="sx">%{:a =&gt; 1, 2 =&gt; :b}</span>
+<span class="o">**</span> <span class="p">(</span><span class="no">MatchError</span><span class="p">)</span> <span class="n">no</span> <span class="n">match</span> <span class="n">of</span> <span class="n">right</span> <span class="n">hand</span> <span class="n">side</span> <span class="ss">value: </span><span class="sx">%{2 =&gt; :b, :a =&gt; 1}</span></code></pre></figure>
+
+<p>As shown above, a map matches as long as the keys in the pattern exist in the given map. Therefore, an empty map matches all maps.</p>
+
+<p>Variables can be used when accessing, matching and adding map keys:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">iex</span><span class="o">&gt;</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="mi">1</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="sx">%{n =&gt; :one}</span>
+<span class="sx">%{1 =&gt; :one}</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">map</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+<span class="ss">:one</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="sx">%{^n =&gt; :one}</span> <span class="o">=</span> <span class="sx">%{1 =&gt; :one, 2 =&gt; :two, 3 =&gt; :three}</span>
+<span class="sx">%{1 =&gt; :one, 2 =&gt; :two, 3 =&gt; :three}</span></code></pre></figure>
+
+<p><a href="https://hexdocs.pm/elixir/Map.html">The Map module</a> provides a very similar API to the <code class="highlighter-rouge">Keyword</code> module with convenience functions to manipulate maps:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">iex</span><span class="o">&gt;</span> <span class="no">Map</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="sx">%{:a =&gt; 1, 2 =&gt; :b}</span><span class="p">,</span> <span class="ss">:a</span><span class="p">)</span>
+<span class="mi">1</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">Map</span><span class="p">.</span><span class="nf">put</span><span class="p">(</span><span class="sx">%{:a =&gt; 1, 2 =&gt; :b}</span><span class="p">,</span> <span class="ss">:c</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="sx">%{2 =&gt; :b, :a =&gt; 1, :c =&gt; 3}</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">Map</span><span class="p">.</span><span class="nf">to_list</span><span class="p">(</span><span class="sx">%{:a =&gt; 1, 2 =&gt; :b}</span><span class="p">)</span>
+<span class="p">[{</span><span class="mi">2</span><span class="p">,</span> <span class="ss">:b</span><span class="p">},</span> <span class="p">{</span><span class="ss">:a</span><span class="p">,</span> <span class="mi">1</span><span class="p">}]</span></code></pre></figure>
+
+<p>Maps have the following syntax for updating a key’s value:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">iex</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="sx">%{:a =&gt; 1, 2 =&gt; :b}</span>
+<span class="sx">%{2 =&gt; :b, :a =&gt; 1}</span>
+
+<span class="n">iex</span><span class="o">&gt;</span> <span class="sx">%{map | 2 =&gt; "two"}</span>
+<span class="sx">%{2 =&gt; "two", :a =&gt; 1}</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="sx">%{map | :c =&gt; 3}</span>
+<span class="o">**</span> <span class="p">(</span><span class="no">KeyError</span><span class="p">)</span> <span class="n">key</span> <span class="ss">:c</span> <span class="n">not</span> <span class="n">found</span> <span class="ss">in: </span><span class="sx">%{2 =&gt; :b, :a =&gt; 1}</span></code></pre></figure>
+
+<p>The syntax above requires the given key to exist. It cannot be used to add new keys. For example, using it with the <code class="highlighter-rouge">:c</code> key failed because there is no <code class="highlighter-rouge">:c</code> in the map.</p>
+
+<p>When all the keys in a map are atoms, you can use the keyword syntax for convenience:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">iex</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="sx">%{a: 1, b: 2}</span>
+<span class="sx">%{a: 1, b: 2}</span></code></pre></figure>
+
+<p>Another interesting property of maps is that they provide their own syntax for accessing atom keys:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">iex</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="sx">%{:a =&gt; 1, 2 =&gt; :b}</span>
+<span class="sx">%{2 =&gt; :b, :a =&gt; 1}</span>
+
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">map</span><span class="p">.</span><span class="nf">a</span>
+<span class="mi">1</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">map</span><span class="p">.</span><span class="nf">c</span>
+<span class="o">**</span> <span class="p">(</span><span class="no">KeyError</span><span class="p">)</span> <span class="n">key</span> <span class="ss">:c</span> <span class="n">not</span> <span class="n">found</span> <span class="ss">in: </span><span class="sx">%{2 =&gt; :b, :a =&gt; 1}</span></code></pre></figure>
+
+<p>Elixir developers typically prefer to use the <code class="highlighter-rouge">map.field</code> syntax and pattern matching instead of the functions in the <code class="highlighter-rouge">Map</code>  module when working with maps because they lead to an assertive style of programming. <a href="https://dashbit.co/blog/writing-assertive-code-with-elixir">This blog post by José Valim</a> provides insight and examples on how you get more concise and faster software by writing assertive code in Elixir.</p>
+
+<h3 id="nested-data-structures">Nested data structures</h3>
+
+<p>Often we will have maps inside maps, or even keywords lists inside maps, and so forth. Elixir provides conveniences for manipulating nested data structures via the <code class="highlighter-rouge">put_in/2</code> , <code class="highlighter-rouge">update_in/2</code>  and other macros giving the same conveniences you would find in imperative languages while keeping the immutable properties of the language.</p>
+
+<p>Imagine you have the following structure:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">iex</span><span class="o">&gt;</span> <span class="n">users</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="ss">john: </span><span class="sx">%{name: "John", age: 27, languages: ["Erlang", "Ruby", "Elixir"]}</span><span class="p">,</span>
+  <span class="ss">mary: </span><span class="sx">%{name: "Mary", age: 29, languages: ["Elixir", "F#", "Clojure"]}</span>
+<span class="p">]</span>
+<span class="p">[</span>
+  <span class="ss">john: </span><span class="sx">%{age: 27, languages: ["Erlang", "Ruby", "Elixir"], name: "John"}</span><span class="p">,</span>
+  <span class="ss">mary: </span><span class="sx">%{age: 29, languages: ["Elixir", "F#", "Clojure"], name: "Mary"}</span>
+<span class="p">]</span></code></pre></figure>
+
+<p>We have a keyword list of users where each value is a map containing the name, age and a list of programming languages each user likes. If we wanted to access the age for john, we could write:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">iex</span><span class="o">&gt;</span> <span class="n">users</span><span class="p">[</span><span class="ss">:john</span><span class="p">].</span><span class="nf">age</span>
+<span class="mi">27</span></code></pre></figure>
+
+<p>It happens we can also use this same syntax for updating the value:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">iex</span><span class="o">&gt;</span> <span class="n">users</span> <span class="o">=</span> <span class="n">put_in</span> <span class="n">users</span><span class="p">[</span><span class="ss">:john</span><span class="p">].</span><span class="nf">age</span><span class="p">,</span> <span class="mi">31</span>
+<span class="p">[</span>
+  <span class="ss">john: </span><span class="sx">%{age: 31, languages: ["Erlang", "Ruby", "Elixir"], name: "John"}</span><span class="p">,</span>
+  <span class="ss">mary: </span><span class="sx">%{age: 29, languages: ["Elixir", "F#", "Clojure"], name: "Mary"}</span>
+<span class="p">]</span></code></pre></figure>
+
+<p>The <code class="highlighter-rouge">update_in/2</code>  macro is similar but allows us to pass a function that controls how the value changes. For example, let’s remove “Clojure” from Mary’s list of languages:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">iex</span><span class="o">&gt;</span> <span class="n">users</span> <span class="o">=</span> <span class="n">update_in</span> <span class="n">users</span><span class="p">[</span><span class="ss">:mary</span><span class="p">].</span><span class="nf">languages</span><span class="p">,</span> <span class="n">fn</span> <span class="n">languages</span> <span class="o">-&gt;</span> <span class="no">List</span><span class="p">.</span><span class="nf">delete</span><span class="p">(</span><span class="n">languages</span><span class="p">,</span> <span class="s2">"Clojure"</span><span class="p">)</span> <span class="k">end</span>
+<span class="p">[</span>
+  <span class="ss">john: </span><span class="sx">%{age: 31, languages: ["Erlang", "Ruby", "Elixir"], name: "John"}</span><span class="p">,</span>
+  <span class="ss">mary: </span><span class="sx">%{age: 29, languages: ["Elixir", "F#"], name: "Mary"}</span>
+<span class="p">]</span></code></pre></figure>
+
+<p>There is more to learn about <code class="highlighter-rouge">put_in/2</code>  and <code class="highlighter-rouge">update_in/2</code>, including the <code class="highlighter-rouge">get_and_update_in/2</code>  that allows us to extract a value and update the data structure at once. There are also <code class="highlighter-rouge">put_in/3</code>,  <code class="highlighter-rouge">update_in/3</code>  and <code class="highlighter-rouge">get_and_update_in/3</code>  which allow dynamic access into the data structure.</p>
+
+<p>This concludes our introduction to associative data structures in Elixir. You will find out that, given keyword lists and maps, you will always have the right tool to tackle problems that require associative data structures in Elixir.</p>
+
+  </div>
+
   <h1><a href="/ruby/2021/10/31/ruby-equality-tests.html">Ruby Equality tests</a></h1>
   <p class="author">
     <span class="date">2021-10-31 19:21:59 -0300</span>
@@ -426,167 +554,6 @@ f2 failed: 42 - can'</span><span class="n">t</span> <span class="n">work</span> 
   <span class="n">def2</span><span class="p">(</span><span class="ss">:f</span><span class="p">)</span> <span class="p">{}</span>
 <span class="k">end</span>
 <span class="no">C</span><span class="p">.</span><span class="nf">new</span><span class="p">.</span><span class="nf">f</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>       <span class="c1">#=&gt; ArgumentError</span></code></pre></figure>
-
-  </div>
-
-  <h1><a href="/ruby/2020/02/25/flash-messages-in-rails.html">Flash Messages in Rails</a></h1>
-  <p class="author">
-    <span class="date">2020-02-25 00:35:08 -0300</span>
-  </p>
-  <div class="content">
-    <h1 id="what-are-flash-messages">What are flash messages?</h1>
-
-<p>A flash message is a way to communicate information with the users of your Rails application so they can know what happens as a result of their actions.</p>
-
-<p>Example messages:</p>
-
-<p>“Password changed correctly” (confirmation)
-“User not found” (error)
-You set these flash messages in your controllers, then you render them in your views. Your users can then act accordingly.</p>
-
-<p>Let’s learn exactly how this works!</p>
-
-<h1 id="how-to-use-flash-messages"><strong>How to Use Flash Messages</strong></h1>
-
-<p>You can work with these notification messages using the flash helper method.</p>
-
-<p>It behaves a lot like a Ruby hash.</p>
-
-<p>The flash object has methods like keys, any? or each &amp; you can access a particular message with [].</p>
-
-<p>What types of flash messages can you set?</p>
-
-<p>By default you have:</p>
-
-<ol>
-  <li>notice</li>
-  <li>alert</li>
-</ol>
-
-<p>Here’s an example of how to use it:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">flash</span><span class="p">.</span><span class="nf">alert</span> <span class="o">=</span> <span class="s2">"User not found."</span> </code></pre></figure>
-
-<h2 id="or-if-you-prefer">Or if you prefer:</h2>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">flash</span><span class="p">[</span><span class="ss">:alert</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"User not found."</span> </code></pre></figure>
-
-<p>(Only a style difference.)</p>
-
-<p>You can use this code inside your controller actions, like index, create, new, etc.</p>
-
-<p>Another way is this:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">redirect_to</span> <span class="ss">:books_path</span><span class="p">,</span> <span class="ss">notice: </span><span class="s2">"Book not found"</span></code></pre></figure>
-
-<p>This allows you to redirect &amp; create a flash message in one step.</p>
-
-<p>Nice!</p>
-
-<h1 id="alert-vs-notice">Alert vs Notice</h1>
-<p>As far as I understand it doesn’t really matter if you use alert or notice.</p>
-
-<p>Use the one that feels more natural for your situation.</p>
-
-<p>I like to think about alert as an error message &amp; a notice as a confirmation message.</p>
-
-<p>Separating them helps you style them differently.</p>
-
-<h1 id="for-example">For example:</h1>
-
-<p>You can show alerts in red &amp; notices in green.</p>
-
-<p>It’s also possible to create your own flash types by using the add_flash_types controller method.</p>
-
-<h1 id="like-this">Like this:</h1>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">ApplicationController</span>
-  <span class="n">add_flash_types</span> <span class="ss">:info</span><span class="p">,</span> <span class="ss">:error</span><span class="p">,</span> <span class="ss">:warning</span>
-<span class="k">end</span> </code></pre></figure>
-
-<h1 id="rendering-flash-messages">Rendering Flash Messages</h1>
-
-<p>Flash messages aren’t shown automatically.</p>
-
-<p>You have to render them inside one of your views so users can see them.</p>
-
-<p>Consider adding this to your application layout.</p>
-
-<h2 id="heres-a-code-example">Here’s a code example:</h2>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="sx">% flash.each </span><span class="k">do</span> <span class="o">|</span><span class="n">type</span><span class="p">,</span> <span class="n">msg</span><span class="o">|</span> <span class="sx">%&gt;
-  &lt;div&gt;</span>
-    <span class="o">&lt;</span><span class="sx">%= msg %&gt;
-  &lt;/div&gt;
-&lt;% end %&gt;</span></code></pre></figure>
-
-<p>Put this wherever you want to show your notice, usually at the top of the page, below the menu bar.</p>
-
-<p>Remember:</p>
-
-<p>Once you render a message it’ll be removed from flash, so it won’t be shown again.</p>
-
-<p>Styling Your Notices &amp; Alert Messages</p>
-
-<p>Flash messages don’t have any built-in design or style.</p>
-
-<p>Solution?</p>
-
-<p>If you’re using Bootstrap, you can use the “alert alert-info” CSS class to make flash messages look good.</p>
-
-<p>Example:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="sx">% flash.each </span><span class="k">do</span> <span class="o">|</span><span class="n">type</span><span class="p">,</span> <span class="n">msg</span><span class="o">|</span> <span class="sx">%&gt;
-  &lt;div class="alert alert-info"&gt;</span>
-    <span class="o">&lt;</span><span class="sx">%= msg %&gt;
-  &lt;/div&gt;
-&lt;% end %&gt;</span></code></pre></figure>
-
-<p>It looks like this:</p>
-
-<p>If you’re NOT using Bootstrap, then you can write your own CSS to make it look however you want.</p>
-
-<h1 id="when-are-flash-messages-rendered">When Are Flash Messages Rendered?</h1>
-
-<p>Flash messages are only removed on your next controller action, after your display them.</p>
-
-<p>Implications:</p>
-
-<p>If you redirect_to, then render a flash message, that’s good
-If you redirect_to &amp; DON’T render the message, the message will stick around, in the flash hash
-If you render on the same action that you’re setting the flash message, that flash message will be available, but NOT removed so it will stay around &amp; potentially be shown twice
-So…</p>
-
-<p>What if you want to set a flash message for the current action?</p>
-
-<p>That’s where flash.now comes in!</p>
-
-<p>Here’s an example:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">index</span>
-  <span class="vi">@books</span> <span class="o">=</span> <span class="no">Book</span><span class="p">.</span><span class="nf">all</span>
-
-  <span class="n">flash</span><span class="p">.</span><span class="nf">now</span><span class="p">[</span><span class="ss">:notice</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"We have exactly </span><span class="si">#{</span><span class="vi">@books</span><span class="p">.</span><span class="nf">size</span><span class="si">}</span><span class="s2"> books available."</span>
-<span class="k">end</span></code></pre></figure>
-
-<p>This will render the index view.</p>
-
-<p>The notice message will be shown &amp; removed from flash so it won’t be shown twice.</p>
-
-<p>In other words:</p>
-
-<p>You only need to use flash.now if you’re going to render instead of redirecting.</p>
-
-<h1 id="summary">Summary</h1>
-<p>You’ve learned about flash messages in Rails &amp; how to use them correctly!</p>
-
-<p>Btw, flash messages aren’t the same as validation errors. Validations are associated with the model object, and you access these validation messages with the errors method, like @user.errors.</p>
-
-<p>Now it’s your turn to put this into practice by writing some code.</p>
-
-<p>Thanks for reading!</p>
-
-<hr />
 
   </div>
 

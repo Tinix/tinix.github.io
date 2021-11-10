@@ -6,9 +6,141 @@
 </description>
     <link>http://localhost:3000/</link>
     <atom:link href="http://localhost:3000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 31 Oct 2021 19:32:29 -0300</pubDate>
-    <lastBuildDate>Sun, 31 Oct 2021 19:32:29 -0300</lastBuildDate>
+    <pubDate>Wed, 10 Nov 2021 18:37:45 -0300</pubDate>
+    <lastBuildDate>Wed, 10 Nov 2021 18:37:45 -0300</lastBuildDate>
     <generator>Jekyll v3.3.1</generator>
+    
+      <item>
+        <title>Elixir  - Maps</title>
+        <description>&lt;h2 id=&quot;maps&quot;&gt;Maps&lt;/h2&gt;
+&lt;p&gt;Whenever you need a key-value store, maps are the “go to” data structure in Elixir. A map is created using the &lt;code class=&quot;highlighter-rouge&quot;&gt;%{}&lt;/code&gt; syntax:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;iex&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;map&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sx&quot;&gt;%{:a =&amp;gt; 1, 2 =&amp;gt; :b}&lt;/span&gt;
+&lt;span class=&quot;sx&quot;&gt;%{2 =&amp;gt; :b, :a =&amp;gt; 1}&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;iex&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;iex&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;ss&quot;&gt;:b&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;iex&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;kp&quot;&gt;nil&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Compared to keyword lists, we can already see two differences:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Maps allow any value as a key.&lt;/li&gt;
+  &lt;li&gt;Maps’ keys do not follow any ordering.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;In contrast to keyword lists, maps are very useful with pattern matching. When a map is used in a pattern, it will always match on a subset of the given value:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;iex&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;sx&quot;&gt;%{}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sx&quot;&gt;%{:a =&amp;gt; 1, 2 =&amp;gt; :b}&lt;/span&gt;
+&lt;span class=&quot;sx&quot;&gt;%{2 =&amp;gt; :b, :a =&amp;gt; 1}&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;iex&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;sx&quot;&gt;%{:a =&amp;gt; a}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sx&quot;&gt;%{:a =&amp;gt; 1, 2 =&amp;gt; :b}&lt;/span&gt;
+&lt;span class=&quot;sx&quot;&gt;%{2 =&amp;gt; :b, :a =&amp;gt; 1}&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;iex&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;iex&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;sx&quot;&gt;%{:c =&amp;gt; c}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sx&quot;&gt;%{:a =&amp;gt; 1, 2 =&amp;gt; :b}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;MatchError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;no&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;match&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;of&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;right&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hand&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;side&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;value: &lt;/span&gt;&lt;span class=&quot;sx&quot;&gt;%{2 =&amp;gt; :b, :a =&amp;gt; 1}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;As shown above, a map matches as long as the keys in the pattern exist in the given map. Therefore, an empty map matches all maps.&lt;/p&gt;
+
+&lt;p&gt;Variables can be used when accessing, matching and adding map keys:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;iex&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;iex&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;map&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sx&quot;&gt;%{n =&amp;gt; :one}&lt;/span&gt;
+&lt;span class=&quot;sx&quot;&gt;%{1 =&amp;gt; :one}&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;iex&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;ss&quot;&gt;:one&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;iex&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;sx&quot;&gt;%{^n =&amp;gt; :one}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sx&quot;&gt;%{1 =&amp;gt; :one, 2 =&amp;gt; :two, 3 =&amp;gt; :three}&lt;/span&gt;
+&lt;span class=&quot;sx&quot;&gt;%{1 =&amp;gt; :one, 2 =&amp;gt; :two, 3 =&amp;gt; :three}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://hexdocs.pm/elixir/Map.html&quot;&gt;The Map module&lt;/a&gt; provides a very similar API to the &lt;code class=&quot;highlighter-rouge&quot;&gt;Keyword&lt;/code&gt; module with convenience functions to manipulate maps:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;iex&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sx&quot;&gt;%{:a =&amp;gt; 1, 2 =&amp;gt; :b}&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;iex&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;put&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sx&quot;&gt;%{:a =&amp;gt; 1, 2 =&amp;gt; :b}&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;sx&quot;&gt;%{2 =&amp;gt; :b, :a =&amp;gt; 1, :c =&amp;gt; 3}&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;iex&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;to_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sx&quot;&gt;%{:a =&amp;gt; 1, 2 =&amp;gt; :b}&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[{&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Maps have the following syntax for updating a key’s value:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;iex&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;map&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sx&quot;&gt;%{:a =&amp;gt; 1, 2 =&amp;gt; :b}&lt;/span&gt;
+&lt;span class=&quot;sx&quot;&gt;%{2 =&amp;gt; :b, :a =&amp;gt; 1}&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;iex&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;sx&quot;&gt;%{map | 2 =&amp;gt; &quot;two&quot;}&lt;/span&gt;
+&lt;span class=&quot;sx&quot;&gt;%{2 =&amp;gt; &quot;two&quot;, :a =&amp;gt; 1}&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;iex&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;sx&quot;&gt;%{map | :c =&amp;gt; 3}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;KeyError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;key&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:c&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;found&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;in: &lt;/span&gt;&lt;span class=&quot;sx&quot;&gt;%{2 =&amp;gt; :b, :a =&amp;gt; 1}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;The syntax above requires the given key to exist. It cannot be used to add new keys. For example, using it with the &lt;code class=&quot;highlighter-rouge&quot;&gt;:c&lt;/code&gt; key failed because there is no &lt;code class=&quot;highlighter-rouge&quot;&gt;:c&lt;/code&gt; in the map.&lt;/p&gt;
+
+&lt;p&gt;When all the keys in a map are atoms, you can use the keyword syntax for convenience:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;iex&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;map&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sx&quot;&gt;%{a: 1, b: 2}&lt;/span&gt;
+&lt;span class=&quot;sx&quot;&gt;%{a: 1, b: 2}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Another interesting property of maps is that they provide their own syntax for accessing atom keys:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;iex&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;map&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sx&quot;&gt;%{:a =&amp;gt; 1, 2 =&amp;gt; :b}&lt;/span&gt;
+&lt;span class=&quot;sx&quot;&gt;%{2 =&amp;gt; :b, :a =&amp;gt; 1}&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;iex&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;a&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;iex&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;c&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;KeyError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;key&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:c&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;found&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;in: &lt;/span&gt;&lt;span class=&quot;sx&quot;&gt;%{2 =&amp;gt; :b, :a =&amp;gt; 1}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Elixir developers typically prefer to use the &lt;code class=&quot;highlighter-rouge&quot;&gt;map.field&lt;/code&gt; syntax and pattern matching instead of the functions in the &lt;code class=&quot;highlighter-rouge&quot;&gt;Map&lt;/code&gt;  module when working with maps because they lead to an assertive style of programming. &lt;a href=&quot;https://dashbit.co/blog/writing-assertive-code-with-elixir&quot;&gt;This blog post by José Valim&lt;/a&gt; provides insight and examples on how you get more concise and faster software by writing assertive code in Elixir.&lt;/p&gt;
+
+&lt;h3 id=&quot;nested-data-structures&quot;&gt;Nested data structures&lt;/h3&gt;
+
+&lt;p&gt;Often we will have maps inside maps, or even keywords lists inside maps, and so forth. Elixir provides conveniences for manipulating nested data structures via the &lt;code class=&quot;highlighter-rouge&quot;&gt;put_in/2&lt;/code&gt; , &lt;code class=&quot;highlighter-rouge&quot;&gt;update_in/2&lt;/code&gt;  and other macros giving the same conveniences you would find in imperative languages while keeping the immutable properties of the language.&lt;/p&gt;
+
+&lt;p&gt;Imagine you have the following structure:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;iex&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;users&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;john: &lt;/span&gt;&lt;span class=&quot;sx&quot;&gt;%{name: &quot;John&quot;, age: 27, languages: [&quot;Erlang&quot;, &quot;Ruby&quot;, &quot;Elixir&quot;]}&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;mary: &lt;/span&gt;&lt;span class=&quot;sx&quot;&gt;%{name: &quot;Mary&quot;, age: 29, languages: [&quot;Elixir&quot;, &quot;F#&quot;, &quot;Clojure&quot;]}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;john: &lt;/span&gt;&lt;span class=&quot;sx&quot;&gt;%{age: 27, languages: [&quot;Erlang&quot;, &quot;Ruby&quot;, &quot;Elixir&quot;], name: &quot;John&quot;}&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;mary: &lt;/span&gt;&lt;span class=&quot;sx&quot;&gt;%{age: 29, languages: [&quot;Elixir&quot;, &quot;F#&quot;, &quot;Clojure&quot;], name: &quot;Mary&quot;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;We have a keyword list of users where each value is a map containing the name, age and a list of programming languages each user likes. If we wanted to access the age for john, we could write:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;iex&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;users&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:john&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;age&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;27&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;It happens we can also use this same syntax for updating the value:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;iex&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;users&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;put_in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;users&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:john&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;age&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;31&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;john: &lt;/span&gt;&lt;span class=&quot;sx&quot;&gt;%{age: 31, languages: [&quot;Erlang&quot;, &quot;Ruby&quot;, &quot;Elixir&quot;], name: &quot;John&quot;}&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;mary: &lt;/span&gt;&lt;span class=&quot;sx&quot;&gt;%{age: 29, languages: [&quot;Elixir&quot;, &quot;F#&quot;, &quot;Clojure&quot;], name: &quot;Mary&quot;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;update_in/2&lt;/code&gt;  macro is similar but allows us to pass a function that controls how the value changes. For example, let’s remove “Clojure” from Mary’s list of languages:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;iex&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;users&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;update_in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;users&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:mary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;languages&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fn&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;languages&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;delete&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;languages&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Clojure&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;john: &lt;/span&gt;&lt;span class=&quot;sx&quot;&gt;%{age: 31, languages: [&quot;Erlang&quot;, &quot;Ruby&quot;, &quot;Elixir&quot;], name: &quot;John&quot;}&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;mary: &lt;/span&gt;&lt;span class=&quot;sx&quot;&gt;%{age: 29, languages: [&quot;Elixir&quot;, &quot;F#&quot;], name: &quot;Mary&quot;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;There is more to learn about &lt;code class=&quot;highlighter-rouge&quot;&gt;put_in/2&lt;/code&gt;  and &lt;code class=&quot;highlighter-rouge&quot;&gt;update_in/2&lt;/code&gt;, including the &lt;code class=&quot;highlighter-rouge&quot;&gt;get_and_update_in/2&lt;/code&gt;  that allows us to extract a value and update the data structure at once. There are also &lt;code class=&quot;highlighter-rouge&quot;&gt;put_in/3&lt;/code&gt;,  &lt;code class=&quot;highlighter-rouge&quot;&gt;update_in/3&lt;/code&gt;  and &lt;code class=&quot;highlighter-rouge&quot;&gt;get_and_update_in/3&lt;/code&gt;  which allow dynamic access into the data structure.&lt;/p&gt;
+
+&lt;p&gt;This concludes our introduction to associative data structures in Elixir. You will find out that, given keyword lists and maps, you will always have the right tool to tackle problems that require associative data structures in Elixir.&lt;/p&gt;
+</description>
+        <pubDate>Wed, 10 Nov 2021 18:16:18 -0300</pubDate>
+        <link>http://localhost:3000/elixir/2021/11/10/elixir-maps.html</link>
+        <guid isPermaLink="true">http://localhost:3000/elixir/2021/11/10/elixir-maps.html</guid>
+        
+        
+        <category>elixir</category>
+        
+      </item>
     
       <item>
         <title>Ruby Equality tests</title>
@@ -794,38 +926,6 @@ In Ruby, there is rake, in Elixir there is mix.&lt;/p&gt;
         
         
         <category>ruby</category>
-        
-      </item>
-    
-      <item>
-        <title>spacemacs toggle-transparency</title>
-        <description>&lt;p&gt;Anything added via spacemacs/add-toggle or things available in SPC t and SPC T should be proper toggles. This way, you can toggle them in user-config if you want to change the default state.&lt;/p&gt;
-
-&lt;p&gt;Specifically, spacemacs/toggle-transparency (and the related spacemacs/toggle-transparent-frame) both open a micro-state (in addition to toggling the setting). This means, that, if you want to have a transparent frame by default, you cannot just add (spacemacs/toggle-transparency) to your .spacemacs, because it will open the micro-state instead of just toggling transparency.&lt;/p&gt;
-
-&lt;p&gt;I’m not sure what other toggles do this, if there are any at all.&lt;/p&gt;
-
-&lt;p&gt;Ah, for now, I’m using this code in my user-config as a workaround:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt; &lt;span class=&quot;p&quot;&gt;;;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Transparency&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;by&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;default&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;frame&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;parameter&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;selected&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;frame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;alpha&lt;/span&gt;
-                       &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cons&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dotspacemacs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;active&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transparency&lt;/span&gt;
-                             &lt;span class=&quot;n&quot;&gt;dotspacemacs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;inactive&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transparency&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;later , spacemas reload config&lt;/p&gt;
-
-&lt;p&gt;SPC f  e  R&lt;/p&gt;
-
-&lt;p&gt;if you want load theme&lt;/p&gt;
-
-&lt;p&gt;SPC T s and select theme and enter&lt;/p&gt;
-</description>
-        <pubDate>Mon, 26 Feb 2018 19:01:21 -0300</pubDate>
-        <link>http://localhost:3000/spacemacs/2018/02/26/spacemacs-toggle-transparency.html</link>
-        <guid isPermaLink="true">http://localhost:3000/spacemacs/2018/02/26/spacemacs-toggle-transparency.html</guid>
-        
-        
-        <category>spacemacs</category>
         
       </item>
     
