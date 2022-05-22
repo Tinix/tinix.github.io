@@ -1,47 +1,70 @@
 /**
  * Site header
  */
+
+// .site-header {
+//     border-top: 11px solid #337ab7;
+//     // background: url(../fondo_ruby.jpg) no-repeat scroll top center / cover;
+//     border-bottom: 4px solid #d9edf7; //$grey-color-light;
+//     min-height: 100%;
+
+
+//     // Positioning context for the mobile navigation icon
+//     position: relative;
+// }
+
 .site-header {
-    border-top: 11px solid #337ab7;
-    // background: url(../fondo_ruby.jpg) no-repeat scroll top center / cover;
-    border-bottom: 4px solid #d9edf7; //$grey-color-light;
-    min-height: 100%;
-
-
-    // Positioning context for the mobile navigation icon
-    position: relative;
+background: center/cover no-repeat linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url(../images/banner.jpg);
+    height: 22em;
+    display: flex;
+    font-weight: 600;
 }
 
+
 .site-title {
+    text-decoration: none;
     font-size: 37px;
-    font-weight: 300;
-    line-height: 56px;
+    font-weight: 700;
+    // line-height: 56px;
+    line-height: 240px;
     letter-spacing: -1px;
     margin-bottom: 0;
     float: left;
-    color: red;
+    color: #2F4166;
 
     &,
     &:visited {
-        color: $grey-color-dark;
+        color: #2F4166;
+        text-decoration: none;
+    }
+    &:hover {
+        color: #2F4166;
+        text-decoration: none;
     }
 }
 
 .site-nav {
     float: right;
-    line-height: 56px;
+    // line-height: 56px;
+    line-height: 254px;
+    padding-left: 110px;
 
     .menu-icon {
         display: none;
     }
 
     .page-link {
-        color: $text-color;
+        color: #2F4166;
         line-height: $base-line-height;
+        font-size: 25px;
 
         // Gaps between nav items, but not on the last one
         &:not(:last-child) {
             margin-right: 20px;
+        }
+        &:hover {
+            color: #2F4166;
+            text-decoration: none;
         }
     }
 
@@ -171,7 +194,7 @@
  * Page content
  */
 .page-content {
-    padding: $spacing-unit 0;
+    // padding: $spacing-unit 0;
 }
 
 .page-heading {
