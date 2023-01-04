@@ -20,7 +20,7 @@ Jekyll is a simple, blog-aware, static site generator perfect for personal, proj
 ## Philosophy
 This is a Weblog about getting stuff done with Ruby and Ruby on Rails. This is the source code for the blog, which is created with the Jekyll static site framework/generator.
 
-Copyright (c) 2003 - 2017 George Daniel Tinivella 
+Copyright (c) 2003 - 2023 Daniel Tinivella 
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
