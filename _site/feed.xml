@@ -6,9 +6,51 @@
 </description>
     <link>http://localhost:3000/</link>
     <atom:link href="http://localhost:3000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 05 Jan 2023 21:08:46 -0300</pubDate>
-    <lastBuildDate>Thu, 05 Jan 2023 21:08:46 -0300</lastBuildDate>
+    <pubDate>Fri, 06 Jan 2023 11:01:05 -0300</pubDate>
+    <lastBuildDate>Fri, 06 Jan 2023 11:01:05 -0300</lastBuildDate>
     <generator>Jekyll v3.3.1</generator>
+    
+      <item>
+        <title>Ruby method missing</title>
+        <description>&lt;p&gt;Method_missing is one of those special sauces that make Ruby such a
+wonderful programming language. It acts like a catch-all method in a class - if
+you call a method that the class doesn’t know how to respond to, Ruby will
+first look for a method_missing method to handle this unexpected method
+call. If method_missing doesn’t exist, then the typical NoMethodError will be
+raised.
+With method_missing, you can truly create dynamic classes that respond to a
+wide variety of methods, based on things like database fields - Active Record
+uses method_missing extensively to define getter and setter methods for
+each of the fields in the model’s database table.
+For an contrived example of method_missing in the flesh, you could define a
+class like the following:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;StringLength&lt;/span&gt;
+   &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;method_missing&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+       &lt;span class=&quot;s2&quot;&gt;&quot;'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arg&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;' has &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; letters!&quot;&lt;/span&gt;
+     &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;And then interact with your class like so:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;StringLength&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;a_word&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;'a_word' has 6 letters!&quot;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;StringLength&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;something_long&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;'something_long' has 14 letters!&quot;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;StringLength&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;does_it_respond_to_anything?&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;'does_it_respond_to_anything?' has 28 letters!&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;You probably won’t use method_missing extensively in your Rails apps, but
+it’s good to know it exists, and the kinds of dynamic interfaces it can create.&lt;/p&gt;
+</description>
+        <pubDate>Thu, 05 Jan 2023 23:54:32 -0300</pubDate>
+        <link>http://localhost:3000/ruby/2023/01/05/method-missing.html</link>
+        <guid isPermaLink="true">http://localhost:3000/ruby/2023/01/05/method-missing.html</guid>
+        
+        
+        <category>ruby</category>
+        
+      </item>
     
       <item>
         <title>Elixir  - Maps</title>
@@ -894,38 +936,6 @@ In Ruby, there is rake, in Elixir there is mix.&lt;/p&gt;
         
         
         <category>elixir</category>
-        
-      </item>
-    
-      <item>
-        <title>Updating a rails password via the rails console</title>
-        <description>&lt;p&gt;I forgot one of my test passwords and realized I didn’t have a quick way to redo the password. There is a simple handful of commands fix this:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;irb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;&lt;span class=&quot;mo&quot;&gt;001&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;u&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;find_by_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;no&quot;&gt;User&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Load&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ms&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;no&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;users&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;users&quot;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;users&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;id&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;LIMIT&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#&amp;lt;User id: 1, name: &quot;JJ Asghar&quot;, email: &quot;jjasghar@gmail.com&quot;, created_at: &quot;2014-04-18 17:46:48&quot;, updated_at: &quot;2014-04-25 23:21:10&quot;, password_digest: &quot;$2a$10$or/wJw1I8Wpf0lXNbtawveoQXETGJbUkv/VwXQXzn92r...&quot;, remember_token: &quot;uUJTExCyt4mpAOpQWd4PMA&quot;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;irb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;&lt;span class=&quot;mo&quot;&gt;002&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;u&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#&amp;lt;User id: 1, name: &quot;JJ Asghar&quot;, email: &quot;jjasghar@gmail.com&quot;, created_at: &quot;2014-04-18 17:46:48&quot;, updated_at: &quot;2014-04-25 23:21:10&quot;, password_digest: &quot;$2a$10$or/wJw1I8Wpf0lXNbtawveoQXETGJbUkv/VwXQXzn92r...&quot;, remember_token: &quot;uUJTExCyt4mpAOpQWd4PMA&quot;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;irb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;&lt;span class=&quot;mo&quot;&gt;003&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;u&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;password&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;a_stupid_pa$$word&quot;&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;_stupid_pa$$word&quot;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;irb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;&lt;span class=&quot;mo&quot;&gt;004&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;u&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;password_confirmation&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;a_stupid_pa$$word&quot;&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;_stupid_pa$$word&quot;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;irb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;&lt;span class=&quot;mo&quot;&gt;005&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;u&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;save&lt;/span&gt;
-   &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ms&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;k&quot;&gt;BEGIN&lt;/span&gt;
-  &lt;span class=&quot;no&quot;&gt;User&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Exists&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;12&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ms&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;no&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;AS&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;one&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;users&quot;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;LOWER&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;users&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;email&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;LOWER&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'jjasghar@gmail.com'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;AND&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;users&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;id&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;LIMIT&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-   &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ms&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;no&quot;&gt;UPDATE&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;users&quot;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;SET&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;password_digest&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'$2a$10$Za7prnrSthhE90AvB15BNOMl8sf3oL7onBpZ45nH/9skwHfn1EFA.'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;remember_token&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'zOZYjEVovO143qrX1yhibw'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;updated_at&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'2014-04-25 23:24:39.329502'&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;users&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;id&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-   &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ms&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;no&quot;&gt;COMMIT&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;irb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;&lt;span class=&quot;mo&quot;&gt;006&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;As you can see, you need to create an object via a find_by_&lt;something&gt;, in my case id and write it to u. After that I change the password key to a_stupid_pa$$word along with the password_confirmation. I then write it to the database via u.save.&lt;/something&gt;&lt;/p&gt;
-</description>
-        <pubDate>Tue, 07 Aug 2018 16:47:20 -0300</pubDate>
-        <link>http://localhost:3000/ruby/2018/08/07/updating-a-rails-password-via-the-rails-console.html</link>
-        <guid isPermaLink="true">http://localhost:3000/ruby/2018/08/07/updating-a-rails-password-via-the-rails-console.html</guid>
-        
-        
-        <category>ruby</category>
         
       </item>
     

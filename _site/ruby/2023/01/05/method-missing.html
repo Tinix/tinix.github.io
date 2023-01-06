@@ -9,11 +9,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>About</title>
-  <meta name="description" content="Also known as Tinix , Degree in Computer Science FaMAF,Writer Software, Ruby, Elixir, Rust, Go, Linux and FreeBSD, I like have Mate, 4 lang​​, but all that means almost nothing..
-">
+  <title>Ruby method missing</title>
+  <meta name="description" content="Method_missing is one of those special sauces that make Ruby such awonderful programming language. It acts like a catch-all method in a class - ifyou call a ...">
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://localhost:3000/about/">
+  <link rel="canonical" href="http://localhost:3000/ruby/2023/01/05/method-missing.html">
   <link rel="alternate" type="application/rss+xml" title="Tinix&#39;s different point of view." href="http://localhost:3000/feed.xml">
 </head>
 
@@ -71,33 +70,72 @@
 
     <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <article class="post">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title">About</h1>
+    <h1 class="post-title" itemprop="name headline">Ruby method missing</h1>
   </header>
 
-  <div class="post-content">
-    <p>Also known as Tinix , Software Engineer. Interested in low level programming and security, although my programming experience has been mostly related with Ruby</p>
+  <div class="post-content" itemprop="articleBody">
+    <p>Method_missing is one of those special sauces that make Ruby such a
+wonderful programming language. It acts like a catch-all method in a class - if
+you call a method that the class doesn’t know how to respond to, Ruby will
+first look for a method_missing method to handle this unexpected method
+call. If method_missing doesn’t exist, then the typical NoMethodError will be
+raised.
+With method_missing, you can truly create dynamic classes that respond to a
+wide variety of methods, based on things like database fields - Active Record
+uses method_missing extensively to define getter and setter methods for
+each of the fields in the model’s database table.
+For an contrived example of method_missing in the flesh, you could define a
+class like the following:</p>
 
-<!-- _include/image.html -->
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">StringLength</span>
+   <span class="k">def</span> <span class="nf">method_missing</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+       <span class="s2">"'</span><span class="si">#{</span><span class="n">arg</span><span class="si">}</span><span class="s2">' has </span><span class="si">#{</span><span class="n">arg</span><span class="p">.</span><span class="nf">length</span><span class="si">}</span><span class="s2"> letters!"</span>
+     <span class="k">end</span>
+<span class="k">end</span></code></pre></figure>
 
-<div class="image-wrapper">
-  
-    <img src="http://localhost:3000/images/tinix.png" alt="Me!" />
-    
-  
-  <p class="image-caption">Hey, I am Tinix! </p>
-  
-  
-</div>
+<p>And then interact with your class like so:</p>
 
-<p>I love work with Ruby and another language also Free/Open Source technologies and being able to contribute to them. Always involved in several projects some personal…, 
-I enjoy trying new technologies and learning something new everyday. 
-I like to spend my free time with friends, and I like drinking Mate, and 4 languages, but all that means almost nothing…
-Vim is my favorite editor because is a highly configurable text editor built to make creating and changing any kind of text very efficient. It is included as “vi” with most UNIX systems and with Apple OS X.</p>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&gt;</span> <span class="no">StringLength</span><span class="p">.</span><span class="nf">new</span><span class="p">.</span><span class="nf">a_word</span>
+<span class="o">=&gt;</span> <span class="s2">"'a_word' has 6 letters!"</span>
+<span class="o">&gt;</span> <span class="no">StringLength</span><span class="p">.</span><span class="nf">new</span><span class="p">.</span><span class="nf">something_long</span>
+<span class="o">=&gt;</span> <span class="s2">"'something_long' has 14 letters!"</span>
+<span class="o">&gt;</span> <span class="no">StringLength</span><span class="p">.</span><span class="nf">new</span><span class="p">.</span><span class="nf">does_it_respond_to_anything?</span>
+<span class="o">=&gt;</span> <span class="s2">"'does_it_respond_to_anything?' has 28 letters!"</span></code></pre></figure>
 
-   
+<p>You probably won’t use method_missing extensively in your Rails apps, but
+it’s good to know it exists, and the kinds of dynamic interfaces it can create.</p>
+
+        
+<div id="disqus_thread"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+    /*
+    var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        
+        s.src = '//tinixgit.disqus.com/embed.js';
+        
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">Comments powered by Disqus.</a></noscript>
+ <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+  
+
+
 
   </div>
 

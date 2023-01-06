@@ -1,5 +1,5 @@
 ---
-title: Method missing
+title: Ruby method missing
 layout: post
 date: '2023-01-05 23:54:32'
 categories: ruby
