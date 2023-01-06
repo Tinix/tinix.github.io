@@ -4,11 +4,11 @@ title: Tinix's different point of view.
 comments: true
 
 
-tags: [jekyll, disqus, ruby, rails, programmings, Java, DevOps, FreeBSD , Linux, postgreSQL, MySQL,]
+tags: [jekyll, disqus, ruby, rails, rust, go, elixir, programmings, Java, DevOps, FreeBSD , Linux, postgreSQL, MySQL,]
 # Site settings
-email: dtinivella@gmail.com
+email: daniel.tinivella@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
- Also known as Tinix , Degree in Computer Science FaMAF,Writer Software, Math Fan, Ruby , Python, Elixir FreeBSD, I like have Mate, 4 lang​​, but all that means almost nothing..
+ Also known as Tinix , Degree in Computer Science FaMAF,Writer Software, Ruby, Elixir, Rust, Go, Linux and FreeBSD, I like have Mate, 4 lang​​, but all that means almost nothing..
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://tinix.github.io" # the base hostname & protocol for your site
 twitter_username: Tinix
