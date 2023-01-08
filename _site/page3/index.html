@@ -61,6 +61,8 @@
         
           
         
+          
+        
       </div>
     </nav>
 
@@ -83,6 +85,82 @@
 
   <script id="dsq-count-scr" src="//tinixgit.disqus.com/count.js" async></script>
 
+
+  <h1><a href="/elixir/2018/09/28/ruby-vs-elixir-rails-vs-phoenix-part-1.html">Ruby vs Elixir ,  Rails vs Phoenix - part 1</a></h1>
+  <p class="author">
+    <span class="date">2018-09-28 16:52:56 -0300</span>
+  </p>
+  <div class="content">
+    <p><img src="http://localhost:3000/images/ruby-elixir.png" alt="useful image" /></p>
+
+<p>This is not a, “Which is better?”, post. It is more a way to help other developers, like myself, who have a background in Rails development and are interested in Elixir and Phoenix.</p>
+
+<p>Elixir != Ruby and Phoenix != Rails. Even though there may be some similarities between both, it is beneficial to stay open to innovative and often lateral approaches in Elixir/Phoenix.</p>
+
+<p>If you are a Ruby/Rails developer who is interested in adding Elixir/Phoenix to your toolbelt, then I hope this post serves as a helpful starting point.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">Struct</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">:first</span><span class="p">,</span> <span class="ss">:last</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">full_name</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+    <span class="s2">"</span><span class="si">#{</span><span class="n">user</span><span class="p">.</span><span class="nf">first</span><span class="si">}</span><span class="s2"> </span><span class="si">#{</span><span class="n">user</span><span class="p">.</span><span class="nf">last</span><span class="si">}</span><span class="s2">"</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">"George"</span><span class="p">,</span> <span class="s2">"Tinix"</span><span class="p">)</span>
+<span class="no">User</span><span class="p">.</span><span class="nf">full_name</span><span class="p">(</span><span class="n">user</span><span class="p">)</span> 
+<span class="c1">#=&gt; "George Tinix"</span>
+ </code></pre></figure>
+
+<p>Notice that we pass user to the full_name method. There are no “object instances” to call methods on in Elixir.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">defmodule</span> <span class="no">User</span> <span class="k">do</span>
+  <span class="n">defstruct</span> <span class="p">[</span><span class="ss">:first</span><span class="p">,</span> <span class="ss">:last</span><span class="p">]</span>
+
+  <span class="k">def</span> <span class="nf">full_name</span><span class="p">(</span><span class="n">user</span><span class="p">)</span> <span class="k">do</span>
+    <span class="s2">"</span><span class="si">#{</span><span class="n">user</span><span class="p">.</span><span class="nf">first</span><span class="si">}</span><span class="s2"> </span><span class="si">#{</span><span class="n">user</span><span class="p">.</span><span class="nf">last</span><span class="si">}</span><span class="s2">"</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">user</span> <span class="o">=</span> <span class="o">%</span><span class="no">User</span><span class="p">{</span><span class="ss">first: </span><span class="s2">"George"</span><span class="p">,</span> <span class="ss">last: </span><span class="s2">"Tinix"</span><span class="p">}</span>
+<span class="no">User</span><span class="p">.</span><span class="nf">full_name</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+<span class="c1">#=&gt; "George Tinix"</span>
+ </code></pre></figure>
+
+<h1 id="embrace-pattern-matching">Embrace Pattern Matching</h1>
+<p>In Ruby, conditionals are predominant, but in Elixir it is more favorable to use pattern matching.</p>
+
+<p>In Ruby, you might see something like this:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">notify_user</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">user</span><span class="p">.</span><span class="nf">send_emails?</span> <span class="k">do</span>
+   <span class="c1">#Send emails</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+ </code></pre></figure>
+
+<p>In Elixir, we would use pattern matching against the data structure of the user argument:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"> <span class="k">def</span> <span class="nf">notify_user</span><span class="p">(</span><span class="o">%</span><span class="no">User</span><span class="p">{</span><span class="n">send_emails?</span><span class="p">:</span> <span class="kp">true</span><span class="p">})</span> <span class="k">do</span>
+  <span class="c1">#Send emails</span>
+<span class="k">end</span>
+<span class="k">def</span> <span class="nf">notify_user</span><span class="p">(</span><span class="n">user</span><span class="p">),</span> <span class="ss">do: </span><span class="n">user</span>
+ </code></pre></figure>
+
+<p>The above example shows the use of pattern matching within function definitions but we can also use pattern matching to control the flow of logic.</p>
+
+<p>In Rails, this could be considered the equivalent of returning a Result object for handling outcomes beyond just true or false.</p>
+
+<p>In Elixir, you would utilize pattern matching on a function’s result. The following is quite common to see in Phoenix controllers:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"> <span class="k">case</span> <span class="no">MyApp</span><span class="p">.</span><span class="nf">do_something</span><span class="p">()</span> <span class="k">do</span>
+  <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">value</span><span class="p">}</span>     <span class="o">-&gt;</span> <span class="c1"># do stuff ...</span>
+  <span class="p">{</span><span class="ss">:error</span><span class="p">,</span> <span class="n">errors</span><span class="p">}</span> <span class="o">-&gt;</span> <span class="c1"># do different stuff...</span>
+<span class="k">end</span>
+ </code></pre></figure>
+
+<hr />
+
+
+  </div>
 
   <h1><a href="/ruby/2018/08/07/updating-a-rails-password-via-the-rails-console.html">Updating a rails password via the rails console</a></h1>
   <p class="author">
@@ -284,154 +362,6 @@ To install or update nvm, you can use the install script using cURL:</p>
 
   </div>
 
-  <h1><a href="/ruby/2018/01/29/what-is-attr-accessor-in-rails.html">What is attr_accessor in Rails?</a></h1>
-  <p class="author">
-    <span class="date">2018-01-29 20:15:02 -0300</span>
-  </p>
-  <div class="content">
-    <p>attr_accessor is used to <strong>define an attribute for object of Model which is not mapped with any column in database</strong>. This answers question - What is attr_accessor in Rails.</p>
-
-<p><strong>1. attr_accessor Methods</strong></p>
-
-<p>attr_accessor creates two methods i.e. getter method and setter method.</p>
-
-<p>**getter method **- it is used to retrieve value of the attribute</p>
-
-<p><strong>setter method</strong> - it is used to set value to the attribute</p>
-
-<p><strong>When to use attr_accessor in Rails?</strong></p>
-
-<p>Whenever you want to show certain attribute for particular form but you do not want to store it’s value in the database then you use attr_accessor for that model as follows,</p>
-
-<p>Suppose we have a Model called user in out database with following fields,</p>
-
-<ul>
-  <li>id</li>
-  <li>name</li>
-  <li>age</li>
-  <li>city</li>
-  <li>profession</li>
-</ul>
-
-<p>And we define attr_accessor :type_of_user as follows,</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">Class</span> <span class="no">User</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
-   <span class="kp">attr_accessor</span> <span class="ss">:type_of_user</span>
-<span class="k">end</span></code></pre></figure>
-
-<p>Now, whenever you create a object of the class User then you can assign a value to it’s attr_accessor.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">new_user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">:name</span> <span class="o">=&gt;</span> <span class="s1">'Albert'</span><span class="p">,</span> <span class="ss">:age</span> <span class="o">=&gt;</span> <span class="mi">23</span><span class="p">,</span> <span class="ss">:city</span> <span class="o">=&gt;</span> <span class="s1">'Ports S.'</span><span class="p">)</span></code></pre></figure>
-
-<p>This will create new object of class User and assign given attribute values. You can assign value to attr_accessor variable as follows,</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">ew_user</span><span class="p">.</span><span class="nf">type_of_user</span> <span class="o">=</span> <span class="s1">'middle-aged'</span></code></pre></figure>
-
-<p>This assigns ‘middle-aged’ value to the attribute type_of_user attr_accessor.</p>
-
-<p>getter and setter in Action
-For attribute type_of_user getter and setter methods are created as follows,</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># getter</span>
-<span class="k">def</span> <span class="nf">type_of_user</span>
-  <span class="vi">@type_of_user</span>
-<span class="k">end</span>
-
-<span class="c1"># setter</span>
-<span class="k">def</span> <span class="nf">type_of_user</span><span class="o">=</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
-  <span class="vi">@type_of_user</span> <span class="o">=</span> <span class="n">val</span>
-<span class="k">end</span></code></pre></figure>
-
-<p>And these are used whenever we assign or retrieve values from the attr_accessor.</p>
-
-<ol>
-  <li>Usage in Classes
-Whenever changing value of the attr_accessor variables, we need to use self.variable_name =  to assign new value to the variable. Otherwise, it will consider it as a local variable resulting into incorrect values.</li>
-</ol>
-
-<p>For example,</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">SimpleService</span>
-
-  <span class="kp">attr_accessor</span> <span class="ss">:name</span>
-
-  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
-    <span class="vi">@name</span> <span class="o">=</span> <span class="nb">name</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="nf">process</span>
-    <span class="k">if</span> <span class="kp">false</span> <span class="c1"># some condition met</span>
-      <span class="nb">name</span> <span class="o">=</span> <span class="s1">'Akshay'</span>
-    <span class="k">end</span>
-    <span class="nb">name</span>
-  <span class="k">end</span>
-<span class="k">end</span></code></pre></figure>
-
-<p>Here, it the above service class we have defined name as the attr_accessor. We need to change it’s value based on some condition. And we return it’s value from process method.</p>
-
-<p>When we execute this class as,</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">SimpleService</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s1">'John Doe'</span><span class="p">).</span><span class="nf">process</span>
-<span class="o">=&gt;</span> <span class="kp">nil</span></code></pre></figure>
-
-<p>We can see that process method has returned nil.</p>
-
-<p>Explaination</p>
-
-<p>In the block,</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">process</span>
-  <span class="k">if</span> <span class="kp">false</span> <span class="c1"># some condition met</span>
-    <span class="nb">name</span> <span class="o">=</span> <span class="s1">'Akshay'</span>
-  <span class="k">end</span>
-  <span class="nb">name</span>
-<span class="k">end</span></code></pre></figure>
-
-<p>As the if condition is false, and value of name is returned from the process method, name is considered as the local variable. Local variable name does not have any value. Thus, it returns nil.</p>
-
-<p>Correction</p>
-
-<p>To correct the above service class, we need to use explicity self when assigning value to the attr_accessor variable as given below,</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">SimpleService</span>
-
-  <span class="kp">attr_accessor</span> <span class="ss">:name</span>
-
-  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
-    <span class="vi">@name</span> <span class="o">=</span> <span class="nb">name</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="nf">process</span>
-    <span class="k">if</span> <span class="kp">false</span> <span class="c1"># some condition met</span>
-      <span class="nb">self</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="s1">'Akshay'</span>
-    <span class="k">end</span>
-    <span class="nb">name</span>
-  <span class="k">end</span>
-<span class="k">end</span></code></pre></figure>
-
-<p>Now if we execute this class, we will get expected result as given below.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">SimpleService</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s1">'John Doe'</span><span class="p">).</span><span class="nf">process</span>
-<span class="o">=&gt;</span> <span class="s2">"John Doe"</span></code></pre></figure>
-
-<ol>
-  <li>Lifetime of attr_accessor
-attr_accessor is accessible throughout object’s lifecycle. When object is saved using any of ActiveRecord method, save, update etc. all attributes of Model other than attr_accessor are saved in the database.</li>
-</ol>
-
-<p>How to Access
-Throughout lifecycle of object, you can access the value of attribute accessor as follows,</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">new_user</span><span class="p">.</span><span class="nf">type_of_user</span></code></pre></figure>
-
-<ol>
-  <li>Conclusion
-We learned what is attr_accessor in Rails and how to use it with Rails .</li>
-</ol>
-
-
-  </div>
-
 <br>
 <!--Pagination links  -->
 
@@ -463,6 +393,10 @@ We learned what is attr_accessor in Rails and how to use it with Rails .</li>
   
   
   <a href="/page6">6</a>
+  
+  
+  
+  <a href="/page7">7</a>
   
   
 

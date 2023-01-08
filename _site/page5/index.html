@@ -61,6 +61,8 @@
         
           
         
+          
+        
       </div>
     </nav>
 
@@ -83,6 +85,45 @@
 
   <script id="dsq-count-scr" src="//tinixgit.disqus.com/count.js" async></script>
 
+
+  <h1><a href="/ruby/2017/09/26/creating-a-random-string-on-rails.html">Creating a random string on Rails</a></h1>
+  <p class="author">
+    <span class="date">2017-09-26 00:49:08 -0300</span>
+  </p>
+  <div class="content">
+    <p>As we know that in almost all web applications we have to ammend functionalities in which we need to create a random string.
+This string can contain some alpha numeric characters, numbers, lower case alphabets, upper case alphabets and etc.
+This random string or token can be generated for many purposes like OTP ( one time password), recovery code etc.
+Today we will see how to generate an eight character token with the help of arrays.
+This token will have some numbers, upper case alphabets and lower case alphabets in all jumbled up manner.
+Here is how we can do it…</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">token</span> <span class="o">=</span> <span class="p">((</span><span class="s1">'0'</span><span class="p">.</span><span class="nf">.</span><span class="s1">'9'</span><span class="p">).</span><span class="nf">to_a</span> <span class="o">+</span> <span class="p">(</span><span class="s1">'a'</span><span class="p">.</span><span class="nf">.</span><span class="s1">'z'</span><span class="p">).</span><span class="nf">to_a</span> <span class="o">+</span> <span class="p">(</span><span class="s1">'A'</span><span class="p">.</span><span class="nf">.</span><span class="s1">'Z'</span><span class="p">).</span><span class="nf">to_a</span><span class="p">).</span><span class="nf">shuffle</span><span class="p">.</span><span class="nf">first</span><span class="p">(</span><span class="mi">8</span><span class="p">).</span><span class="nf">join</span></code></pre></figure>
+
+<p>now as we can see we have taken a variable token in which we are storing numbers from 0 to 9
+in the second bracket we have taken all the lower case alphabets.
+in the third bracket we have taken all the upper case alphabets.
+and converted them all into array through to_a method.
+the plus sign concatenates all the arrays into one
+then finally the .shuffle method will jumble up the whole string 
+and first(8) method will take the first 8 characters from that jumbled up string hence giving us the required token.
+Now everytime we will call this method it will generate a random string like this as seen in the picture below:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="mi">2</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">5</span> <span class="p">:</span><span class="mo">002</span> <span class="o">&gt;</span> <span class="n">token</span> <span class="o">=</span> <span class="p">((</span><span class="s1">'0'</span><span class="p">.</span><span class="nf">.</span><span class="s1">'9'</span><span class="p">).</span><span class="nf">to_a</span> <span class="o">+</span> <span class="p">(</span><span class="s1">'a'</span><span class="p">.</span><span class="nf">.</span><span class="s1">'z'</span><span class="p">).</span><span class="nf">to_a</span> <span class="o">+</span> <span class="p">(</span><span class="s1">'A'</span><span class="p">.</span><span class="nf">.</span><span class="s1">'Z'</span><span class="p">).</span><span class="nf">to_a</span><span class="p">).</span><span class="nf">shuffle</span><span class="p">.</span><span class="nf">first</span><span class="p">(</span><span class="mi">8</span><span class="p">).</span><span class="nf">join</span>
+ <span class="o">=&gt;</span> <span class="s2">"a9bIGCwP"</span> 
+<span class="mi">2</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">5</span> <span class="p">:</span><span class="mo">003</span> <span class="o">&gt;</span> <span class="n">token</span> <span class="o">=</span> <span class="p">((</span><span class="s1">'0'</span><span class="p">.</span><span class="nf">.</span><span class="s1">'9'</span><span class="p">).</span><span class="nf">to_a</span> <span class="o">+</span> <span class="p">(</span><span class="s1">'a'</span><span class="p">.</span><span class="nf">.</span><span class="s1">'z'</span><span class="p">).</span><span class="nf">to_a</span> <span class="o">+</span> <span class="p">(</span><span class="s1">'A'</span><span class="p">.</span><span class="nf">.</span><span class="s1">'Z'</span><span class="p">).</span><span class="nf">to_a</span><span class="p">).</span><span class="nf">shuffle</span><span class="p">.</span><span class="nf">first</span><span class="p">(</span><span class="mi">8</span><span class="p">).</span><span class="nf">join</span>
+ <span class="o">=&gt;</span> <span class="s2">"OZimKuqJ"</span> 
+<span class="mi">2</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">5</span> <span class="p">:</span><span class="mo">004</span> <span class="o">&gt;</span> <span class="n">token</span> <span class="o">=</span> <span class="p">((</span><span class="s1">'0'</span><span class="p">.</span><span class="nf">.</span><span class="s1">'9'</span><span class="p">).</span><span class="nf">to_a</span> <span class="o">+</span> <span class="p">(</span><span class="s1">'a'</span><span class="p">.</span><span class="nf">.</span><span class="s1">'z'</span><span class="p">).</span><span class="nf">to_a</span> <span class="o">+</span> <span class="p">(</span><span class="s1">'A'</span><span class="p">.</span><span class="nf">.</span><span class="s1">'Z'</span><span class="p">).</span><span class="nf">to_a</span><span class="p">).</span><span class="nf">shuffle</span><span class="p">.</span><span class="nf">first</span><span class="p">(</span><span class="mi">8</span><span class="p">).</span><span class="nf">join</span>
+ <span class="o">=&gt;</span> <span class="s2">"c09NCv8Z"</span> 
+<span class="mi">2</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">5</span> <span class="p">:</span><span class="mo">005</span> <span class="o">&gt;</span> <span class="n">token</span> <span class="o">=</span> <span class="p">((</span><span class="s1">'0'</span><span class="p">.</span><span class="nf">.</span><span class="s1">'9'</span><span class="p">).</span><span class="nf">to_a</span> <span class="o">+</span> <span class="p">(</span><span class="s1">'a'</span><span class="p">.</span><span class="nf">.</span><span class="s1">'z'</span><span class="p">).</span><span class="nf">to_a</span> <span class="o">+</span> <span class="p">(</span><span class="s1">'A'</span><span class="p">.</span><span class="nf">.</span><span class="s1">'Z'</span><span class="p">).</span><span class="nf">to_a</span><span class="p">).</span><span class="nf">shuffle</span><span class="p">.</span><span class="nf">first</span><span class="p">(</span><span class="mi">8</span><span class="p">).</span><span class="nf">join</span>
+ <span class="o">=&gt;</span> <span class="s2">"SyVPNqso"</span> 
+<span class="mi">2</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">5</span> <span class="p">:</span><span class="mo">006</span> <span class="o">&gt;</span> <span class="n">token</span> <span class="o">=</span> <span class="p">((</span><span class="s1">'0'</span><span class="p">.</span><span class="nf">.</span><span class="s1">'9'</span><span class="p">).</span><span class="nf">to_a</span> <span class="o">+</span> <span class="p">(</span><span class="s1">'a'</span><span class="p">.</span><span class="nf">.</span><span class="s1">'z'</span><span class="p">).</span><span class="nf">to_a</span> <span class="o">+</span> <span class="p">(</span><span class="s1">'A'</span><span class="p">.</span><span class="nf">.</span><span class="s1">'Z'</span><span class="p">).</span><span class="nf">to_a</span><span class="p">).</span><span class="nf">shuffle</span><span class="p">.</span><span class="nf">first</span><span class="p">(</span><span class="mi">8</span><span class="p">).</span><span class="nf">join</span>
+ <span class="o">=&gt;</span> <span class="s2">"mLhlOeQT"</span> 
+<span class="mi">2</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">5</span> <span class="p">:</span><span class="mo">007</span> <span class="o">&gt;</span> </code></pre></figure>
+
+<p>So I hope this blog was helpful to create a random string for multi purposes..!!</p>
+
+  </div>
 
   <h1><a href="/ruby/2017/07/19/working-with-grep-in-ruby.html">Working with GREP in Ruby</a></h1>
   <p class="author">
@@ -282,29 +323,6 @@ I had an impression that it is a hacker friendly, simple and extensible blog pla
 
   </div>
 
-  <h1><a href="/emacs,%20freebsd/2016/04/09/projectile-makes-your-emacs-very-fast.html">Projectile makes your Emacs very fast!</a></h1>
-  <p class="author">
-    <span class="date">2016-04-09 12:49:07 -0300</span>
-  </p>
-  <div class="content">
-    <p>Projectile makes your Emacs very fast…!!!
-after installing projectile in Emacs…
-It was easier to search and fin files within directories quicky
-projectile replaces command palette of Sublime Text Editor!</p>
-
-<p>You Know … I recommend Projectile !!
-for more info visit :</p>
-
-<p><a href="http://github.com/bbatsov/projectile">Projectile Repo Github</a></p>
-
-<iframe width="560" height="315" src="//www.youtube.com/embed/qpv9i_I4jYU" frameborder="0"> </iframe>
-
-<p>See you next Article ..!!
-Tinix!</p>
-
-
-  </div>
-
 <br>
 <!--Pagination links  -->
 
@@ -336,6 +354,10 @@ Tinix!</p>
   
   
   <a href="/page6">6</a>
+  
+  
+  
+  <a href="/page7">7</a>
   
   
 

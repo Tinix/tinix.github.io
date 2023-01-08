@@ -9,10 +9,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Projectile makes your Emacs very fast!</title>
-  <meta name="description" content="Projectile makes your Emacs very fast…!!!after installing projectile in Emacs…It was easier to search and fin files within directories quickyprojectile repla...">
+  <title>Rust “Hello World!” in three languages</title>
+  <meta name="description" content="For our first program, we want to write something that outputs the following text inmultiple languages:Hello, world!Grüß Gott!ハロー・ワールドYou have probably seen ...">
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://localhost:3000/emacs,%20freebsd/2016/04/09/projectile-makes-your-emacs-very-fast.html">
+  <link rel="canonical" href="http://localhost:3000/rust/2023/01/08/rust-hello-world-in-three-languages.html">
   <link rel="alternate" type="application/rss+xml" title="Tinix&#39;s different point of view." href="http://localhost:3000/feed.xml">
 </head>
 
@@ -75,25 +75,50 @@
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">Projectile makes your Emacs very fast!</h1>
+    <h1 class="post-title" itemprop="name headline">Rust “Hello World!” in three languages</h1>
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p>Projectile makes your Emacs very fast…!!!
-after installing projectile in Emacs…
-It was easier to search and fin files within directories quicky
-projectile replaces command palette of Sublime Text Editor!</p>
+    <p>For our first program, we want to write something that outputs the following text in
+multiple languages:
+Hello, world!
+Grüß Gott!
+ハロー・ワールド
+You have probably seen the first line. The other two are there to highlight a few of Rust’s features: easy iteration and built-in support for Unicode.</p>
 
-<p>You Know … I recommend Projectile !!
-for more info visit :</p>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">fn</span> <span class="n">greet_world</span><span class="p">()</span> <span class="p">{</span> 
+  <span class="n">println!</span><span class="p">(</span><span class="s2">"Hello World"</span><span class="p">);</span>
+  <span class="n">let</span> <span class="n">southern_germany</span> <span class="o">=</span> <span class="s2">"Grüß Gott!"</span><span class="p">;</span>
+  <span class="n">let</span> <span class="n">japan</span> <span class="o">=</span> <span class="s2">"ハロー・ワールド"</span><span class="p">;</span>
+  <span class="n">let</span> <span class="n">regions</span> <span class="o">=</span> <span class="p">[</span><span class="n">southern_germany</span><span class="p">,</span> <span class="n">japan</span><span class="p">];</span>
+  <span class="k">for</span> <span class="n">region</span> <span class="k">in</span> <span class="n">regions</span><span class="p">.</span><span class="nf">iter</span><span class="p">()</span> <span class="p">{</span> 
+    <span class="n">println!</span><span class="p">(</span><span class="s2">"{}"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">region</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
 
-<p><a href="http://github.com/bbatsov/projectile">Projectile Repo Github</a></p>
+<span class="n">fn</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span> 
+  <span class="n">greet_world</span><span class="p">();</span>
+<span class="p">}</span></code></pre></figure>
 
-<iframe width="560" height="315" src="//www.youtube.com/embed/qpv9i_I4jYU" frameborder="0"> </iframe>
+<p>Now that src/main.rs is updated, execute cargo run from the hello2/ directory. You
+should see three greetings appear after some output generated from cargo itself:</p>
 
-<p>See you next Article ..!!
-Tinix!</p>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
+<span class="no">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="n">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mi">0</span><span class="o">.</span><span class="mi">95</span><span class="n">s</span>
+<span class="no">Running</span> <span class="sb">`target/debug/hello-world`</span>
+<span class="no">Hello</span><span class="p">,</span> <span class="n">world!</span>
+<span class="no">Gr</span><span class="err">üß</span> <span class="no">Gott</span><span class="o">!</span>
+<span class="err">ハロー・ワールド</span></code></pre></figure>
 
+<p>Let’s take a few moments to touch on some of the interesting elements of Rust from
+One of the first things that you are likely to notice is that strings in Rust are able to include a wide range of characters. Strings are guaranteed to be encoded as UTF-8.
+This means that you can use non-English languages with relative ease.
+The one character that might look out of place is the exclamation mark after
+println. If you have programmed in Ruby, you may be used to thinking that it is used
+to signal a destructive operation. In Rust, it signals the use of a macro. Macros can be
+thought of as fancy functions for now. These offer the ability to avoid boilerplate code.
+In the case of println!, there is a lot of type detection going on under the hood so
+that arbitrary data types can be printed to the screen.</p>
 
         
 <div id="disqus_thread"></div>
