@@ -86,6 +86,62 @@
   <script id="dsq-count-scr" src="//tinixgit.disqus.com/count.js" async></script>
 
 
+  <h1><a href="/ruby/,/rails/2017/09/26/before-validation-and-after-touch-callback-in-rails.html">Before_validation and  after_touch callbacks in Rails</a></h1>
+  <p class="author">
+    <span class="date">2017-09-26 09:00:40 -0300</span>
+  </p>
+  <div class="content">
+    <p>Rails provide us with some pre-defined methods or hooks which can be invoked after or before the execution of a certain method in the object life cycle.
+Callbacks are called in certain moments of object’s life cycle which we will get to know in this blog.
+Today we will be studying about three callbacks as follows :
+before_validation
+As the name suggests, this method is called before validation of all the fields of the form.
+For example, there is a registration form which has an email field, so as soon as the user will fill the email field and submit the form before the value gets saved into the database we have to make sure that all characters in the email should be down case.
+So in this case, we will invoke a before_validation callback in which we will define a method to be called before the create method is called.
+In this method, we will convert the whole string into down case and after that, the create method will be called like this.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>class Employee &lt; ApplicationRecord
+  
+  before_validation :normalize_email, on: :create
+ 
+  # :on takes an array as well
+  
+  def create
+    ...
+  end 
+  protected
+    def normalize_email
+      self.email = email.downcase.titleize
+    end
+end
+</code></pre>
+</div>
+
+<p>after_touch
+Whenever an object is being touched the after_touch callback is called .
+For example
+We create an employee object and as soon as we touch the object the after_touch callback is invoked.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>class Employee &lt; ApplicationRecord
+  
+  after_touch do |employee|
+    puts "The object has been touched"
+  end
+end
+ 
+&gt;&gt; e = Employee.create(name: 'Tom')
+=&gt; #&lt;Employee id: 1, name: "Tom", created_at: "2013-11-25 12:17:49", updated_at: "2013-11-25 12:17:49"&gt;
+ 
+&gt;&gt; e.touch
+The object has been touched
+=&gt; true
+</code></pre>
+</div>
+
+<p>So hope this article was helpful to understand both the callbacks.</p>
+
+  </div>
+
   <h1><a href="/ruby/2017/09/26/creating-a-random-string-on-rails.html">Creating a random string on Rails</a></h1>
   <p class="author">
     <span class="date">2017-09-26 00:49:08 -0300</span>
@@ -296,30 +352,6 @@ I had an impression that it is a hacker friendly, simple and extensible blog pla
 
 <p>Check out the <a href="http://jekyllrb.com/docs/home">Jekyll docs</a> for more info on how to get the most out of Jekyll. File all bugs/feature requests at <a href="https://github.com/jekyll/jekyll">Jekyll’s GitHub repo</a>. If you have questions, you can ask them on <a href="https://talk.jekyllrb.com/">Jekyll Talk</a>.</p>
 
-
-  </div>
-
-  <h1><a href="/git/2017/01/27/viewing-the-git-log.html">Viewing the Git log</a></h1>
-  <p class="author">
-    <span class="date">2017-01-27 11:52:19 -0300</span>
-  </p>
-  <div class="content">
-    <p>This list isn’t complete, but the commands shown here are the handful that I use on a day-to-day basis. They should all work in a recent version of git on Linux or macOS (I don’t have access to a Windows computer anymore, but if you know something I don’t, please leave a comment and I’ll amend this article).</p>
-
-<ul>
-  <li><strong><code class="highlighter-rouge">git log</code></strong>: On its own, <code class="highlighter-rouge">git log</code> displays a list of commits and their commit messages in reverse chronological order (most recent commits at the top).</li>
-  <li><strong><code class="highlighter-rouge">git log --reverse</code></strong>: Display the output in reverse, so the earliest commits appear at the top of the output.</li>
-  <li><strong><code class="highlighter-rouge">git log --oneline</code></strong>: Passing <code class="highlighter-rouge">--oneline</code> results in a terse, two-column list of commit titles and SHA identifiers.</li>
-  <li><strong><code class="highlighter-rouge">git log -p</code></strong>: Passing the <code class="highlighter-rouge">-p</code> flag adds a full patch, or diff, to each commit–the code you added and removed.</li>
-  <li><strong><code class="highlighter-rouge">git log -p &lt;filename&gt;</code></strong>: Passing a file name restricts log output to changes to that file (for example, <code class="highlighter-rouge">git log -p app/models/user.rb</code>). You can remove the <code class="highlighter-rouge">-p</code> flag if you don’t care about the code changes in each commit, or use <code class="highlighter-rouge">--oneline</code> instead to get a quick list. I find that I’m almost always interested in the actual code changes, though. If there’s a chance that git could confuse the filename for a branch name, include <code class="highlighter-rouge">--</code> to disambiguate (<code class="highlighter-rouge">git log -p -- app/models/user.rb</code>).</li>
-  <li><strong><code class="highlighter-rouge">git log -p -S &lt;query&gt;</code></strong>: Use the <code class="highlighter-rouge">-S</code> flag (also known as the <em>git pickaxe</em>) along with a search term to restrict log output to code changes matching the search (for example, <code class="highlighter-rouge">git log -p -S password</code>). Again, this will work without <code class="highlighter-rouge">-p</code>, or with <code class="highlighter-rouge">--oneline</code>, but this is how I typically use it.</li>
-  <li><strong><code class="highlighter-rouge">git log -p --grep &lt;query&gt;</code></strong>: The <code class="highlighter-rouge">--grep</code> flag searches only the commit messages for the provided query. Wrap the query in quotes if it contains spaces. (You and your team are hopefully <a href="http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html">writing useful commit messages</a>!)</li>
-  <li><strong><code class="highlighter-rouge">git log &lt;commit1&gt;..&lt;commit2&gt;</code></strong>: Restrict output to only the differences between two specific commits by passing them with a <code class="highlighter-rouge">..</code> (and no spaces) between them. This works with SHA identifiers (<code class="highlighter-rouge">git log 660bfa2..922b5d2</code>) as well as branch names (<code class="highlighter-rouge">git log rails-4.1..rails-4.2</code>). Leave either side blank to imply the current branch (<code class="highlighter-rouge">git log rails-4.2..</code>). Use with <code class="highlighter-rouge">-p</code>, <code class="highlighter-rouge">-S</code>, and <code class="highlighter-rouge">--grep</code> as outlined above to filter the results further.</li>
-  <li><strong><code class="highlighter-rouge">git log --stat</code></strong>: Add a brief list of the files that were altered in each commit, with a count of lines that were added or removed. As you may have guessed by now, <code class="highlighter-rouge">--stat</code> can be used alongside the other flags listed here to narrow results.</li>
-  <li><strong><code class="highlighter-rouge">git log --no-merges</code></strong>: Omit merge commits from the log output (use <code class="highlighter-rouge">--merges</code> to show <em>only</em> merge commits). I don’t use these as often.</li>
-</ul>
-
-<p>As I mentioned, this is just a list of the tools I use most often to look at the git log. If you want to learn more, Atlassian’s article on <a href="https://www.atlassian.com/git/tutorials/git-log">advanced git logging</a> is a great next step.</p>
 
   </div>
 
