@@ -86,6 +86,82 @@
   <script id="dsq-count-scr" src="//tinixgit.disqus.com/count.js" async></script>
 
 
+  <h1><a href="/ruby/2023/01/19/ruby-map.html">Ruby Map</a></h1>
+  <p class="author">
+    <span class="date">2023-01-19 23:46:38 -0300</span>
+  </p>
+  <div class="content">
+    <p>The Ruby library includes the module Enumerable. This library contains
+map(), reduce(), select(), and other functions.</p>
+
+<p>Map
+This function of the Ruby Enumerable library is simple but profound. The map() method is applied to an array or a hash. The job of map() is to apply a function or block to each member of the array and return a new array.
+So, when you see</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+  <span class="n">xx</span>
+<span class="k">end</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">output_array</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">number</span><span class="o">|</span>
+  <span class="n">f</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+<span class="k">end</span></code></pre></figure>
+
+<p>you read, for each number in [1,2,3,4,5] apply f(x) to return the array
+[f(1), f(2), f(3), f(4), f(5)]. In this case, the answer is [1,4,9,16,25].
+One could encode it in traditional imperative programming as follows:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">output_array</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">number</span> <span class="k">in</span> <span class="mi">1</span><span class="p">.</span><span class="nf">.</span><span class="mi">5</span>
+  <span class="n">output_array</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span> <span class="n">f</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="p">)</span>
+<span class="k">end</span></code></pre></figure>
+
+<p>Using map, for example:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">output_array</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">number</span><span class="o">|</span>
+  <span class="n">number</span> <span class="o">*</span> <span class="n">number</span>
+<span class="k">end</span></code></pre></figure>
+
+<p>Or, you could encode it as follows:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">output_array</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">map</span><span class="p">{</span><span class="o">|</span><span class="n">element</span><span class="o">|</span> <span class="n">element</span> <span class="o">*</span> <span class="n">element</span><span class="p">}</span></code></pre></figure>
+
+<p>[1,2,3,4,5] is the array. The function (or block) to be applied to each
+element is {|element| element<em>element }.
+With the { } syntax, or the do-end syntax, the object in the vertical bars
+(represented by element) is the element of the array currently being acted
+upon by the block, and the last object in any function or block is the return
+value, so element</em>element is returned. The net result is the following:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">25</span><span class="p">]</span></code></pre></figure>
+
+<p>Suppose you wanted to provide data to a graphing program that
+plotted the square of the value.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">map</span><span class="p">{</span><span class="o">|</span><span class="n">element</span><span class="o">|</span> <span class="p">[</span><span class="n">element</span><span class="p">,</span> <span class="n">element</span><span class="o">*</span> <span class="n">element</span><span class="p">]}</span></code></pre></figure>
+
+<p>In this case, each “point” is a tuple (array) with an element and its
+square. This returns the following:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">9</span><span class="p">],[</span><span class="mi">4</span><span class="p">,</span><span class="mi">16</span><span class="p">],[</span><span class="mi">5</span><span class="p">,</span><span class="mi">25</span><span class="p">]]</span></code></pre></figure>
+
+<p>The difference is that the block returns an array each time with the
+number and its square, so the result is an array of arrays.
+Since map returns an array, you can cascade map calls. For example,
+you could have a map block square each element, and then a second map
+block add 100. For example:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">number</span><span class="o">|</span>
+  <span class="n">number</span> <span class="o">*</span> <span class="n">number</span>
+<span class="k">end</span><span class="p">.</span><span class="nf">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">square</span><span class="o">|</span>
+  <span class="n">square</span> <span class="o">+</span> <span class="mi">100</span>
+<span class="k">end</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">=&gt;</span> <span class="p">[</span><span class="mi">101</span><span class="p">,</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">109</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">125</span><span class="p">]</span></code></pre></figure>
+
+<p>A number of the more complex operations can be solved by cascading with map calls.</p>
+
+  </div>
+
   <h1><a href="/ruby/2023/01/16/ruby-block-passing-syntax.html">Ruby Block passing Syntax</a></h1>
   <p class="author">
     <span class="date">2023-01-16 19:22:05 -0300</span>
@@ -365,69 +441,6 @@ it’s good to know it exists, and the kinds of dynamic interfaces it can create
 <p>There is more to learn about <code class="highlighter-rouge">put_in/2</code>  and <code class="highlighter-rouge">update_in/2</code>, including the <code class="highlighter-rouge">get_and_update_in/2</code>  that allows us to extract a value and update the data structure at once. There are also <code class="highlighter-rouge">put_in/3</code>,  <code class="highlighter-rouge">update_in/3</code>  and <code class="highlighter-rouge">get_and_update_in/3</code>  which allow dynamic access into the data structure.</p>
 
 <p>This concludes our introduction to associative data structures in Elixir. You will find out that, given keyword lists and maps, you will always have the right tool to tackle problems that require associative data structures in Elixir.</p>
-
-  </div>
-
-  <h1><a href="/ruby/2021/10/31/ruby-equality-tests.html">Ruby Equality tests</a></h1>
-  <p class="author">
-    <span class="date">2021-10-31 19:21:59 -0300</span>
-  </p>
-  <div class="content">
-    <p>The Object class defines three equality-test methods: ==, eql?, and equal?. At the Object level, all equality-test methods do the same thing: they tell you whether two
-objects are exactly the same object. Here they are in action:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="no">Object</span><span class="p">.</span><span class="nf">new</span>
-<span class="o">=&gt;</span> <span class="c1">#&lt;Object:0x00000101258af8&gt;</span>
-<span class="o">&gt;&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="no">Object</span><span class="p">.</span><span class="nf">new</span>
-<span class="o">=&gt;</span> <span class="c1">#&lt;Object:0x00000101251d70&gt;</span>
-<span class="o">&gt;&gt;</span> <span class="n">a</span> <span class="o">==</span> <span class="n">a</span>
-<span class="o">=&gt;</span> <span class="kp">true</span>
-<span class="o">&gt;&gt;</span> <span class="n">a</span> <span class="o">==</span> <span class="n">b</span>
-<span class="o">=&gt;</span> <span class="kp">false</span>
-<span class="o">&gt;&gt;</span> <span class="n">a</span> <span class="o">!=</span> <span class="n">b</span>
-<span class="o">=&gt;</span> <span class="kp">true</span>
-<span class="o">&gt;&gt;</span> <span class="n">a</span><span class="p">.</span><span class="nf">eql?</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-<span class="o">=&gt;</span> <span class="kp">true</span>
-<span class="o">&gt;&gt;</span> <span class="n">a</span><span class="p">.</span><span class="nf">eql?</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
-<span class="o">=&gt;</span> <span class="kp">false</span>
-<span class="o">&gt;&gt;</span> <span class="n">a</span><span class="p">.</span><span class="nf">equal?</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-<span class="o">=&gt;</span> <span class="kp">true</span>
-<span class="o">&gt;&gt;</span> <span class="n">a</span><span class="p">.</span><span class="nf">equal?</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
-<span class="o">=&gt;</span> <span class="kp">false</span></code></pre></figure>
-
-<p>All three of the positive equality-test methods give the same results in these examples: 
-when you test a against a, the result is true, and when you test a against b, the result is false. (The not-equal or negative equality test method != is the inverse of the ==
-method; in fact, if you define ==, your objects will automatically have the != method.)
-We have plenty of ways to establish that a is a but not b.</p>
-
-<h5 id="but-there-isnt-much-point-in-having-three-tests-that-do-the-same-thing">But there isn’t much point in having three tests that do the same thing.</h5>
-<p>Further down the road, in classes other than Object, == and/or eql? are typically redefined to do meaningful work for different objects. For example, String redefines == and eql? to return whether the value of the strings being compared are identical. Two strings
-can have the same value but in fact be different objects. The equal? method retains its Object definition and checks if two strings are exactly the same object. Let’s look at string equality in action:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&gt;&gt;</span> <span class="n">string1</span> <span class="o">=</span> <span class="s2">"text"</span>
-<span class="o">=&gt;</span> <span class="s2">"text"</span>
-<span class="o">&gt;&gt;</span> <span class="n">string2</span> <span class="o">=</span> <span class="s2">"text"</span>
-<span class="o">=&gt;</span> <span class="s2">"text"</span>
-<span class="o">&gt;&gt;</span> <span class="n">string1</span> <span class="o">==</span> <span class="n">string2</span>
-<span class="o">=&gt;</span> <span class="kp">true</span>
-<span class="o">&gt;&gt;</span> <span class="n">string1</span><span class="p">.</span><span class="nf">eql?</span><span class="p">(</span><span class="n">string2</span><span class="p">)</span>
-<span class="o">=&gt;</span> <span class="kp">true</span>
-<span class="o">&gt;&gt;</span> <span class="n">string1</span><span class="p">.</span><span class="nf">equal?</span><span class="p">(</span><span class="n">string2</span><span class="p">)</span>
-<span class="o">=&gt;</span> <span class="kp">false</span></code></pre></figure>
-
-<p>As you can see, the strings are == and eql?, but not equal?. Ruby recommends against redefining equal? so that it can always be used to determine object identity.</p>
-
-<p>Why do we have == and eql? if they’re synonymous at the Object level? Because it gives us more flexibility as we subclass Object. Because we don’t redefine equal?, we
-have the option to redefine either == or eql? and compare objects in different ways.</p>
-
-<p>For example, in the Numeric class (a superclass of Integer and Float), == performs type conversion before making a comparison but eql? doesn’t:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&gt;&gt;</span> <span class="mi">5</span> <span class="o">==</span> <span class="mi">5</span><span class="o">.</span><span class="mi">0</span>
-<span class="o">=&gt;</span> <span class="kp">true</span>
-<span class="o">&gt;&gt;</span> <span class="mi">5</span><span class="p">.</span><span class="nf">eql?</span> <span class="mi">5</span><span class="o">.</span><span class="mi">0</span>
-<span class="o">=&gt;</span> <span class="kp">false</span></code></pre></figure>
-
-<p>Ruby gives you a suite of tools for object comparisons, and not always just comparison for equality.</p>
 
   </div>
 

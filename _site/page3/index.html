@@ -86,6 +86,78 @@
   <script id="dsq-count-scr" src="//tinixgit.disqus.com/count.js" async></script>
 
 
+  <h1><a href="/docker/2020/02/19/install-docker-on-ubuntu-1810.html">Install Docker on Ubuntu 18.10</a></h1>
+  <p class="author">
+    <span class="date">2020-02-19 00:22:50 -0300</span>
+  </p>
+  <div class="content">
+    <p><img src="http://localhost:3000/images/instalar-docker-en-Ubuntu.jpg" alt="useful image" /></p>
+<h2 id="lets-install-docker">let’s install Docker</h2>
+<p>Step 1: Update Local Database
+Update the local database with the command:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span></code></pre></figure>
+
+<p>Step 2: Download Dependencies
+You’ll need to run these commands to allow your operating system to access the Docker repositories over HTTPS.</p>
+
+<p>In the terminal window, type:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">tinix</span><span class="vi">@yandex</span><span class="ss">:/</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">apt</span><span class="o">-</span><span class="n">transport</span><span class="o">-</span><span class="n">https</span> <span class="n">ca</span><span class="o">-</span><span class="n">certificates</span> <span class="n">curl</span> <span class="n">software</span><span class="o">-</span><span class="n">properties</span><span class="o">-</span><span class="n">common</span></code></pre></figure>
+
+<p>To clarify, here’s a brief breakdown of each command:</p>
+
+<ul>
+  <li>apt-transport-https: Allows the package manager to transfer files and data over https</li>
+  <li>ca-certificates: Allows the system (and web browser) to check security certificates</li>
+  <li>curl: This is a tool for transferring data</li>
+  <li>software-properties-common: Adds scripts for managing software</li>
+</ul>
+
+<p>Step 3: Add Docker’s GPG Key
+The GPG key is a security feature.</p>
+
+<p>To ensure that the software you’re installing is authentic, enter:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">tinix</span><span class="vi">@yandex</span><span class="ss">:/</span><span class="err">$</span> <span class="n">curl</span> <span class="o">-</span><span class="n">fsSL</span> <span class="n">https</span><span class="ss">:/</span><span class="o">/</span><span class="n">download</span><span class="p">.</span><span class="nf">docker</span><span class="p">.</span><span class="nf">com</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">ubuntu</span><span class="o">/</span><span class="n">gpg</span> <span class="o">|</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">key</span> <span class="n">add</span> <span class="o">-</span></code></pre></figure>
+
+<h1 id="add-the-repository">Add the repository</h1>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">tinix</span><span class="vi">@yandex</span><span class="ss">:/</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">add</span><span class="o">-</span><span class="n">apt</span><span class="o">-</span><span class="n">repository</span> <span class="s2">"deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"</span></code></pre></figure>
+
+<h1 id="update-again">Update again</h1>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">tinix</span><span class="vi">@yandex</span><span class="ss">:/</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span></code></pre></figure>
+
+<h1 id="install-docker">install docker</h1>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"> <span class="n">tinix</span><span class="vi">@yandex</span><span class="ss">:/</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">docker</span><span class="o">-</span><span class="n">ce</span></code></pre></figure>
+
+<h1 id="start-with-the-system">start with the system</h1>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">tinix</span><span class="vi">@yandex</span><span class="ss">:/</span><span class="err">$</span> <span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">enable</span> <span class="n">docker</span></code></pre></figure>
+
+<h1 id="add-new-user">add new user</h1>
+<p>for example check you user</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">tinix</span><span class="vi">@yandex</span><span class="ss">:/</span><span class="err">$</span> <span class="n">whoami</span>
+<span class="n">tinix</span>
+<span class="err">$</span> <span class="n">sudo</span> <span class="n">usermod</span> <span class="o">-</span><span class="n">aG</span> <span class="n">docker</span> <span class="n">tinix</span></code></pre></figure>
+
+<h1 id="leave-session">leave session</h1>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">tinix</span><span class="vi">@yandex</span><span class="ss">:/</span><span class="err">$</span> <span class="nb">exit</span></code></pre></figure>
+
+<h1 id="start-again-with-the-new-user-and-check">start again with the new user and check</h1>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">tinix</span><span class="vi">@yandex</span><span class="ss">:/</span><span class="err">$</span> <span class="n">docker</span> <span class="n">run</span> <span class="n">hello</span><span class="o">-</span><span class="n">world</span></code></pre></figure>
+
+<p>that’s all folks..!!</p>
+
+<hr />
+
+  </div>
+
   <h1><a href="/elixir/2018/09/28/ruby-vs-elixir-rails-vs-phoenix-part-2.html">Ruby vs Elixir ,  Rails vs Phoenix - part 2</a></h1>
   <p class="author">
     <span class="date">2018-09-28 16:52:56 -0300</span>
@@ -284,88 +356,6 @@ In Ruby, there is rake, in Elixir there is mix.</p>
 <p>if you want load theme</p>
 
 <p>SPC T s and select theme and enter</p>
-
-  </div>
-
-  <h1><a href="/npm/2018/02/01/how-to-install-latest-nodejs-npm-on-debian.html">How to Install Latest Nodejs & NPM on Debian</a></h1>
-  <p class="author">
-    <span class="date">2018-02-01 11:48:03 -0300</span>
-  </p>
-  <div class="content">
-    <p><strong>npm installation not working under Debian Stretch</strong></p>
-
-<p>I just tried to install node and npm on Debian Stretch. I installed node like decribed here.</p>
-
-<p>After installing nodejs-legacy too I got the node command working but npm command still won’t be found.</p>
-
-<p>So, I tried to install it manually via apt-get install npm but it just tells me that it can’t find the package. Next I tried the “Fancy Install (Unix)” from npm repository which fails with…</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">install</span> <span class="n">npm</span><span class="vi">@latest</span>
-<span class="ss">fetching: </span><span class="n">https</span><span class="ss">:/</span><span class="o">/</span><span class="n">registry</span><span class="p">.</span><span class="nf">npmjs</span><span class="p">.</span><span class="nf">org</span><span class="o">/</span><span class="n">npm</span><span class="o">/-</span><span class="sr">/npm-5.5.1.tgz
-module.js:327
-    throw err;
-    ^
-
-Error: Cannot find module '/</span><span class="n">tmp</span><span class="o">/</span><span class="n">npm</span><span class="o">.</span><span class="mi">1272</span><span class="o">/</span><span class="n">package</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">read</span><span class="o">-</span><span class="n">package</span><span class="o">-</span><span class="n">json</span><span class="p">.</span><span class="nf">js</span><span class="err">'</span>
-    <span class="n">at</span> <span class="no">Function</span><span class="o">.</span><span class="no">Module</span><span class="p">.</span><span class="nf">_resolveFilename</span> <span class="p">(</span><span class="n">module</span><span class="p">.</span><span class="nf">js</span><span class="p">:</span><span class="mi">325</span><span class="p">:</span><span class="mi">15</span><span class="p">)</span>
-    <span class="n">at</span> <span class="no">Function</span><span class="o">.</span><span class="no">Module</span><span class="p">.</span><span class="nf">_load</span> <span class="p">(</span><span class="n">module</span><span class="p">.</span><span class="nf">js</span><span class="p">:</span><span class="mi">276</span><span class="p">:</span><span class="mi">25</span><span class="p">)</span>
-    <span class="n">at</span> <span class="no">Function</span><span class="o">.</span><span class="no">Module</span><span class="p">.</span><span class="nf">runMain</span> <span class="p">(</span><span class="n">module</span><span class="p">.</span><span class="nf">js</span><span class="p">:</span><span class="mi">441</span><span class="p">:</span><span class="mi">10</span><span class="p">)</span>
-    <span class="n">at</span> <span class="n">startup</span> <span class="p">(</span><span class="n">node</span><span class="p">.</span><span class="nf">js</span><span class="p">:</span><span class="mi">140</span><span class="p">:</span><span class="mi">18</span><span class="p">)</span>
-    <span class="n">at</span> <span class="n">node</span><span class="p">.</span><span class="nf">js</span><span class="p">:</span><span class="mi">1043</span><span class="p">:</span><span class="mi">3</span>
-<span class="n">added</span> <span class="mi">1</span> <span class="n">package</span> <span class="n">and</span> <span class="n">removed</span> <span class="mi">1</span> <span class="n">package</span> <span class="k">in</span> <span class="mi">0</span><span class="o">.</span><span class="mi">45</span><span class="n">s</span>
-<span class="sr">/usr/</span><span class="n">bin</span><span class="o">/</span><span class="n">npm</span> <span class="o">-&gt;</span> <span class="sr">/usr/</span><span class="n">lib</span><span class="o">/</span><span class="n">node_modules</span><span class="o">/</span><span class="n">npm</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">npm</span><span class="o">-</span><span class="n">cli</span><span class="p">.</span><span class="nf">js</span>
-<span class="sr">/usr/</span><span class="n">bin</span><span class="o">/</span><span class="n">npx</span> <span class="o">-&gt;</span> <span class="sr">/usr/</span><span class="n">lib</span><span class="o">/</span><span class="n">node_modules</span><span class="o">/</span><span class="n">npm</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">npx</span><span class="o">-</span><span class="n">cli</span><span class="p">.</span><span class="nf">js</span>
-<span class="o">+</span> <span class="n">npm</span><span class="err">@</span><span class="mi">5</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">1</span>
-<span class="n">updated</span> <span class="mi">1</span> <span class="n">package</span> <span class="k">in</span> <span class="mi">1</span><span class="o">.</span><span class="mi">21</span><span class="n">s</span>
-<span class="no">It</span> <span class="n">worked</span></code></pre></figure>
-
-<p>later I look this a solution I things so … and saw if install nvm and later install with nvm install npm ???
-ok I go</p>
-
-<p>open <a href="https://github.com/creationix/nvm">https://github.com/creationix/nvm</a> 
-install NVM Node Version Manager</p>
-
-<p>Install script
-To install or update nvm, you can use the install script using cURL:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">curl</span> <span class="o">-</span><span class="n">o</span><span class="o">-</span> <span class="n">https</span><span class="ss">:/</span><span class="o">/</span><span class="n">raw</span><span class="p">.</span><span class="nf">githubusercontent</span><span class="p">.</span><span class="nf">com</span><span class="o">/</span><span class="n">creationix</span><span class="o">/</span><span class="n">nvm</span><span class="o">/</span><span class="n">v0</span><span class="o">.</span><span class="mi">33</span><span class="o">.</span><span class="mi">8</span><span class="o">/</span><span class="n">install</span><span class="p">.</span><span class="nf">sh</span> <span class="o">|</span> <span class="n">bash</span></code></pre></figure>
-
-<p>or Wget</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">wget</span> <span class="o">-</span><span class="n">qO</span><span class="o">-</span> <span class="n">https</span><span class="ss">:/</span><span class="o">/</span><span class="n">raw</span><span class="p">.</span><span class="nf">githubusercontent</span><span class="p">.</span><span class="nf">com</span><span class="o">/</span><span class="n">creationix</span><span class="o">/</span><span class="n">nvm</span><span class="o">/</span><span class="n">v0</span><span class="o">.</span><span class="mi">33</span><span class="o">.</span><span class="mi">8</span><span class="o">/</span><span class="n">install</span><span class="p">.</span><span class="nf">sh</span> <span class="o">|</span> <span class="n">bash</span></code></pre></figure>
-
-<p>The script clones the nvm repository to ~/.nvm and adds the source line to your profile (~/.bash_profile, ~/.zshrc, ~/.profile, or ~/.bashrc).</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">export</span> <span class="no">NVM_DIR</span><span class="o">=</span><span class="s2">"$HOME/.nvm"</span>
-<span class="p">[</span> <span class="o">-</span><span class="n">s</span> <span class="s2">"$NVM_DIR/nvm.sh"</span> <span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="p">\</span><span class="o">.</span> <span class="s2">"$NVM_DIR/nvm.sh"</span> <span class="c1"># This loads nvm</span></code></pre></figure>
-
-<p>Note: On Linux, after running the install script, if you get nvm: command not found or see no feedback from your terminal after you type:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">command</span> <span class="o">-</span><span class="n">v</span> <span class="n">nvm</span></code></pre></figure>
-
-<p>or run</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">nvm</span> <span class="o">--</span><span class="n">version</span></code></pre></figure>
-
-<p>later you can run …</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">nvm</span> <span class="n">install</span> <span class="n">node</span>
-<span class="no">Downloading</span> <span class="n">and</span> <span class="n">installing</span> <span class="n">node</span> <span class="n">v9</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">0</span><span class="p">.</span><span class="nf">.</span><span class="o">.</span>
-<span class="no">Downloading</span> <span class="n">https</span><span class="ss">:/</span><span class="o">/</span><span class="n">nodejs</span><span class="p">.</span><span class="nf">org</span><span class="o">/</span><span class="n">dist</span><span class="o">/</span><span class="n">v9</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">0</span><span class="o">/</span><span class="n">node</span><span class="o">-</span><span class="n">v9</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">x64</span><span class="p">.</span><span class="nf">tar</span><span class="p">.</span><span class="nf">xz</span><span class="p">.</span><span class="nf">.</span><span class="o">.</span>
-<span class="c1">######################################################################## 100.0%</span>
-<span class="no">Computing</span> <span class="n">checksum</span> <span class="n">with</span> <span class="n">sha256sum</span>
-<span class="no">Checksums</span> <span class="n">matched!</span>
-<span class="no">Now</span> <span class="n">using</span> <span class="n">node</span> <span class="n">v9</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">0</span> <span class="p">(</span><span class="n">npm</span> <span class="n">v5</span><span class="o">.</span><span class="mi">6</span><span class="o">.</span><span class="mi">0</span><span class="p">)</span>
-<span class="no">Creating</span> <span class="n">default</span> <span class="ss">alias: </span><span class="n">default</span> <span class="o">-&gt;</span> <span class="n">node</span> <span class="p">(</span><span class="o">-&gt;</span> <span class="n">v9</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">0</span><span class="p">)</span>
-<span class="err"> </span><span class="n">tinix</span><span class="err">  </span><span class="o">~</span><span class="err">  </span><span class="n">node</span> <span class="o">-</span><span class="n">v</span>
-<span class="n">v9</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">0</span></code></pre></figure>
-
-<p>look this…</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err"> </span><span class="n">tinix</span><span class="err">  </span><span class="o">~</span><span class="err">  </span><span class="n">node</span> <span class="o">-</span><span class="n">v</span>
-<span class="n">v9</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">0</span></code></pre></figure>
-
-<p>problem solved..!!!</p>
 
   </div>
 

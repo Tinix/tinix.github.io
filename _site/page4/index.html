@@ -86,6 +86,88 @@
   <script id="dsq-count-scr" src="//tinixgit.disqus.com/count.js" async></script>
 
 
+  <h1><a href="/npm/2018/02/01/how-to-install-latest-nodejs-npm-on-debian.html">How to Install Latest Nodejs & NPM on Debian</a></h1>
+  <p class="author">
+    <span class="date">2018-02-01 11:48:03 -0300</span>
+  </p>
+  <div class="content">
+    <p><strong>npm installation not working under Debian Stretch</strong></p>
+
+<p>I just tried to install node and npm on Debian Stretch. I installed node like decribed here.</p>
+
+<p>After installing nodejs-legacy too I got the node command working but npm command still won’t be found.</p>
+
+<p>So, I tried to install it manually via apt-get install npm but it just tells me that it can’t find the package. Next I tried the “Fancy Install (Unix)” from npm repository which fails with…</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">install</span> <span class="n">npm</span><span class="vi">@latest</span>
+<span class="ss">fetching: </span><span class="n">https</span><span class="ss">:/</span><span class="o">/</span><span class="n">registry</span><span class="p">.</span><span class="nf">npmjs</span><span class="p">.</span><span class="nf">org</span><span class="o">/</span><span class="n">npm</span><span class="o">/-</span><span class="sr">/npm-5.5.1.tgz
+module.js:327
+    throw err;
+    ^
+
+Error: Cannot find module '/</span><span class="n">tmp</span><span class="o">/</span><span class="n">npm</span><span class="o">.</span><span class="mi">1272</span><span class="o">/</span><span class="n">package</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">read</span><span class="o">-</span><span class="n">package</span><span class="o">-</span><span class="n">json</span><span class="p">.</span><span class="nf">js</span><span class="err">'</span>
+    <span class="n">at</span> <span class="no">Function</span><span class="o">.</span><span class="no">Module</span><span class="p">.</span><span class="nf">_resolveFilename</span> <span class="p">(</span><span class="n">module</span><span class="p">.</span><span class="nf">js</span><span class="p">:</span><span class="mi">325</span><span class="p">:</span><span class="mi">15</span><span class="p">)</span>
+    <span class="n">at</span> <span class="no">Function</span><span class="o">.</span><span class="no">Module</span><span class="p">.</span><span class="nf">_load</span> <span class="p">(</span><span class="n">module</span><span class="p">.</span><span class="nf">js</span><span class="p">:</span><span class="mi">276</span><span class="p">:</span><span class="mi">25</span><span class="p">)</span>
+    <span class="n">at</span> <span class="no">Function</span><span class="o">.</span><span class="no">Module</span><span class="p">.</span><span class="nf">runMain</span> <span class="p">(</span><span class="n">module</span><span class="p">.</span><span class="nf">js</span><span class="p">:</span><span class="mi">441</span><span class="p">:</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">at</span> <span class="n">startup</span> <span class="p">(</span><span class="n">node</span><span class="p">.</span><span class="nf">js</span><span class="p">:</span><span class="mi">140</span><span class="p">:</span><span class="mi">18</span><span class="p">)</span>
+    <span class="n">at</span> <span class="n">node</span><span class="p">.</span><span class="nf">js</span><span class="p">:</span><span class="mi">1043</span><span class="p">:</span><span class="mi">3</span>
+<span class="n">added</span> <span class="mi">1</span> <span class="n">package</span> <span class="n">and</span> <span class="n">removed</span> <span class="mi">1</span> <span class="n">package</span> <span class="k">in</span> <span class="mi">0</span><span class="o">.</span><span class="mi">45</span><span class="n">s</span>
+<span class="sr">/usr/</span><span class="n">bin</span><span class="o">/</span><span class="n">npm</span> <span class="o">-&gt;</span> <span class="sr">/usr/</span><span class="n">lib</span><span class="o">/</span><span class="n">node_modules</span><span class="o">/</span><span class="n">npm</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">npm</span><span class="o">-</span><span class="n">cli</span><span class="p">.</span><span class="nf">js</span>
+<span class="sr">/usr/</span><span class="n">bin</span><span class="o">/</span><span class="n">npx</span> <span class="o">-&gt;</span> <span class="sr">/usr/</span><span class="n">lib</span><span class="o">/</span><span class="n">node_modules</span><span class="o">/</span><span class="n">npm</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">npx</span><span class="o">-</span><span class="n">cli</span><span class="p">.</span><span class="nf">js</span>
+<span class="o">+</span> <span class="n">npm</span><span class="err">@</span><span class="mi">5</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">1</span>
+<span class="n">updated</span> <span class="mi">1</span> <span class="n">package</span> <span class="k">in</span> <span class="mi">1</span><span class="o">.</span><span class="mi">21</span><span class="n">s</span>
+<span class="no">It</span> <span class="n">worked</span></code></pre></figure>
+
+<p>later I look this a solution I things so … and saw if install nvm and later install with nvm install npm ???
+ok I go</p>
+
+<p>open <a href="https://github.com/creationix/nvm">https://github.com/creationix/nvm</a> 
+install NVM Node Version Manager</p>
+
+<p>Install script
+To install or update nvm, you can use the install script using cURL:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">curl</span> <span class="o">-</span><span class="n">o</span><span class="o">-</span> <span class="n">https</span><span class="ss">:/</span><span class="o">/</span><span class="n">raw</span><span class="p">.</span><span class="nf">githubusercontent</span><span class="p">.</span><span class="nf">com</span><span class="o">/</span><span class="n">creationix</span><span class="o">/</span><span class="n">nvm</span><span class="o">/</span><span class="n">v0</span><span class="o">.</span><span class="mi">33</span><span class="o">.</span><span class="mi">8</span><span class="o">/</span><span class="n">install</span><span class="p">.</span><span class="nf">sh</span> <span class="o">|</span> <span class="n">bash</span></code></pre></figure>
+
+<p>or Wget</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">wget</span> <span class="o">-</span><span class="n">qO</span><span class="o">-</span> <span class="n">https</span><span class="ss">:/</span><span class="o">/</span><span class="n">raw</span><span class="p">.</span><span class="nf">githubusercontent</span><span class="p">.</span><span class="nf">com</span><span class="o">/</span><span class="n">creationix</span><span class="o">/</span><span class="n">nvm</span><span class="o">/</span><span class="n">v0</span><span class="o">.</span><span class="mi">33</span><span class="o">.</span><span class="mi">8</span><span class="o">/</span><span class="n">install</span><span class="p">.</span><span class="nf">sh</span> <span class="o">|</span> <span class="n">bash</span></code></pre></figure>
+
+<p>The script clones the nvm repository to ~/.nvm and adds the source line to your profile (~/.bash_profile, ~/.zshrc, ~/.profile, or ~/.bashrc).</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">export</span> <span class="no">NVM_DIR</span><span class="o">=</span><span class="s2">"$HOME/.nvm"</span>
+<span class="p">[</span> <span class="o">-</span><span class="n">s</span> <span class="s2">"$NVM_DIR/nvm.sh"</span> <span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="p">\</span><span class="o">.</span> <span class="s2">"$NVM_DIR/nvm.sh"</span> <span class="c1"># This loads nvm</span></code></pre></figure>
+
+<p>Note: On Linux, after running the install script, if you get nvm: command not found or see no feedback from your terminal after you type:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">command</span> <span class="o">-</span><span class="n">v</span> <span class="n">nvm</span></code></pre></figure>
+
+<p>or run</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">nvm</span> <span class="o">--</span><span class="n">version</span></code></pre></figure>
+
+<p>later you can run …</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">nvm</span> <span class="n">install</span> <span class="n">node</span>
+<span class="no">Downloading</span> <span class="n">and</span> <span class="n">installing</span> <span class="n">node</span> <span class="n">v9</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">0</span><span class="p">.</span><span class="nf">.</span><span class="o">.</span>
+<span class="no">Downloading</span> <span class="n">https</span><span class="ss">:/</span><span class="o">/</span><span class="n">nodejs</span><span class="p">.</span><span class="nf">org</span><span class="o">/</span><span class="n">dist</span><span class="o">/</span><span class="n">v9</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">0</span><span class="o">/</span><span class="n">node</span><span class="o">-</span><span class="n">v9</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">x64</span><span class="p">.</span><span class="nf">tar</span><span class="p">.</span><span class="nf">xz</span><span class="p">.</span><span class="nf">.</span><span class="o">.</span>
+<span class="c1">######################################################################## 100.0%</span>
+<span class="no">Computing</span> <span class="n">checksum</span> <span class="n">with</span> <span class="n">sha256sum</span>
+<span class="no">Checksums</span> <span class="n">matched!</span>
+<span class="no">Now</span> <span class="n">using</span> <span class="n">node</span> <span class="n">v9</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">0</span> <span class="p">(</span><span class="n">npm</span> <span class="n">v5</span><span class="o">.</span><span class="mi">6</span><span class="o">.</span><span class="mi">0</span><span class="p">)</span>
+<span class="no">Creating</span> <span class="n">default</span> <span class="ss">alias: </span><span class="n">default</span> <span class="o">-&gt;</span> <span class="n">node</span> <span class="p">(</span><span class="o">-&gt;</span> <span class="n">v9</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">0</span><span class="p">)</span>
+<span class="err"> </span><span class="n">tinix</span><span class="err">  </span><span class="o">~</span><span class="err">  </span><span class="n">node</span> <span class="o">-</span><span class="n">v</span>
+<span class="n">v9</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">0</span></code></pre></figure>
+
+<p>look this…</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err"> </span><span class="n">tinix</span><span class="err">  </span><span class="o">~</span><span class="err">  </span><span class="n">node</span> <span class="o">-</span><span class="n">v</span>
+<span class="n">v9</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">0</span></code></pre></figure>
+
+<p>problem solved..!!!</p>
+
+  </div>
+
   <h1><a href="/ruby/2018/01/30/ruby-for-rails-blocks.html">Ruby for Rails: Blocks</a></h1>
   <p class="author">
     <span class="date">2018-01-30 12:06:31 -0300</span>
@@ -499,44 +581,6 @@ We learned what is attr_accessor in Rails and how to use it with Rails .</li>
   <span class="n">redirect_to</span> <span class="p">{</span> <span class="ss">:action</span><span class="o">=&gt;</span><span class="s1">'atom'</span> <span class="p">},</span> <span class="ss">:alert</span> <span class="o">=&gt;</span> <span class="s2">"Something serious happened"</span></code></pre></figure>
 
 <p>When using redirect_to :back, if there is no referrer, RedirectBackError will be raised. You may specify some fallback behavior for this case by rescuing RedirectBackError.</p>
-
-  </div>
-
-  <h1><a href="/ruby/2017/09/26/using-delayed-jobs-in-rails.html">Using Delayed Jobs in Rails</a></h1>
-  <p class="author">
-    <span class="date">2017-09-26 09:00:40 -0300</span>
-  </p>
-  <div class="content">
-    <p>When creating a web application sometimes need arises that we have to schedule some jobs during the execution of a particular method. Due to these job the render of the page has to wait until the task gets over.
-This waiting can be sometimes annoying because a user who is waiting for a job to get completed will have to wait for a lot of time if the number of jobs to be performed is more.
-For example if we take the scenario of sending mails to the user. Now for this if we have large number of users to whom we want to send a mail from our application so it will take a lot of time to get completed which no one will like to wait. 
-So by using delayed jobs what we can do is we can execute the processes in the background and user wont have to wait till all the processes are completed. 
-For that we will be using a gem called</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">gem</span> <span class="s1">'delayed_job_active_record'</span></code></pre></figure>
-
-<p>place this gem in your gemfile and run bundle install.
-Now after done with this we need to add the generator of this gem because active record actice records backend requires a job table in which the jobs will be stored in a queue. You can create the table by running the following command</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">rails</span> <span class="n">generate</span> <span class="n">delayed_job</span><span class="ss">:active_record</span></code></pre></figure>
-
-<p>and then run rake db:migrate
-Now when using this in development mode we need to set the queue_adapter in config/application.rb</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">config</span><span class="p">.</span><span class="nf">active_job</span><span class="p">.</span><span class="nf">queue_adapter</span> <span class="o">=</span> <span class="ss">:delayed_job</span></code></pre></figure>
-
-<p>with the help of this queue adapter we dont need to restart delayed Job every time we update our code in development.
-Now once done with this we will have to start the rake job in our console which will allow the jobs to run in the background without having the need to restart it again and again. We need to write this in console</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">rake</span> <span class="n">jobs</span><span class="ss">:work</span></code></pre></figure>
-
-<p>This will start the rake job thread and will wait for a process or a task to come to it.
-Now last thing which we need to do is call the delay method where we actually need our jobs to be processed in background without affecting the current execution. 
-Suppose oif you are sending a mail to all the users who have subscribed for a magazine so the users wont have to wait until the mail is sent to all the users. we will just add the delay method like this</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">NotificationMailer</span><span class="p">.</span><span class="nf">delay</span><span class="p">.</span><span class="nf">notification_email</span><span class="p">(</span><span class="n">email</span><span class="p">)</span></code></pre></figure>
-
-<p>Here notification mailer is the name of the mailer and notification_email is the method through which the mail is being sent. Now the mail will be sent to all users in the background and the execution of the method wont be delayed.</p>
 
   </div>
 

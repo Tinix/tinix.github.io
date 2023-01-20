@@ -86,6 +86,42 @@
   <script id="dsq-count-scr" src="//tinixgit.disqus.com/count.js" async></script>
 
 
+  <h1><a href="/jekyll,/freebsd,/gemsrubygems,/libv8/2016/03/12/problem-solved-with-gem-install-libv8-on-FreeBSD-10.2.html">Problem solved with gem install libv8 on FreeBSD 10.2</a></h1>
+  <p class="author">
+    <span class="date">2016-03-12 15:22:25 -0300</span>
+  </p>
+  <div class="content">
+    <p>This is the output of running the command ‘gem install libv8’:</p>
+
+<p>the result is :
+…….
+An error occurred while installing libv8 (3.16.14.13), and Bundler cannot continue.
+Make sure that <code class="highlighter-rouge">gem install libv8 -v ‘3.16.14.13’</code> succeeds before bundling.</p>
+
+<p>problem solved :</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">sudo</span> <span class="n">gem</span> <span class="n">install</span> <span class="n">libv8</span> <span class="o">-</span><span class="n">v</span> <span class="s1">'3.16.14.13'</span> <span class="o">--</span> <span class="o">--</span><span class="n">with</span><span class="o">-</span><span class="nb">system</span><span class="o">-</span><span class="n">v8</span></code></pre></figure>
+
+<p>then</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">Building</span> <span class="n">native</span> <span class="n">extensions</span> <span class="ss">with: </span><span class="s1">'--with-system-v8'</span>
+<span class="no">This</span> <span class="n">could</span> <span class="n">take</span> <span class="n">a</span> <span class="k">while</span><span class="p">.</span><span class="nf">.</span><span class="o">.</span>
+<span class="no">Successfully</span> <span class="n">installed</span> <span class="n">libv8</span><span class="o">-</span><span class="mi">3</span><span class="o">.</span><span class="mi">16</span><span class="o">.</span><span class="mi">14</span><span class="o">.</span><span class="mi">13</span>
+<span class="no">Parsing</span> <span class="n">documentation</span> <span class="k">for</span> <span class="n">libv8</span><span class="o">-</span><span class="mi">3</span><span class="o">.</span><span class="mi">16</span><span class="o">.</span><span class="mi">14</span><span class="o">.</span><span class="mi">13</span>
+<span class="no">Installing</span> <span class="n">ri</span> <span class="n">documentation</span> <span class="k">for</span> <span class="n">libv8</span><span class="o">-</span><span class="mi">3</span><span class="o">.</span><span class="mi">16</span><span class="o">.</span><span class="mi">14</span><span class="o">.</span><span class="mi">13</span>
+<span class="no">Done</span> <span class="n">installing</span> <span class="n">documentation</span> <span class="k">for</span> <span class="n">libv8</span> <span class="n">after</span> <span class="mi">1</span> <span class="n">seconds</span>
+<span class="mi">1</span> <span class="n">gem</span> <span class="n">installed</span></code></pre></figure>
+
+<p>and finally again running …bundle install</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="vg">$bundle</span> <span class="n">install</span></code></pre></figure>
+
+<p>Hope that helps!</p>
+
+<p>cheers Tinix!</p>
+
+  </div>
+
   <h1><a href="/jekyll/update/2016/03/12/jekyll-start.html">Jekyll start</a></h1>
   <p class="author">
     <span class="date">2016-03-12 15:22:25 -0300</span>
