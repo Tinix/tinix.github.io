@@ -86,6 +86,139 @@
   <script id="dsq-count-scr" src="//tinixgit.disqus.com/count.js" async></script>
 
 
+  <h1><a href="/ruby/2023/01/24/ruby-reduce.html">Ruby Reduce</a></h1>
+  <p class="author">
+    <span class="date">2023-01-24 21:21:27 -0300</span>
+  </p>
+  <div class="content">
+    <p>This function of the Ruby Enumerable library is more complex than map()
+and is quite powerful. The method is applied to a collection (for example,
+an array or a hash). The job of reduce() is to apply a function cumulatively
+to each member of the collection and then return an object (which could
+be an array, a single value, a hash, or anything).</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">reduce</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">:</span><span class="o">+</span><span class="p">)</span></code></pre></figure>
+
+<p>This is like saying for each member of the list, add (:+) the member to
+memo and save the memo for the next element. The initial value of memo is 0
+(the first parameter). Another way to code it is as follows:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">memo</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">each</span><span class="p">{</span><span class="o">|</span><span class="n">element</span><span class="o">|</span> <span class="n">memo</span> <span class="o">=</span> <span class="n">memo</span><span class="p">.</span><span class="nf">+</span><span class="p">(</span><span class="n">element</span><span class="p">)}</span></code></pre></figure>
+
+<p>Or, you can pass reduce a block of code to run. The block comes after
+the closing parenthesis and is surrounded by a do-end construct, or a {}
+construct. The emitted variables are always the memo first and the element
+second. (In this case, the initial value of memo is 33).</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">reduce</span><span class="p">(</span><span class="mi">33</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">memo</span><span class="p">,</span> <span class="n">element</span><span class="o">|</span>
+  <span class="n">memo</span><span class="p">.</span><span class="nf">+</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+<span class="k">end</span>
+<span class="n">memo</span>
+<span class="o">=&gt;</span> <span class="mi">48</span></code></pre></figure>
+
+<p>(You don’t have to call them “memo” or “element,” but that is how they
+behave). After each iteration, the memo takes the value of the last object in
+the block. For example:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">reduce</span><span class="p">(</span><span class="mi">33</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">memo</span><span class="p">,</span> <span class="n">element</span><span class="o">|</span>
+  <span class="n">memo</span><span class="p">.</span><span class="nf">+</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+  <span class="mi">77</span><span class="o">.</span><span class="mi">7</span>
+<span class="k">end</span>
+<span class="o">=&gt;</span> <span class="mi">77</span><span class="o">.</span><span class="mi">7</span></code></pre></figure>
+
+<p>This returned 77.7, because that was the last object in the block.
+Another thing to remember is that the memo returned by the block has
+to be of the same class as the memo emitted by the reduce function. For
+example, when you are using reduce() to build a Hash object, you must
+return the whole Hash object:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">reduce</span><span class="p">({})</span> <span class="k">do</span> <span class="o">|</span><span class="n">memo</span><span class="p">,</span> <span class="n">element</span><span class="o">|</span>
+  <span class="n">memo</span><span class="p">[</span><span class="n">element</span><span class="p">]</span> <span class="o">=</span> <span class="n">element</span><span class="p">.</span><span class="nf">to_s</span>
+<span class="k">end</span></code></pre></figure>
+
+<p>IndexError: index 2 out of string
+There is an error because the first run of the iteration returned
+memo[element], which is a String class, but the input expects it to be a
+Hash. To correct it, make sure that the memo of class Hash is explicitly the last
+object returned, as follows:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">reduce</span><span class="p">({})</span> <span class="k">do</span> <span class="o">|</span><span class="n">memo</span><span class="p">,</span> <span class="n">element</span><span class="o">|</span>
+  <span class="n">memo</span><span class="p">[</span><span class="n">element</span><span class="p">]</span> <span class="o">=</span> <span class="n">element</span><span class="p">.</span><span class="nf">to_s</span>
+  <span class="n">memo</span>
+<span class="k">end</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">=&gt;</span> <span class="p">{</span><span class="mi">1</span><span class="o">=&gt;</span><span class="s2">"1"</span><span class="p">,</span> <span class="mi">2</span><span class="o">=&gt;</span><span class="s2">"2"</span><span class="p">,</span> <span class="mi">3</span><span class="o">=&gt;</span><span class="s2">"3"</span><span class="p">,</span> <span class="mi">4</span><span class="o">=&gt;</span><span class="s2">"4"</span><span class="p">,</span> <span class="mi">5</span><span class="o">=&gt;</span><span class="s2">"5"</span><span class="p">}</span></code></pre></figure>
+
+<p>This worked because memo is a Hash class and was returned every time.
+You can think of the reduce operation as operating on each element
+and saving some kind of memo to carry forward to the operation on the
+next element. In the preceding example, where you calculate the sum of
+five numbers,</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">reduce</span><span class="p">(</span><span class="mi">0</span><span class="p">,:</span><span class="o">+</span><span class="p">)</span></code></pre></figure>
+
+<p>or</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">reduce</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">memo</span><span class="p">,</span> <span class="n">element</span><span class="o">|</span>
+  <span class="n">memo</span> <span class="o">+</span> <span class="n">element</span>
+<span class="k">end</span></code></pre></figure>
+
+<p>you are initializing the remembered quantity with a 0 and telling it to
+remember to add the current element to the previously reduced quantity
+and save it. The initial value of memo is an integer, and the last object
+returned by the reduce block is also an integer.
+You could remember other things in the memo too. For example,
+you could save the last two numbers of a sequence. You would start with
+an initial value of [nil,nil] for the last two remembered things. On every
+iteration, you would push the element onto the memo (end of the array),
+and then you would shift off the first element of the array.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">initial_memo</span> <span class="o">=</span> <span class="p">[</span><span class="kp">nil</span><span class="p">,</span><span class="kp">nil</span><span class="p">]</span>
+<span class="n">last_2</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">.</span><span class="nf">.</span><span class="mi">10</span><span class="p">).</span><span class="nf">reduce</span><span class="p">(</span><span class="n">initial_memo</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">memo</span><span class="p">,</span> <span class="n">element</span><span class="o">|</span>
+   <span class="n">initial_memo</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span> <span class="n">element</span> <span class="p">)</span>
+   <span class="n">initial_memo</span><span class="p">.</span><span class="nf">shift</span>
+   <span class="n">initial_memo</span>
+<span class="k">end</span>
+<span class="o">=&gt;</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">]</span></code></pre></figure>
+
+<p>In general, if you have to remember something about the previously
+used elements when operating on the current element, use reduce(). If
+you don’t need to remember anything, use map().
+Sometimes reduce returns an array, in which case you can cascade it
+with other reduce calls or map calls. For example, if you want to add the
+sum of squares, you can use a map call to square each element, and then a
+reduce call to add them. For example:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">number</span><span class="o">|</span>
+  <span class="n">number</span> <span class="o">*</span> <span class="n">number</span>
+<span class="k">end</span><span class="p">.</span><span class="nf">reduce</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">sum</span><span class="p">,</span> <span class="n">square</span><span class="o">|</span>
+  <span class="n">sum</span> <span class="o">+</span> <span class="n">square</span>
+<span class="k">end</span>
+<span class="o">=&gt;</span> <span class="mi">55</span></code></pre></figure>
+
+<p>Or, perhaps you want to find the odd numbers of the last five in a
+sequence:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">sequence</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">455</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">45</span><span class="p">,</span><span class="mi">66</span><span class="p">,</span><span class="mi">77</span><span class="p">,</span><span class="mi">54</span><span class="p">,</span><span class="mi">23</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">55</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">]</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">sequence</span><span class="p">.</span><span class="nf">reduce</span><span class="p">([</span><span class="kp">nil</span><span class="p">,</span><span class="kp">nil</span><span class="p">,</span><span class="kp">nil</span><span class="p">,</span><span class="kp">nil</span><span class="p">,</span><span class="kp">nil</span><span class="p">])</span> <span class="k">do</span> <span class="o">|</span><span class="n">memo</span><span class="p">,</span> <span class="n">number</span><span class="o">|</span>
+  <span class="n">memo</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+  <span class="n">memo</span><span class="p">.</span><span class="nf">shift</span>
+  <span class="n">memo</span>
+<span class="k">end</span><span class="p">.</span><span class="nf">select</span> <span class="k">do</span> <span class="o">|</span><span class="n">one_of_last_5</span><span class="o">|</span>
+  <span class="n">one_of_last_5</span><span class="o">%</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="k">end</span>
+<span class="o">=&gt;</span> <span class="p">[</span><span class="mi">23</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span></code></pre></figure>
+
+<p>If this seems complex and idiomatic, don’t worry, because we’ll
+explore these programming mechanics later in the blog. It suffices to say
+that reduce can be used on both sides of a data-processing cascade. And
+please always remember that the input memo must be of the same class or
+structure as the output memo.</p>
+
+  </div>
+
   <h1><a href="/ruby/2023/01/19/ruby-map.html">Ruby Map</a></h1>
   <p class="author">
     <span class="date">2023-01-19 23:46:38 -0300</span>
@@ -313,134 +446,6 @@ class like the following:</p>
 
 <p>You probably won’t use method_missing extensively in your Rails apps, but
 it’s good to know it exists, and the kinds of dynamic interfaces it can create.</p>
-
-  </div>
-
-  <h1><a href="/elixir/2021/11/10/elixir-maps.html">Elixir  - Maps</a></h1>
-  <p class="author">
-    <span class="date">2021-11-10 18:16:18 -0300</span>
-  </p>
-  <div class="content">
-    <h2 id="maps">Maps</h2>
-<p>Whenever you need a key-value store, maps are the “go to” data structure in Elixir. A map is created using the <code class="highlighter-rouge">%{}</code> syntax:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">iex</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="sx">%{:a =&gt; 1, 2 =&gt; :b}</span>
-<span class="sx">%{2 =&gt; :b, :a =&gt; 1}</span>
-<span class="n">iex</span><span class="o">&gt;</span> <span class="n">map</span><span class="p">[</span><span class="ss">:a</span><span class="p">]</span>
-<span class="mi">1</span>
-<span class="n">iex</span><span class="o">&gt;</span> <span class="n">map</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-<span class="ss">:b</span>
-<span class="n">iex</span><span class="o">&gt;</span> <span class="n">map</span><span class="p">[</span><span class="ss">:c</span><span class="p">]</span>
-<span class="kp">nil</span></code></pre></figure>
-
-<p>Compared to keyword lists, we can already see two differences:</p>
-
-<ul>
-  <li>Maps allow any value as a key.</li>
-  <li>Maps’ keys do not follow any ordering.</li>
-</ul>
-
-<p>In contrast to keyword lists, maps are very useful with pattern matching. When a map is used in a pattern, it will always match on a subset of the given value:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">iex</span><span class="o">&gt;</span> <span class="sx">%{}</span> <span class="o">=</span> <span class="sx">%{:a =&gt; 1, 2 =&gt; :b}</span>
-<span class="sx">%{2 =&gt; :b, :a =&gt; 1}</span>
-<span class="n">iex</span><span class="o">&gt;</span> <span class="sx">%{:a =&gt; a}</span> <span class="o">=</span> <span class="sx">%{:a =&gt; 1, 2 =&gt; :b}</span>
-<span class="sx">%{2 =&gt; :b, :a =&gt; 1}</span>
-<span class="n">iex</span><span class="o">&gt;</span> <span class="n">a</span>
-<span class="mi">1</span>
-<span class="n">iex</span><span class="o">&gt;</span> <span class="sx">%{:c =&gt; c}</span> <span class="o">=</span> <span class="sx">%{:a =&gt; 1, 2 =&gt; :b}</span>
-<span class="o">**</span> <span class="p">(</span><span class="no">MatchError</span><span class="p">)</span> <span class="n">no</span> <span class="n">match</span> <span class="n">of</span> <span class="n">right</span> <span class="n">hand</span> <span class="n">side</span> <span class="ss">value: </span><span class="sx">%{2 =&gt; :b, :a =&gt; 1}</span></code></pre></figure>
-
-<p>As shown above, a map matches as long as the keys in the pattern exist in the given map. Therefore, an empty map matches all maps.</p>
-
-<p>Variables can be used when accessing, matching and adding map keys:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">iex</span><span class="o">&gt;</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="mi">1</span>
-<span class="n">iex</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="sx">%{n =&gt; :one}</span>
-<span class="sx">%{1 =&gt; :one}</span>
-<span class="n">iex</span><span class="o">&gt;</span> <span class="n">map</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
-<span class="ss">:one</span>
-<span class="n">iex</span><span class="o">&gt;</span> <span class="sx">%{^n =&gt; :one}</span> <span class="o">=</span> <span class="sx">%{1 =&gt; :one, 2 =&gt; :two, 3 =&gt; :three}</span>
-<span class="sx">%{1 =&gt; :one, 2 =&gt; :two, 3 =&gt; :three}</span></code></pre></figure>
-
-<p><a href="https://hexdocs.pm/elixir/Map.html">The Map module</a> provides a very similar API to the <code class="highlighter-rouge">Keyword</code> module with convenience functions to manipulate maps:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">iex</span><span class="o">&gt;</span> <span class="no">Map</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="sx">%{:a =&gt; 1, 2 =&gt; :b}</span><span class="p">,</span> <span class="ss">:a</span><span class="p">)</span>
-<span class="mi">1</span>
-<span class="n">iex</span><span class="o">&gt;</span> <span class="no">Map</span><span class="p">.</span><span class="nf">put</span><span class="p">(</span><span class="sx">%{:a =&gt; 1, 2 =&gt; :b}</span><span class="p">,</span> <span class="ss">:c</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-<span class="sx">%{2 =&gt; :b, :a =&gt; 1, :c =&gt; 3}</span>
-<span class="n">iex</span><span class="o">&gt;</span> <span class="no">Map</span><span class="p">.</span><span class="nf">to_list</span><span class="p">(</span><span class="sx">%{:a =&gt; 1, 2 =&gt; :b}</span><span class="p">)</span>
-<span class="p">[{</span><span class="mi">2</span><span class="p">,</span> <span class="ss">:b</span><span class="p">},</span> <span class="p">{</span><span class="ss">:a</span><span class="p">,</span> <span class="mi">1</span><span class="p">}]</span></code></pre></figure>
-
-<p>Maps have the following syntax for updating a key’s value:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">iex</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="sx">%{:a =&gt; 1, 2 =&gt; :b}</span>
-<span class="sx">%{2 =&gt; :b, :a =&gt; 1}</span>
-
-<span class="n">iex</span><span class="o">&gt;</span> <span class="sx">%{map | 2 =&gt; "two"}</span>
-<span class="sx">%{2 =&gt; "two", :a =&gt; 1}</span>
-<span class="n">iex</span><span class="o">&gt;</span> <span class="sx">%{map | :c =&gt; 3}</span>
-<span class="o">**</span> <span class="p">(</span><span class="no">KeyError</span><span class="p">)</span> <span class="n">key</span> <span class="ss">:c</span> <span class="n">not</span> <span class="n">found</span> <span class="ss">in: </span><span class="sx">%{2 =&gt; :b, :a =&gt; 1}</span></code></pre></figure>
-
-<p>The syntax above requires the given key to exist. It cannot be used to add new keys. For example, using it with the <code class="highlighter-rouge">:c</code> key failed because there is no <code class="highlighter-rouge">:c</code> in the map.</p>
-
-<p>When all the keys in a map are atoms, you can use the keyword syntax for convenience:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">iex</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="sx">%{a: 1, b: 2}</span>
-<span class="sx">%{a: 1, b: 2}</span></code></pre></figure>
-
-<p>Another interesting property of maps is that they provide their own syntax for accessing atom keys:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">iex</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="sx">%{:a =&gt; 1, 2 =&gt; :b}</span>
-<span class="sx">%{2 =&gt; :b, :a =&gt; 1}</span>
-
-<span class="n">iex</span><span class="o">&gt;</span> <span class="n">map</span><span class="p">.</span><span class="nf">a</span>
-<span class="mi">1</span>
-<span class="n">iex</span><span class="o">&gt;</span> <span class="n">map</span><span class="p">.</span><span class="nf">c</span>
-<span class="o">**</span> <span class="p">(</span><span class="no">KeyError</span><span class="p">)</span> <span class="n">key</span> <span class="ss">:c</span> <span class="n">not</span> <span class="n">found</span> <span class="ss">in: </span><span class="sx">%{2 =&gt; :b, :a =&gt; 1}</span></code></pre></figure>
-
-<p>Elixir developers typically prefer to use the <code class="highlighter-rouge">map.field</code> syntax and pattern matching instead of the functions in the <code class="highlighter-rouge">Map</code>  module when working with maps because they lead to an assertive style of programming. <a href="https://dashbit.co/blog/writing-assertive-code-with-elixir">This blog post by José Valim</a> provides insight and examples on how you get more concise and faster software by writing assertive code in Elixir.</p>
-
-<h3 id="nested-data-structures">Nested data structures</h3>
-
-<p>Often we will have maps inside maps, or even keywords lists inside maps, and so forth. Elixir provides conveniences for manipulating nested data structures via the <code class="highlighter-rouge">put_in/2</code> , <code class="highlighter-rouge">update_in/2</code>  and other macros giving the same conveniences you would find in imperative languages while keeping the immutable properties of the language.</p>
-
-<p>Imagine you have the following structure:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">iex</span><span class="o">&gt;</span> <span class="n">users</span> <span class="o">=</span> <span class="p">[</span>
-  <span class="ss">john: </span><span class="sx">%{name: "John", age: 27, languages: ["Erlang", "Ruby", "Elixir"]}</span><span class="p">,</span>
-  <span class="ss">mary: </span><span class="sx">%{name: "Mary", age: 29, languages: ["Elixir", "F#", "Clojure"]}</span>
-<span class="p">]</span>
-<span class="p">[</span>
-  <span class="ss">john: </span><span class="sx">%{age: 27, languages: ["Erlang", "Ruby", "Elixir"], name: "John"}</span><span class="p">,</span>
-  <span class="ss">mary: </span><span class="sx">%{age: 29, languages: ["Elixir", "F#", "Clojure"], name: "Mary"}</span>
-<span class="p">]</span></code></pre></figure>
-
-<p>We have a keyword list of users where each value is a map containing the name, age and a list of programming languages each user likes. If we wanted to access the age for john, we could write:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">iex</span><span class="o">&gt;</span> <span class="n">users</span><span class="p">[</span><span class="ss">:john</span><span class="p">].</span><span class="nf">age</span>
-<span class="mi">27</span></code></pre></figure>
-
-<p>It happens we can also use this same syntax for updating the value:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">iex</span><span class="o">&gt;</span> <span class="n">users</span> <span class="o">=</span> <span class="n">put_in</span> <span class="n">users</span><span class="p">[</span><span class="ss">:john</span><span class="p">].</span><span class="nf">age</span><span class="p">,</span> <span class="mi">31</span>
-<span class="p">[</span>
-  <span class="ss">john: </span><span class="sx">%{age: 31, languages: ["Erlang", "Ruby", "Elixir"], name: "John"}</span><span class="p">,</span>
-  <span class="ss">mary: </span><span class="sx">%{age: 29, languages: ["Elixir", "F#", "Clojure"], name: "Mary"}</span>
-<span class="p">]</span></code></pre></figure>
-
-<p>The <code class="highlighter-rouge">update_in/2</code>  macro is similar but allows us to pass a function that controls how the value changes. For example, let’s remove “Clojure” from Mary’s list of languages:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">iex</span><span class="o">&gt;</span> <span class="n">users</span> <span class="o">=</span> <span class="n">update_in</span> <span class="n">users</span><span class="p">[</span><span class="ss">:mary</span><span class="p">].</span><span class="nf">languages</span><span class="p">,</span> <span class="n">fn</span> <span class="n">languages</span> <span class="o">-&gt;</span> <span class="no">List</span><span class="p">.</span><span class="nf">delete</span><span class="p">(</span><span class="n">languages</span><span class="p">,</span> <span class="s2">"Clojure"</span><span class="p">)</span> <span class="k">end</span>
-<span class="p">[</span>
-  <span class="ss">john: </span><span class="sx">%{age: 31, languages: ["Erlang", "Ruby", "Elixir"], name: "John"}</span><span class="p">,</span>
-  <span class="ss">mary: </span><span class="sx">%{age: 29, languages: ["Elixir", "F#"], name: "Mary"}</span>
-<span class="p">]</span></code></pre></figure>
-
-<p>There is more to learn about <code class="highlighter-rouge">put_in/2</code>  and <code class="highlighter-rouge">update_in/2</code>, including the <code class="highlighter-rouge">get_and_update_in/2</code>  that allows us to extract a value and update the data structure at once. There are also <code class="highlighter-rouge">put_in/3</code>,  <code class="highlighter-rouge">update_in/3</code>  and <code class="highlighter-rouge">get_and_update_in/3</code>  which allow dynamic access into the data structure.</p>
-
-<p>This concludes our introduction to associative data structures in Elixir. You will find out that, given keyword lists and maps, you will always have the right tool to tackle problems that require associative data structures in Elixir.</p>
 
   </div>
 
