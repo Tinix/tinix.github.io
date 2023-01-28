@@ -86,6 +86,44 @@
   <script id="dsq-count-scr" src="//tinixgit.disqus.com/count.js" async></script>
 
 
+  <h1><a href="/ruby/2023/01/05/method-missing.html">Ruby method missing</a></h1>
+  <p class="author">
+    <span class="date">2023-01-05 23:54:32 -0300</span>
+  </p>
+  <div class="content">
+    <p>Method_missing is one of those special sauces that make Ruby such a
+wonderful programming language. It acts like a catch-all method in a class - if
+you call a method that the class doesn’t know how to respond to, Ruby will
+first look for a method_missing method to handle this unexpected method
+call. If method_missing doesn’t exist, then the typical NoMethodError will be
+raised.
+With method_missing, you can truly create dynamic classes that respond to a
+wide variety of methods, based on things like database fields - Active Record
+uses method_missing extensively to define getter and setter methods for
+each of the fields in the model’s database table.
+For an contrived example of method_missing in the flesh, you could define a
+class like the following:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">StringLength</span>
+   <span class="k">def</span> <span class="nf">method_missing</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+       <span class="s2">"'</span><span class="si">#{</span><span class="n">arg</span><span class="si">}</span><span class="s2">' has </span><span class="si">#{</span><span class="n">arg</span><span class="p">.</span><span class="nf">length</span><span class="si">}</span><span class="s2"> letters!"</span>
+     <span class="k">end</span>
+<span class="k">end</span></code></pre></figure>
+
+<p>And then interact with your class like so:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&gt;</span> <span class="no">StringLength</span><span class="p">.</span><span class="nf">new</span><span class="p">.</span><span class="nf">a_word</span>
+<span class="o">=&gt;</span> <span class="s2">"'a_word' has 6 letters!"</span>
+<span class="o">&gt;</span> <span class="no">StringLength</span><span class="p">.</span><span class="nf">new</span><span class="p">.</span><span class="nf">something_long</span>
+<span class="o">=&gt;</span> <span class="s2">"'something_long' has 14 letters!"</span>
+<span class="o">&gt;</span> <span class="no">StringLength</span><span class="p">.</span><span class="nf">new</span><span class="p">.</span><span class="nf">does_it_respond_to_anything?</span>
+<span class="o">=&gt;</span> <span class="s2">"'does_it_respond_to_anything?' has 28 letters!"</span></code></pre></figure>
+
+<p>You probably won’t use method_missing extensively in your Rails apps, but
+it’s good to know it exists, and the kinds of dynamic interfaces it can create.</p>
+
+  </div>
+
   <h1><a href="/elixir/2021/11/10/elixir-maps.html">Elixir  - Maps</a></h1>
   <p class="author">
     <span class="date">2021-11-10 18:16:18 -0300</span>
@@ -420,142 +458,6 @@ f2 failed: 42 - can'</span><span class="n">t</span> <span class="n">work</span> 
 <span class="n">can</span><span class="err">'</span><span class="n">t</span> <span class="n">work</span> <span class="n">with</span> <span class="n">it</span></code></pre></figure>
 
 <p>See this <a href="http://blog.golang.org/2011/07/error-handling-and-go.html">great pos</a>t on the Go blog for more on error handling.</p>
-
-  </div>
-
-  <h1><a href="/ruby/2021/09/20/what-is-proc-in-ruby.html">What is Proc in Ruby</a></h1>
-  <p class="author">
-    <span class="date">2021-09-20 20:39:07 -0300</span>
-  </p>
-  <div class="content">
-    <p>A Proc object is an encapsulation of a block of code, which can be stored in a local variable, passed to a method or another Proc, and can be called. Proc is an essential concept in Ruby and a core of its functional programming features.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">square</span> <span class="o">=</span> <span class="no">Proc</span><span class="p">.</span><span class="nf">new</span> <span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="p">}</span>
-
-<span class="n">square</span><span class="p">.</span><span class="nf">call</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>  <span class="c1">#=&gt; 9</span>
-<span class="c1"># shorthands:</span>
-<span class="n">square</span><span class="o">.</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>      <span class="c1">#=&gt; 9</span>
-<span class="n">square</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>       <span class="c1">#=&gt; 9</span></code></pre></figure>
-
-<p>Proc objects are closures, meaning they remember and can use the entire context in which they were created.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">gen_times</span><span class="p">(</span><span class="n">factor</span><span class="p">)</span>
-  <span class="no">Proc</span><span class="p">.</span><span class="nf">new</span> <span class="p">{</span><span class="o">|</span><span class="n">n</span><span class="o">|</span> <span class="n">n</span><span class="o">*</span><span class="n">factor</span> <span class="p">}</span> <span class="c1"># remembers the value of factor at the moment of creation</span>
-<span class="k">end</span>
-
-<span class="n">times3</span> <span class="o">=</span> <span class="n">gen_times</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<span class="n">times5</span> <span class="o">=</span> <span class="n">gen_times</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-
-<span class="n">times3</span><span class="p">.</span><span class="nf">call</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>               <span class="c1">#=&gt; 36</span>
-<span class="n">times5</span><span class="p">.</span><span class="nf">call</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>                <span class="c1">#=&gt; 25</span>
-<span class="n">times3</span><span class="p">.</span><span class="nf">call</span><span class="p">(</span><span class="n">times5</span><span class="p">.</span><span class="nf">call</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>   <span class="c1">#=&gt; 60</span></code></pre></figure>
-
-<h2 id="creation">Creation</h2>
-<p>There are several methods to create a Proc</p>
-
-<ul>
-  <li>Use the Proc class constructor:</li>
-</ul>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">proc1</span> <span class="o">=</span> <span class="no">Proc</span><span class="p">.</span><span class="nf">new</span> <span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="p">}</span></code></pre></figure>
-
-<ul>
-  <li>Use the Kernel#proc method as a shorthand of ::new:</li>
-</ul>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">proc2</span> <span class="o">=</span> <span class="nb">proc</span> <span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="p">}</span></code></pre></figure>
-
-<ul>
-  <li>Receiving a block of code into proc argument (note the &amp;):</li>
-  <li></li>
-</ul>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">make_proc</span><span class="p">(</span><span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
-  <span class="n">block</span>
-<span class="k">end</span>
-
-<span class="n">proc3</span> <span class="o">=</span> <span class="n">make_proc</span> <span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="p">}</span></code></pre></figure>
-
-<ul>
-  <li>Construct a proc with lambda semantics using the Kernel#lambda method (see below for explanations about lambdas):</li>
-</ul>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">lambda1</span> <span class="o">=</span> <span class="nb">lambda</span> <span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="p">}</span></code></pre></figure>
-
-<p>*Use the Lambda literal syntax (also constructs a proc with lambda semantics):</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">lambda2</span> <span class="o">=</span> <span class="o">-&gt;</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="p">}</span></code></pre></figure>
-
-<h2 id="lambda-and-non-lambda-semantics">Lambda and non-lambda semantics</h2>
-<ul>
-  <li>Procs are coming in two flavors: lambda and non-lambda (regular procs). Differences are:</li>
-  <li>In lambdas, return means exit from this lambda;</li>
-</ul>
-
-<p>*In regular procs, return means exit from embracing method (and will throw LocalJumpError if invoked outside the method);</p>
-
-<p>*In lambdas, arguments are treated in the same way as in methods: strict, with ArgumentError for mismatching argument number, and no additional argument processing;</p>
-
-<p>*Regular procs accept arguments more generously: missing arguments are filled with nil, single Array arguments are deconstructed if the proc has multiple arguments, and there is no error raised on extra arguments</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">p</span> <span class="o">=</span> <span class="nb">proc</span> <span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">|</span> <span class="s2">"x=</span><span class="si">#{</span><span class="n">x</span><span class="si">}</span><span class="s2">, y=</span><span class="si">#{</span><span class="n">y</span><span class="si">}</span><span class="s2">"</span> <span class="p">}</span>
-<span class="nb">p</span><span class="p">.</span><span class="nf">call</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>      <span class="c1">#=&gt; "x=1, y=2"</span>
-<span class="nb">p</span><span class="p">.</span><span class="nf">call</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>    <span class="c1">#=&gt; "x=1, y=2", array deconstructed</span>
-<span class="nb">p</span><span class="p">.</span><span class="nf">call</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>   <span class="c1">#=&gt; "x=1, y=2", extra argument discarded</span>
-<span class="nb">p</span><span class="p">.</span><span class="nf">call</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>         <span class="c1">#=&gt; "x=1, y=", nil substituted instead of error</span>
-
-<span class="n">l</span> <span class="o">=</span> <span class="nb">lambda</span> <span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">|</span> <span class="s2">"x=</span><span class="si">#{</span><span class="n">x</span><span class="si">}</span><span class="s2">, y=</span><span class="si">#{</span><span class="n">y</span><span class="si">}</span><span class="s2">"</span> <span class="p">}</span>
-<span class="n">l</span><span class="p">.</span><span class="nf">call</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>      <span class="c1">#=&gt; "x=1, y=2"</span>
-<span class="n">l</span><span class="p">.</span><span class="nf">call</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>    <span class="c1"># ArgumentError: wrong number of arguments (given 1, expected 2)</span>
-<span class="n">l</span><span class="p">.</span><span class="nf">call</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>   <span class="c1"># ArgumentError: wrong number of arguments (given 3, expected 2)</span>
-<span class="n">l</span><span class="p">.</span><span class="nf">call</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>         <span class="c1"># ArgumentError: wrong number of arguments (given 1, expected 2)</span>
-
-<span class="k">def</span> <span class="nf">test_return</span>
-  <span class="o">-&gt;</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">3</span> <span class="p">}.</span><span class="nf">call</span>      <span class="c1"># just returns from lambda into method body</span>
-  <span class="nb">proc</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">4</span> <span class="p">}.</span><span class="nf">call</span>    <span class="c1"># returns from method</span>
-  <span class="k">return</span> <span class="mi">5</span>
-<span class="k">end</span>
-
-<span class="n">test_return</span> <span class="c1"># =&gt; 4, return from proc</span></code></pre></figure>
-
-<p>Lambdas are useful as self-sufficient functions, in particular useful as arguments to higher-order functions, behaving exactly like Ruby methods.</p>
-
-<p>Procs are useful for implementing iterators:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">test</span>
-  <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]].</span><span class="nf">map</span> <span class="p">{</span><span class="o">|</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">|</span> <span class="k">return</span> <span class="n">a</span> <span class="k">if</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">&gt;</span> <span class="mi">10</span> <span class="p">}</span>
-                            <span class="c1">#  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span>
-<span class="k">end</span></code></pre></figure>
-
-<p>Inside map, the block of code is treated as a regular (non-lambda) proc, which means that the internal arrays will be deconstructed to pairs of arguments, and return will exit from the method test. That would not be possible with a stricter lambda.</p>
-
-<p>You can tell a lambda from a regular proc by using the lambda? instance method.</p>
-
-<p>Lambda semantics is typically preserved during the proc lifetime, including &amp;-deconstruction to a block of code:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">p</span> <span class="o">=</span> <span class="nb">proc</span> <span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">|</span> <span class="n">x</span> <span class="p">}</span>
-<span class="n">l</span> <span class="o">=</span> <span class="nb">lambda</span> <span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">|</span> <span class="n">x</span> <span class="p">}</span>
-<span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]].</span><span class="nf">map</span><span class="p">(</span><span class="o">&amp;</span><span class="nb">p</span><span class="p">)</span> <span class="c1">#=&gt; [1, 2]</span>
-<span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]].</span><span class="nf">map</span><span class="p">(</span><span class="o">&amp;</span><span class="n">l</span><span class="p">)</span> <span class="c1"># ArgumentError: wrong number of arguments (given 1, expected 2)</span></code></pre></figure>
-
-<p>The only exception is dynamic method definition: even if defined by passing a non-lambda proc, methods still have normal semantics of argument checking.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">C</span>
-  <span class="n">define_method</span><span class="p">(</span><span class="ss">:e</span><span class="p">,</span> <span class="o">&amp;</span><span class="nb">proc</span> <span class="p">{})</span>
-<span class="k">end</span>
-<span class="no">C</span><span class="p">.</span><span class="nf">new</span><span class="p">.</span><span class="nf">e</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>       <span class="c1">#=&gt; ArgumentError</span>
-<span class="no">C</span><span class="p">.</span><span class="nf">new</span><span class="p">.</span><span class="nf">method</span><span class="p">(</span><span class="ss">:e</span><span class="p">).</span><span class="nf">to_proc</span><span class="p">.</span><span class="nf">lambda?</span>   <span class="c1">#=&gt; true</span></code></pre></figure>
-
-<p>This exception ensures that methods never have unusual argument passing conventions, and makes it easy to have wrappers defining methods that behave as usual.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">C</span>
-  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">def2</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">body</span><span class="p">)</span>
-    <span class="n">define_method</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">body</span><span class="p">)</span>
-  <span class="k">end</span>
-
-  <span class="n">def2</span><span class="p">(</span><span class="ss">:f</span><span class="p">)</span> <span class="p">{}</span>
-<span class="k">end</span>
-<span class="no">C</span><span class="p">.</span><span class="nf">new</span><span class="p">.</span><span class="nf">f</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>       <span class="c1">#=&gt; ArgumentError</span></code></pre></figure>
 
   </div>
 

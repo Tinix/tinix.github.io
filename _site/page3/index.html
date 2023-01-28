@@ -86,6 +86,142 @@
   <script id="dsq-count-scr" src="//tinixgit.disqus.com/count.js" async></script>
 
 
+  <h1><a href="/ruby/2021/09/20/what-is-proc-in-ruby.html">What is Proc in Ruby</a></h1>
+  <p class="author">
+    <span class="date">2021-09-20 20:39:07 -0300</span>
+  </p>
+  <div class="content">
+    <p>A Proc object is an encapsulation of a block of code, which can be stored in a local variable, passed to a method or another Proc, and can be called. Proc is an essential concept in Ruby and a core of its functional programming features.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">square</span> <span class="o">=</span> <span class="no">Proc</span><span class="p">.</span><span class="nf">new</span> <span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="p">}</span>
+
+<span class="n">square</span><span class="p">.</span><span class="nf">call</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>  <span class="c1">#=&gt; 9</span>
+<span class="c1"># shorthands:</span>
+<span class="n">square</span><span class="o">.</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>      <span class="c1">#=&gt; 9</span>
+<span class="n">square</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>       <span class="c1">#=&gt; 9</span></code></pre></figure>
+
+<p>Proc objects are closures, meaning they remember and can use the entire context in which they were created.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">gen_times</span><span class="p">(</span><span class="n">factor</span><span class="p">)</span>
+  <span class="no">Proc</span><span class="p">.</span><span class="nf">new</span> <span class="p">{</span><span class="o">|</span><span class="n">n</span><span class="o">|</span> <span class="n">n</span><span class="o">*</span><span class="n">factor</span> <span class="p">}</span> <span class="c1"># remembers the value of factor at the moment of creation</span>
+<span class="k">end</span>
+
+<span class="n">times3</span> <span class="o">=</span> <span class="n">gen_times</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">times5</span> <span class="o">=</span> <span class="n">gen_times</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="n">times3</span><span class="p">.</span><span class="nf">call</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>               <span class="c1">#=&gt; 36</span>
+<span class="n">times5</span><span class="p">.</span><span class="nf">call</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>                <span class="c1">#=&gt; 25</span>
+<span class="n">times3</span><span class="p">.</span><span class="nf">call</span><span class="p">(</span><span class="n">times5</span><span class="p">.</span><span class="nf">call</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>   <span class="c1">#=&gt; 60</span></code></pre></figure>
+
+<h2 id="creation">Creation</h2>
+<p>There are several methods to create a Proc</p>
+
+<ul>
+  <li>Use the Proc class constructor:</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">proc1</span> <span class="o">=</span> <span class="no">Proc</span><span class="p">.</span><span class="nf">new</span> <span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="p">}</span></code></pre></figure>
+
+<ul>
+  <li>Use the Kernel#proc method as a shorthand of ::new:</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">proc2</span> <span class="o">=</span> <span class="nb">proc</span> <span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="p">}</span></code></pre></figure>
+
+<ul>
+  <li>Receiving a block of code into proc argument (note the &amp;):</li>
+  <li></li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">make_proc</span><span class="p">(</span><span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+  <span class="n">block</span>
+<span class="k">end</span>
+
+<span class="n">proc3</span> <span class="o">=</span> <span class="n">make_proc</span> <span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="p">}</span></code></pre></figure>
+
+<ul>
+  <li>Construct a proc with lambda semantics using the Kernel#lambda method (see below for explanations about lambdas):</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">lambda1</span> <span class="o">=</span> <span class="nb">lambda</span> <span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="p">}</span></code></pre></figure>
+
+<p>*Use the Lambda literal syntax (also constructs a proc with lambda semantics):</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">lambda2</span> <span class="o">=</span> <span class="o">-&gt;</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="p">}</span></code></pre></figure>
+
+<h2 id="lambda-and-non-lambda-semantics">Lambda and non-lambda semantics</h2>
+<ul>
+  <li>Procs are coming in two flavors: lambda and non-lambda (regular procs). Differences are:</li>
+  <li>In lambdas, return means exit from this lambda;</li>
+</ul>
+
+<p>*In regular procs, return means exit from embracing method (and will throw LocalJumpError if invoked outside the method);</p>
+
+<p>*In lambdas, arguments are treated in the same way as in methods: strict, with ArgumentError for mismatching argument number, and no additional argument processing;</p>
+
+<p>*Regular procs accept arguments more generously: missing arguments are filled with nil, single Array arguments are deconstructed if the proc has multiple arguments, and there is no error raised on extra arguments</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">p</span> <span class="o">=</span> <span class="nb">proc</span> <span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">|</span> <span class="s2">"x=</span><span class="si">#{</span><span class="n">x</span><span class="si">}</span><span class="s2">, y=</span><span class="si">#{</span><span class="n">y</span><span class="si">}</span><span class="s2">"</span> <span class="p">}</span>
+<span class="nb">p</span><span class="p">.</span><span class="nf">call</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>      <span class="c1">#=&gt; "x=1, y=2"</span>
+<span class="nb">p</span><span class="p">.</span><span class="nf">call</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>    <span class="c1">#=&gt; "x=1, y=2", array deconstructed</span>
+<span class="nb">p</span><span class="p">.</span><span class="nf">call</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>   <span class="c1">#=&gt; "x=1, y=2", extra argument discarded</span>
+<span class="nb">p</span><span class="p">.</span><span class="nf">call</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>         <span class="c1">#=&gt; "x=1, y=", nil substituted instead of error</span>
+
+<span class="n">l</span> <span class="o">=</span> <span class="nb">lambda</span> <span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">|</span> <span class="s2">"x=</span><span class="si">#{</span><span class="n">x</span><span class="si">}</span><span class="s2">, y=</span><span class="si">#{</span><span class="n">y</span><span class="si">}</span><span class="s2">"</span> <span class="p">}</span>
+<span class="n">l</span><span class="p">.</span><span class="nf">call</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>      <span class="c1">#=&gt; "x=1, y=2"</span>
+<span class="n">l</span><span class="p">.</span><span class="nf">call</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>    <span class="c1"># ArgumentError: wrong number of arguments (given 1, expected 2)</span>
+<span class="n">l</span><span class="p">.</span><span class="nf">call</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>   <span class="c1"># ArgumentError: wrong number of arguments (given 3, expected 2)</span>
+<span class="n">l</span><span class="p">.</span><span class="nf">call</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>         <span class="c1"># ArgumentError: wrong number of arguments (given 1, expected 2)</span>
+
+<span class="k">def</span> <span class="nf">test_return</span>
+  <span class="o">-&gt;</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">3</span> <span class="p">}.</span><span class="nf">call</span>      <span class="c1"># just returns from lambda into method body</span>
+  <span class="nb">proc</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">4</span> <span class="p">}.</span><span class="nf">call</span>    <span class="c1"># returns from method</span>
+  <span class="k">return</span> <span class="mi">5</span>
+<span class="k">end</span>
+
+<span class="n">test_return</span> <span class="c1"># =&gt; 4, return from proc</span></code></pre></figure>
+
+<p>Lambdas are useful as self-sufficient functions, in particular useful as arguments to higher-order functions, behaving exactly like Ruby methods.</p>
+
+<p>Procs are useful for implementing iterators:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">test</span>
+  <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]].</span><span class="nf">map</span> <span class="p">{</span><span class="o">|</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">|</span> <span class="k">return</span> <span class="n">a</span> <span class="k">if</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">&gt;</span> <span class="mi">10</span> <span class="p">}</span>
+                            <span class="c1">#  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span>
+<span class="k">end</span></code></pre></figure>
+
+<p>Inside map, the block of code is treated as a regular (non-lambda) proc, which means that the internal arrays will be deconstructed to pairs of arguments, and return will exit from the method test. That would not be possible with a stricter lambda.</p>
+
+<p>You can tell a lambda from a regular proc by using the lambda? instance method.</p>
+
+<p>Lambda semantics is typically preserved during the proc lifetime, including &amp;-deconstruction to a block of code:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">p</span> <span class="o">=</span> <span class="nb">proc</span> <span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">|</span> <span class="n">x</span> <span class="p">}</span>
+<span class="n">l</span> <span class="o">=</span> <span class="nb">lambda</span> <span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">|</span> <span class="n">x</span> <span class="p">}</span>
+<span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]].</span><span class="nf">map</span><span class="p">(</span><span class="o">&amp;</span><span class="nb">p</span><span class="p">)</span> <span class="c1">#=&gt; [1, 2]</span>
+<span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]].</span><span class="nf">map</span><span class="p">(</span><span class="o">&amp;</span><span class="n">l</span><span class="p">)</span> <span class="c1"># ArgumentError: wrong number of arguments (given 1, expected 2)</span></code></pre></figure>
+
+<p>The only exception is dynamic method definition: even if defined by passing a non-lambda proc, methods still have normal semantics of argument checking.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">C</span>
+  <span class="n">define_method</span><span class="p">(</span><span class="ss">:e</span><span class="p">,</span> <span class="o">&amp;</span><span class="nb">proc</span> <span class="p">{})</span>
+<span class="k">end</span>
+<span class="no">C</span><span class="p">.</span><span class="nf">new</span><span class="p">.</span><span class="nf">e</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>       <span class="c1">#=&gt; ArgumentError</span>
+<span class="no">C</span><span class="p">.</span><span class="nf">new</span><span class="p">.</span><span class="nf">method</span><span class="p">(</span><span class="ss">:e</span><span class="p">).</span><span class="nf">to_proc</span><span class="p">.</span><span class="nf">lambda?</span>   <span class="c1">#=&gt; true</span></code></pre></figure>
+
+<p>This exception ensures that methods never have unusual argument passing conventions, and makes it easy to have wrappers defining methods that behave as usual.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">C</span>
+  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">def2</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">body</span><span class="p">)</span>
+    <span class="n">define_method</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">body</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="n">def2</span><span class="p">(</span><span class="ss">:f</span><span class="p">)</span> <span class="p">{}</span>
+<span class="k">end</span>
+<span class="no">C</span><span class="p">.</span><span class="nf">new</span><span class="p">.</span><span class="nf">f</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>       <span class="c1">#=&gt; ArgumentError</span></code></pre></figure>
+
+  </div>
+
   <h1><a href="/ruby/2020/02/25/flash-messages-in-rails.html">Flash Messages in Rails</a></h1>
   <p class="author">
     <span class="date">2020-02-25 00:35:08 -0300</span>
@@ -461,34 +597,6 @@ In Ruby, there is rake, in Elixir there is mix.</p>
 
 <hr />
 
-
-  </div>
-
-  <h1><a href="/ruby/2018/08/07/updating-a-rails-password-via-the-rails-console.html">Updating a rails password via the rails console</a></h1>
-  <p class="author">
-    <span class="date">2018-08-07 16:47:20 -0300</span>
-  </p>
-  <div class="content">
-    <p>I forgot one of my test passwords and realized I didn’t have a quick way to redo the password. There is a simple handful of commands fix this:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">001</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span> <span class="n">u</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">find_by_id</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-  <span class="no">User</span> <span class="no">Load</span> <span class="p">(</span><span class="mi">3</span><span class="o">.</span><span class="mi">5</span><span class="n">ms</span><span class="p">)</span>  <span class="no">SELECT</span> <span class="s2">"users"</span><span class="p">.</span><span class="nf">*</span> <span class="no">FROM</span> <span class="s2">"users"</span> <span class="no">WHERE</span> <span class="s2">"users"</span><span class="o">.</span><span class="s2">"id"</span> <span class="o">=</span> <span class="mi">1</span> <span class="no">LIMIT</span> <span class="mi">1</span>
-<span class="o">=&gt;</span> <span class="c1">#&lt;User id: 1, name: "JJ Asghar", email: "jjasghar@gmail.com", created_at: "2014-04-18 17:46:48", updated_at: "2014-04-25 23:21:10", password_digest: "$2a$10$or/wJw1I8Wpf0lXNbtawveoQXETGJbUkv/VwXQXzn92r...", remember_token: "uUJTExCyt4mpAOpQWd4PMA"&gt;</span>
-<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">002</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span> <span class="n">u</span>
-<span class="o">=&gt;</span> <span class="c1">#&lt;User id: 1, name: "JJ Asghar", email: "jjasghar@gmail.com", created_at: "2014-04-18 17:46:48", updated_at: "2014-04-25 23:21:10", password_digest: "$2a$10$or/wJw1I8Wpf0lXNbtawveoQXETGJbUkv/VwXQXzn92r...", remember_token: "uUJTExCyt4mpAOpQWd4PMA"&gt;</span>
-<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">003</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span> <span class="n">u</span><span class="p">.</span><span class="nf">password</span> <span class="o">=</span> <span class="s2">"a_stupid_pa$$word"</span>
-<span class="o">=&gt;</span> <span class="s2">"_stupid_pa$$word"</span>
-<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">004</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span> <span class="n">u</span><span class="p">.</span><span class="nf">password_confirmation</span> <span class="o">=</span> <span class="s2">"a_stupid_pa$$word"</span>
-<span class="o">=&gt;</span> <span class="s2">"_stupid_pa$$word"</span>
-<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">005</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span> <span class="n">u</span><span class="p">.</span><span class="nf">save</span>
-   <span class="p">(</span><span class="mi">2</span><span class="o">.</span><span class="mi">0</span><span class="n">ms</span><span class="p">)</span>  <span class="k">BEGIN</span>
-  <span class="no">User</span> <span class="no">Exists</span> <span class="p">(</span><span class="mi">12</span><span class="o">.</span><span class="mi">2</span><span class="n">ms</span><span class="p">)</span>  <span class="no">SELECT</span> <span class="mi">1</span> <span class="no">AS</span> <span class="n">one</span> <span class="no">FROM</span> <span class="s2">"users"</span> <span class="no">WHERE</span> <span class="p">(</span><span class="no">LOWER</span><span class="p">(</span><span class="s2">"users"</span><span class="o">.</span><span class="s2">"email"</span><span class="p">)</span> <span class="o">=</span> <span class="no">LOWER</span><span class="p">(</span><span class="s1">'jjasghar@gmail.com'</span><span class="p">)</span> <span class="no">AND</span> <span class="s2">"users"</span><span class="o">.</span><span class="s2">"id"</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">)</span> <span class="no">LIMIT</span> <span class="mi">1</span>
-   <span class="p">(</span><span class="mi">15</span><span class="o">.</span><span class="mi">8</span><span class="n">ms</span><span class="p">)</span>  <span class="no">UPDATE</span> <span class="s2">"users"</span> <span class="no">SET</span> <span class="s2">"password_digest"</span> <span class="o">=</span> <span class="s1">'$2a$10$Za7prnrSthhE90AvB15BNOMl8sf3oL7onBpZ45nH/9skwHfn1EFA.'</span><span class="p">,</span> <span class="s2">"remember_token"</span> <span class="o">=</span> <span class="s1">'zOZYjEVovO143qrX1yhibw'</span><span class="p">,</span> <span class="s2">"updated_at"</span> <span class="o">=</span> <span class="s1">'2014-04-25 23:24:39.329502'</span> <span class="no">WHERE</span> <span class="s2">"users"</span><span class="o">.</span><span class="s2">"id"</span> <span class="o">=</span> <span class="mi">1</span>
-   <span class="p">(</span><span class="mi">4</span><span class="o">.</span><span class="mi">6</span><span class="n">ms</span><span class="p">)</span>  <span class="no">COMMIT</span>
-<span class="o">=&gt;</span> <span class="kp">true</span>
-<span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">006</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span></code></pre></figure>
-
-<p>As you can see, you need to create an object via a find_by_<something>, in my case id and write it to u. After that I change the password key to a_stupid_pa$$word along with the password_confirmation. I then write it to the database via u.save.</something></p>
 
   </div>
 

@@ -86,6 +86,166 @@
   <script id="dsq-count-scr" src="//tinixgit.disqus.com/count.js" async></script>
 
 
+  <h1><a href="/ruby/2017/10/12/what's-new-in-ruby-2.5.html">What's new in Ruby 2.5?</a></h1>
+  <p class="author">
+    <span class="date">2017-10-12 09:27:58 -0300</span>
+  </p>
+  <div class="content">
+    <h1 id="ruby-250-preview1-released">Ruby 2.5.0-preview1 Released</h1>
+
+<p><img src="http://localhost:3000/images/ruby.png" alt="useful image" /></p>
+
+<p>We are pleased to announce the release of Ruby 2.5.0-preview1.</p>
+
+<p>Ruby 2.5.0-preview1 is the first preview release toward Ruby 2.5.0. It introduces some new features and performance improvements, for example:</p>
+
+<p>After installing the beta version through rvm …</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err"> </span><span class="n">tinix</span><span class="err">   </span><span class="n">rvm</span> <span class="n">install</span> <span class="mi">2</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">preview1</span>
+<span class="no">Searching</span> <span class="k">for</span> <span class="n">binary</span> <span class="n">rubies</span><span class="p">,</span> <span class="n">this</span> <span class="n">might</span> <span class="n">take</span> <span class="n">some</span> <span class="n">time</span><span class="o">.</span>
+<span class="no">No</span> <span class="n">binary</span> <span class="n">rubies</span> <span class="n">available</span> <span class="ss">for: </span><span class="n">debian</span><span class="o">/</span><span class="mi">9</span><span class="o">/</span><span class="n">x86_64</span><span class="o">/</span><span class="n">ruby</span><span class="o">-</span><span class="mi">2</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">preview1</span><span class="o">.</span>
+<span class="no">Continuing</span> <span class="n">with</span> <span class="n">compilation</span><span class="o">.</span> <span class="no">Please</span> <span class="n">read</span> <span class="s1">'rvm help mount'</span> <span class="n">to</span> <span class="n">get</span> <span class="n">more</span> <span class="n">information</span> <span class="n">on</span> <span class="n">binary</span> <span class="n">rubies</span><span class="o">.</span>
+<span class="no">Checking</span> <span class="n">requirements</span> <span class="k">for</span> <span class="n">debian</span><span class="o">.</span>
+<span class="no">Requirements</span> <span class="n">installation</span> <span class="n">successful</span><span class="o">.</span>
+<span class="no">Installing</span> <span class="no">Ruby</span> <span class="n">from</span> <span class="n">source</span> <span class="ss">to: </span><span class="sr">/home/</span><span class="n">tinix</span><span class="o">/</span><span class="p">.</span><span class="nf">rvm</span><span class="o">/</span><span class="n">rubies</span><span class="o">/</span><span class="n">ruby</span><span class="o">-</span><span class="mi">2</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">preview1</span><span class="p">,</span> <span class="n">this</span> <span class="n">may</span> <span class="n">take</span> <span class="n">a</span> <span class="k">while</span> <span class="n">depending</span> <span class="n">on</span> <span class="n">your</span> <span class="n">cpu</span><span class="p">(</span><span class="n">s</span><span class="p">).</span><span class="nf">.</span><span class="p">.</span>
+<span class="nf">ruby</span><span class="o">-</span><span class="mi">2</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">preview1</span> <span class="o">-</span> <span class="c1">#downloading ruby-2.5.0-preview1, this may take a while depending on your connection...</span>
+  <span class="sx">% Total </span>   <span class="o">%</span> <span class="no">Received</span> <span class="o">%</span> <span class="no">Xferd</span>  <span class="no">Average</span> <span class="no">Speed</span>   <span class="no">Time</span>    <span class="no">Time</span>     <span class="no">Time</span>  <span class="no">Current</span>
+                                 <span class="no">Dload</span>  <span class="no">Upload</span>   <span class="no">Total</span>   <span class="no">Spent</span>    <span class="no">Left</span>  <span class="no">Speed</span>
+<span class="mi">100</span> <span class="mi">13</span><span class="o">.</span><span class="mi">4</span><span class="no">M</span>  <span class="mi">100</span> <span class="mi">13</span><span class="o">.</span><span class="mi">4</span><span class="no">M</span>    <span class="mi">0</span>     <span class="mi">0</span>  <span class="mi">1693</span><span class="n">k</span>      <span class="mi">0</span>  <span class="mi">0</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mi">08</span>  <span class="mi">0</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mi">08</span> <span class="o">--</span><span class="p">:</span><span class="o">--</span><span class="p">:</span><span class="o">--</span> <span class="mi">2192</span><span class="n">k</span>
+<span class="no">No</span> <span class="n">checksum</span> <span class="k">for</span> <span class="n">downloaded</span> <span class="n">archive</span><span class="p">,</span> <span class="n">recording</span> <span class="n">checksum</span> <span class="k">in</span> <span class="n">user</span> <span class="n">configuration</span><span class="p">.</span>
+<span class="nf">ruby</span><span class="o">-</span><span class="mi">2</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">preview1</span> <span class="o">-</span> <span class="c1">#extracting ruby-2.5.0-preview1 to /home/tinix/.rvm/src/ruby-2.5.0-preview1....</span>
+<span class="n">ruby</span><span class="o">-</span><span class="mi">2</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">preview1</span> <span class="o">-</span> <span class="c1">#configuring.............................................|</span>
+<span class="n">ruby</span><span class="o">-</span><span class="mi">2</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">preview1</span> <span class="o">-</span> <span class="c1">#post-configuration..</span>
+<span class="n">ruby</span><span class="o">-</span><span class="mi">2</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">preview1</span> <span class="o">-</span> <span class="c1">#compiling.........................................................................|</span>
+<span class="n">ruby</span><span class="o">-</span><span class="mi">2</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">preview1</span> <span class="o">-</span> <span class="c1">#installing..............</span>
+<span class="n">ruby</span><span class="o">-</span><span class="mi">2</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">preview1</span> <span class="o">-</span> <span class="c1">#making binaries executable..</span>
+<span class="no">Rubygems</span> <span class="mi">2</span><span class="o">.</span><span class="mi">6</span><span class="o">.</span><span class="mi">14</span> <span class="n">already</span> <span class="n">available</span> <span class="k">in</span> <span class="n">installed</span> <span class="n">ruby</span><span class="p">,</span> <span class="n">skipping</span> <span class="n">installation</span><span class="p">,</span> <span class="n">use</span> <span class="o">--</span><span class="n">force</span> <span class="n">to</span> <span class="n">reinstall</span><span class="p">.</span>
+<span class="nf">ruby</span><span class="o">-</span><span class="mi">2</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">preview1</span> <span class="o">-</span> <span class="c1">#gemset created /home/tinix/.rvm/gems/ruby-2.5.0-preview1@global</span>
+<span class="n">ruby</span><span class="o">-</span><span class="mi">2</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">preview1</span> <span class="o">-</span> <span class="c1">#importing gemset /home/tinix/.rvm/gemsets/global.gems.............................|</span>
+<span class="n">ruby</span><span class="o">-</span><span class="mi">2</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">preview1</span> <span class="o">-</span> <span class="c1">#generating global wrappers........</span>
+<span class="n">ruby</span><span class="o">-</span><span class="mi">2</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">preview1</span> <span class="o">-</span> <span class="c1">#gemset created /home/tinix/.rvm/gems/ruby-2.5.0-preview1</span>
+<span class="n">ruby</span><span class="o">-</span><span class="mi">2</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">preview1</span> <span class="o">-</span> <span class="c1">#importing gemsetfile /home/tinix/.rvm/gemsets/default.gems evaluated to empty gem list</span>
+<span class="n">ruby</span><span class="o">-</span><span class="mi">2</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">preview1</span> <span class="o">-</span> <span class="c1">#generating default wrappers........</span>
+<span class="n">ruby</span><span class="o">-</span><span class="mi">2</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">preview1</span> <span class="o">-</span> <span class="c1">#adjusting #shebangs for (gem irb erb ri rdoc testrb rake).</span>
+<span class="no">Install</span> <span class="n">of</span> <span class="n">ruby</span><span class="o">-</span><span class="mi">2</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">preview1</span> <span class="o">-</span> <span class="c1">#complete</span>
+<span class="no">Ruby</span> <span class="n">was</span> <span class="n">built</span> <span class="n">without</span> <span class="n">documentation</span><span class="p">,</span> <span class="n">to</span> <span class="n">build</span> <span class="n">it</span> <span class="ss">run: </span><span class="n">rvm</span> <span class="n">docs</span> <span class="n">generate</span><span class="o">-</span><span class="n">ri</span>
+<span class="err"> </span><span class="n">tinix</span><span class="err">  </span>
+ </code></pre></figure>
+
+<p>The 2.5.0-preview1Ruby language version has just been released. Because it is not a stable version, its use is not yet recommended .</p>
+
+<p>** Inverse backtrace**</p>
+
+<p>The <strong>backtrace</strong> (list of methods that were run before an error happened) will start to be displayed in reverse order. Using the following code as an example:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#file test.rb</span>
+
+<span class="k">def</span> <span class="nf">a</span>
+   <span class="n">b</span>
+<span class="k">end</span>
+
+<span class="k">def</span> <span class="nf">b</span>
+   <span class="n">c</span>
+<span class="k">end</span>
+
+<span class="k">def</span> <span class="nf">c</span>
+   <span class="k">raise</span> <span class="s1">'error'</span>
+<span class="k">end</span>
+
+<span class="n">a</span></code></pre></figure>
+
+<p>if the same file is run in ruby 2.4 you get…</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">ruby</span> <span class="nb">test</span><span class="p">.</span><span class="nf">rb</span>
+<span class="nb">test</span><span class="p">.</span><span class="nf">rb</span><span class="p">:</span><span class="mi">10</span><span class="ss">:in</span> <span class="sb">`c': error (RuntimeError)
+    from test.rb:6:in `</span><span class="n">b</span><span class="s1">'
+    from test.rb:2:in `a'</span>
+    <span class="n">from</span> <span class="nb">test</span><span class="p">.</span><span class="nf">rb</span><span class="p">:</span><span class="mi">13</span><span class="ss">:in</span> <span class="sb">`&lt;main&gt;'</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>	Rescue / else / ensure will be allowed inside of / end blocks
+</code></pre>
+</div>
+
+<p>Running with Ruby 2.4:</p>
+
+<p>Currently we can only capture exceptions within methods or blocks begin/ end, ie:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">begin</span>
+  <span class="k">raise</span> <span class="s1">'boom'</span>
+<span class="k">rescue</span> <span class="no">Exception</span> <span class="o">=&gt;</span> <span class="n">e</span>
+  <span class="nb">puts</span> <span class="s2">"Error caught: </span><span class="si">#{</span><span class="n">e</span><span class="p">.</span><span class="nf">message</span><span class="si">}</span><span class="s2">"</span>
+<span class="k">end</span></code></pre></figure>
+
+<p>: Output Error caught: boom</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">my_method</span>
+  <span class="k">raise</span> <span class="n">boom</span>
+  <span class="k">rescue</span> <span class="no">Exception</span> <span class="o">=&gt;</span> <span class="n">and</span>
+  <span class="nb">puts</span> <span class="s2">"Error caught: # {e.message}"</span>
+<span class="k">end</span></code></pre></figure>
+
+<p>: Output Error caught: boom.</p>
+
+<p>But the code below doesn’t work:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">].</span><span class="nf">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">i</span><span class="o">|</span>
+  <span class="k">raise</span> <span class="s1">'boom'</span>
+  <span class="k">rescue</span> <span class="no">Exception</span> <span class="o">=&gt;</span> <span class="n">e</span>
+  <span class="nb">puts</span> <span class="s2">"Error caught: </span><span class="si">#{</span><span class="n">e</span><span class="p">.</span><span class="nf">message</span><span class="si">}</span><span class="s2">"</span>
+<span class="k">end</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">syntax</span> <span class="n">error</span><span class="p">,</span> <span class="n">unexpected</span> <span class="n">keyword_rescue</span><span class="p">,</span> <span class="n">expecting</span> <span class="n">keyword_end</span>
+<span class="k">rescue</span> <span class="no">Exception</span> <span class="o">=&gt;</span> <span class="n">e</span></code></pre></figure>
+
+<p><strong>Running with Ruby 2.5:</strong></p>
+
+<p>In the version that is about to be released, this is possible. The output of the above code will be:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">Captured</span> <span class="ss">error: </span><span class="n">boom</span>
+<span class="no">Captured</span> <span class="ss">error: </span><span class="n">boom</span>
+<span class="no">Captured</span> <span class="ss">error: </span><span class="n">boom</span></code></pre></figure>
+
+<p><strong>New method yield_self</strong></p>
+
+<p>According to the  <a href="https://docs.ruby-lang.org/en/trunk/Object.html#method-i-yield_self">official documentation Ruby 2.5</a></p>
+
+<ul>
+  <li>Yields self to the block and returns the result of the block.</li>
+</ul>
+
+<p>Although very similar to the tapclass method Object(which is very useful, by the way), your returns are different.</p>
+
+<p>While with the method tapyou open a block and at the end the object itself is returned, with the yield_self, the result of the block is returned.</p>
+
+<p>Example:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">object</span><span class="p">.</span><span class="nf">tap</span> <span class="p">{</span><span class="o">|</span> <span class="n">obj</span> <span class="o">|</span> <span class="n">obj</span><span class="p">.</span><span class="nf">save</span><span class="p">}</span> <span class="c1"># =&gt; object</span></code></pre></figure>
+
+<p>The <code class="highlighter-rouge">save</code> method was called,
+ but <code class="highlighter-rouge">object</code> is returned</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">object</span><span class="p">.</span><span class="nf">yield_self</span> <span class="p">{</span><span class="o">|</span> <span class="n">obj</span> <span class="o">|</span> <span class="n">obj</span><span class="p">.</span><span class="nf">save</span><span class="p">}</span> <span class="c1"># =&gt; true</span>
+<span class="c1">#The last block execution will be returned.</span>
+<span class="c1">#That is, assuming that the `save` method returns` true`,</span>
+<span class="c1">#the return of this entire line will be `true` too</span></code></pre></figure>
+
+<p>I could not think of a practical case to use it, but certainly had a reason to have been added :)</p>
+
+<h1 id="other-changes">Other changes</h1>
+<p>The new version will also bring other new features, such as support for Unicode version 10, which <a href="https://emojipedia.org/emoji-5.0/">includes 56 emojis created this year</a> . You can see a complete list with all the news <a href="https://github.com/ruby/ruby/blob/v2_5_0_preview1/NEWS">in this document .</a></p>
+
+<p>To install Ruby 2.5 (though not yet recommended for not being a stable release) through RVM, simply run:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>rvm install 2.5.0-preview1
+</code></pre>
+</div>
+
+<p>for more information visit <a href="https://www.ruby-lang.org/en/news/2017/10/10/ruby-2-5-0-preview1-released/">Ruby 2.5.0-preview1 Released</a></p>
+
+<p>Yes!!! Enjoy Ruby 2.5.0-preview1 Released</p>
+
+  </div>
+
   <h1><a href="/ruby/2017/10/02/redirect-to-options.html">redirect_to(options = {}, response_status = {}) protected</a></h1>
   <p class="author">
     <span class="date">2017-10-02 21:25:18 -0300</span>
@@ -262,98 +422,6 @@ Now everytime we will call this method it will generate a random string like thi
 <span class="mi">2</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">5</span> <span class="p">:</span><span class="mo">007</span> <span class="o">&gt;</span> </code></pre></figure>
 
 <p>So I hope this blog was helpful to create a random string for multi purposes..!!</p>
-
-  </div>
-
-  <h1><a href="/ruby/2017/07/19/working-with-grep-in-ruby.html">Working with GREP in Ruby</a></h1>
-  <p class="author">
-    <span class="date">2017-07-19 03:32:51 +0000</span>
-  </p>
-  <div class="content">
-    <!-- _include/grep.html -->
-
-<div class="image-wrapper">
-  
-    <img src="http://localhost:3000/images/grep.jpg" alt="using GREP method in RUBY" />
-    
-  
-  <p class="image-caption">Using grep in RUBY..!!!</p>
-  
-</div>
-
-<p>As we know that ruby contains a lot of built in modules, in which one of this is the Enumerable module. So before preceddingon what GREP is and How it works, first lets study a little info about Enumerable module.</p>
-
-<p>The Enumerable module provide us a lot of traversal and searching methods which also gives us the ability to do sorting.
-This module basically provides us simpler methods to manipulate collections with the help of searching, traversing and sorting.
-The class provides the each method which yields all the successive members of the collection.
-Enumerable module is included in the class as follows:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="n">dogs</span>
-  <span class="kp">include</span> <span class="no">Enumerable</span>
-  <span class="k">def</span> <span class="nf">breeds</span>
-    <span class="p">.</span><span class="nf">.</span>
-  <span class="k">end</span>
-
-  <span class="p">.</span><span class="nf">.</span>
-<span class="k">end</span></code></pre></figure>
-
-<p>GRIP
-First of all GREP is a powerful UNIX command.
-GREP is a fantastic and a very useful method which comes along with the enumerable module in Ruby.
-Using GREP is very handy and useful when it comes to manipulate collections instead of using a map or select methods.
-Along with, Grep is very useful in customizing the filtering, lets see how we can customize the filters. Firstly, put the categorization logic as case equal(“===”) in a class once it is done after that the instance of that class will be easily filtered out from an Enumerable object using GREP method.
-In the ruby methods of enumerable, we use “select” method for filtering and use “map” method for bulk transforming, but grep act as a combination of both these methods.</p>
-
-<p>How does GREP work?
-To filter the elements in an enumerable object most of the time Select method is usedand it is done by passing a block in it, lets see an example how it is done:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="s2">"man"</span><span class="p">,</span> <span class="s2">"van"</span><span class="p">,</span> <span class="s2">"can"</span><span class="p">,</span> <span class="s2">"dude"</span><span class="p">,</span> <span class="s2">"pan"</span><span class="p">,</span> <span class="s2">"fat"</span><span class="p">].</span><span class="nf">select</span><span class="p">{</span><span class="o">|</span><span class="n">word</span><span class="o">|</span> <span class="n">word</span><span class="p">.</span><span class="nf">include?</span><span class="p">(</span><span class="s2">"an"</span><span class="p">)}</span></code></pre></figure>
-
-<p>This is a result in</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="s2">"man"</span><span class="p">,</span><span class="s2">"van"</span><span class="p">,</span><span class="s2">"can"</span><span class="p">,</span><span class="s2">"pan"</span><span class="p">]</span></code></pre></figure>
-
-<p>The same thing with less complicated code and syntax can be achieved with this very useful method GREP as follows</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="s2">"man"</span><span class="p">,</span> <span class="s2">"van"</span><span class="p">,</span> <span class="s2">"can"</span><span class="p">,</span> <span class="s2">"dude"</span><span class="p">,</span> <span class="s2">"pan"</span><span class="p">,</span> <span class="s2">"fat"</span><span class="p">].</span><span class="nf">grep</span><span class="p">(</span><span class="sr">/an/</span><span class="p">)</span></code></pre></figure>
-
-<p>which will also return the same result as above but now with a less complicated code.
-In the above example, what GREP did was it traversed through the array on which it was fired and it took out all the elements which had ‘an’ in them and gave us the resulting array.
-Grep returns an array for each element in the enum in which the pattern is exactly equal to the elements passed in the array.
-Grep works with regular expressions and all the other objects such as class and ranges.</p>
-
-<p>Example of GREP are as follows:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">2000</span><span class="p">].</span><span class="nf">grep</span><span class="p">(</span><span class="mi">2</span><span class="p">.</span><span class="nf">.</span><span class="mi">200</span><span class="p">)</span>
- <span class="c1"># this will result in  </span>
- <span class="c1"># =&gt; [2, 20, 200]</span></code></pre></figure>
-
-<p>In the above example what grep did was it traversed through the array and picked up all the numbers between 2 to 200 and gave us the resulting array.</p>
-
-<p>Lets see one more example</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="s1">'a'</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="s1">'b'</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="s1">'c'</span><span class="p">].</span><span class="nf">grep</span><span class="p">(</span><span class="no">Integer</span><span class="p">)</span>
- <span class="c1"># This will result in</span>
- <span class="c1"># =&gt; [4,5,6]</span></code></pre></figure>
-
-<p>the same exampple for string :</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="s1">'a'</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="s1">'b'</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="s1">'c'</span><span class="p">].</span><span class="nf">grep</span><span class="p">(</span><span class="no">String</span><span class="p">)</span>
- <span class="c1"># This will result in</span>
- <span class="c1"># =&gt; ["a", "b", "c"]</span></code></pre></figure>
-
-<p>and another example with join</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="s1">'a'</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="s1">'b'</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="s1">'c'</span><span class="p">].</span><span class="nf">grep</span><span class="p">(</span><span class="no">String</span><span class="p">).</span><span class="nf">join</span>
- <span class="o">=&gt;</span> <span class="s2">"abc"</span>
-<span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="s1">'a'</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="s1">'b'</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="s1">'c'</span><span class="p">].</span><span class="nf">grep</span><span class="p">(</span><span class="no">String</span><span class="p">).</span><span class="nf">join</span><span class="p">(</span><span class="s1">','</span><span class="p">)</span>
- <span class="o">=&gt;</span> <span class="s2">"a,b,c"</span>
- </code></pre></figure>
-
-<p>In this above example what grep did was it pulled out all the integers from the main array on which we fired the method and gave us all the integers in the resulting array.
-So, now I hope that the people reading this article would be through with what is GREP, How its used and how useful and handy it is when it comes to manipulate collections.</p>
-
-<p>If you have any inputs or queries please feel free to post in comment section below</p>
 
   </div>
 
