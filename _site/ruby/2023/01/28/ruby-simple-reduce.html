@@ -10,7 +10,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Ruby Simple Reduce</title>
-  <meta name="description" content="I’ll show you here how to implement some functions already available forarrays, but using reduce(), map(), and select().uniqThis function finds a set of uni...">
+  <meta name="description" content="I’ll show you here how to implement some functions already available forarrays, but using reduce(), map(), and select().">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="canonical" href="http://localhost:3000/ruby/2023/01/28/ruby-simple-reduce.html">
   <link rel="alternate" type="application/rss+xml" title="Tinix&#39;s different point of view." href="http://localhost:3000/feed.xml">
@@ -80,9 +80,10 @@
 
   <div class="post-content" itemprop="articleBody">
     <p>I’ll show you here how to implement some functions already available for
-arrays, but using reduce(), map(), and select().
-uniq
-This function finds a set of unique elements in an array. For example:</p>
+arrays, but using reduce(), map(), and select().</p>
+
+<h2 id="uniq">uniq</h2>
+<p>This function finds a set of unique elements in an array. For example:</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>irb&gt; [1,3,5,6,7,8,6,6,1,1].uniq
 =&gt; [1,3,5,6,7,8]
@@ -109,7 +110,7 @@ end
 <p>Almost. Now, we just have to pick off the keys using map:</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>[1,3,5,6,7,8,6,6,1,1].reduce({}) do |memo, element|
- memo[element]=element
+memo[element] = element
   memo
 end.map do |key, value|
     key
@@ -118,6 +119,94 @@ end
 </div>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>=&gt; [1, 3, 5, 6, 7, 8]
+</code></pre>
+</div>
+
+<h2 id="reverse">reverse</h2>
+<p>This function reverses the order of the elements in an array:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>irb&gt; [1,3,5,6,7,8,6,0].reverse
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>=&gt; [0, 6, 8, 7, 6, 5, 3, 1]
+</code></pre>
+</div>
+
+<p>One way to solve this is to keep pushing each element on a stack.
+A stack is just an array where you use unshift to push an element onto
+the front, and shift to pop elements off the front. The initial value of the
+reduce memo is a blank array. I put a print statement so you can see for
+yourself how the memo builds up.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[1,3,5,6,7,8,6,0].reduce([]) do |memo, element|
+memo.unshift element
+  puts "After unshifting element: #{element}, the memo is:
+#{memo.inspect}"
+  memo
+end
+</code></pre>
+</div>
+
+<p>The output is as follows:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>After unshifting element: 1, the memo is: [1]
+After unshifting element: 3, the memo is: [3, 1]
+After unshifting element: 5, the memo is: [5, 3, 1]
+After unshifting element: 6, the memo is: [6, 5, 3, 1]
+After unshifting element: 7, the memo is: [7, 6, 5, 3, 1]
+After unshifting element: 8, the memo is: [8, 7, 6, 5, 3, 1]
+After unshifting element: 6, the memo is: [6, 8, 7, 6, 5, 3, 1]
+After unshifting element: 0, the memo is: [0, 6, 8, 7, 6, 5, 3, 1]
+=&gt; [0, 6, 8, 7, 6, 5, 3, 1]
+</code></pre>
+</div>
+
+<h2 id="max">max</h2>
+<p>This function finds the largest element in an array:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>irb&gt; [1,3,5,6,7,8,6,0].max
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>=&gt; 8
+</code></pre>
+</div>
+
+<p>Reduce will work here because as you iterate through the array, you
+save the largest value in the memo. This example does not even need an
+explicit initial value, because the first element is the default value for the
+memo.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[4,3,5,6,7,8,6,0].reduce do |memo, element|
+if element &gt; memo
+   memo = element
+ else
+   memo = memo
+end
+puts "The largest element after checking #{element} is #{memo}"
+memo
+end
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>The largest element after checking 3 is 4
+The largest element after checking 5 is 5
+The largest element after checking 6 is 6
+The largest element after checking 7 is 7
+The largest element after checking 8 is 8
+The largest element after checking 6 is 8
+The largest element after checking 0 is 8
+=&gt; 8
+</code></pre>
+</div>
+
+<p>Of course, the terse way to encode this is as follows:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[4,3,5,6,7,8,6,0].reduce do |memo, element|
+ (element &gt; memo) ? element : memo
+end
+=&gt; 8
 </code></pre>
 </div>
 
