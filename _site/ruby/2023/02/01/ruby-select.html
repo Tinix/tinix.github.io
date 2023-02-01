@@ -9,10 +9,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Ruby vs Elixir ,  Rails vs Phoenix - part 1</title>
-  <meta name="description" content="">
+  <title>Ruby Select</title>
+  <meta name="description" content="This function of the Ruby Enumerable library is very simple. The select()method is applied to an array or a hash. The job of select() is to selectelements th...">
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://localhost:3000/elixir/2018/09/28/ruby-vs-elixir-rails-vs-phoenix-part-1.html">
+  <link rel="canonical" href="http://localhost:3000/ruby/2023/02/01/ruby-select.html">
   <link rel="alternate" type="application/rss+xml" title="Tinix&#39;s different point of view." href="http://localhost:3000/feed.xml">
 </head>
 
@@ -81,78 +81,69 @@
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">Ruby vs Elixir ,  Rails vs Phoenix - part 1</h1>
+    <h1 class="post-title" itemprop="name headline">Ruby Select</h1>
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p><img src="http://localhost:3000/images/ruby-elixir.png" alt="useful image" /></p>
+    <p>This function of the Ruby Enumerable library is very simple. The select()
+method is applied to an array or a hash. The job of select() is to select
+elements that return true for a predicate applied to the element. (A predicate
+is an expression that returns true or false, and it runs in the block passed
+to select).
+The following trivial example has the predicate always return true,
+and therefore all members of the set are selected. In this case, the set is
+[1,2,3,4,5] and the predicate is true:</p>
 
-<p>This is not a, “Which is better?”, post. It is more a way to help other developers, like myself, who have a background in Rails development and are interested in Elixir and Phoenix.</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>[1,2,3,4,5].select do |element|
+    true
+end
+=&gt; [1,2,3,4,5]
+</code></pre>
+</div>
 
-<p>Elixir != Ruby and Phoenix != Rails. Even though there may be some similarities between both, it is beneficial to stay open to innovative and often lateral approaches in Elixir/Phoenix.</p>
+<p>A slightly less trivial example selects even numbers (i.e., where the
+predicate is **element % 2 == 0 ** ) from the original set of [1,2,3,4,5]:</p>
 
-<p>If you are a Ruby/Rails developer who is interested in adding Elixir/Phoenix to your toolbelt, then I hope this post serves as a helpful starting point.</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>[1,2,3,4,5].select do |element|
+    element % 2 == 0
+end
+=&gt; [2,4]
+</code></pre>
+</div>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">Struct</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">:first</span><span class="p">,</span> <span class="ss">:last</span><span class="p">)</span>
-  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">full_name</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
-    <span class="s2">"</span><span class="si">#{</span><span class="n">user</span><span class="p">.</span><span class="nf">first</span><span class="si">}</span><span class="s2"> </span><span class="si">#{</span><span class="n">user</span><span class="p">.</span><span class="nf">last</span><span class="si">}</span><span class="s2">"</span>
-  <span class="k">end</span>
-<span class="k">end</span>
+<p>Selects can be cascaded. Suppose you want to find the even numbers
+between 1 and 100 starting with a 7. First, you select the even numbers.
+Then, you select the numbers starting with a 7:</p>
 
-<span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">"George"</span><span class="p">,</span> <span class="s2">"Tinix"</span><span class="p">)</span>
-<span class="no">User</span><span class="p">.</span><span class="nf">full_name</span><span class="p">(</span><span class="n">user</span><span class="p">)</span> 
-<span class="c1">#=&gt; "George Tinix"</span>
- </code></pre></figure>
+<div class="highlighter-rouge"><pre class="highlight"><code>irb&gt;  (1..100).select{|number| number % 2 == 0}\
+irb*&gt; .select{|even_number| even_number.to_s[0] == "7"}
+=&gt; [70,72.74,76,78]
+</code></pre>
+</div>
 
-<p>Notice that we pass user to the full_name method. There are no “object instances” to call methods on in Elixir.</p>
+<p>You could also reverse the cascade:</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">defmodule</span> <span class="no">User</span> <span class="k">do</span>
-  <span class="n">defstruct</span> <span class="p">[</span><span class="ss">:first</span><span class="p">,</span> <span class="ss">:last</span><span class="p">]</span>
+<div class="highlighter-rouge"><pre class="highlight"><code>irb&gt;  (1..100).select{|number| number.to_s[0] == "7"}\
+irb*&gt; .select{|seven_number| seven_number % 2 == 0}
+=&gt; [70,72.74,76,78]
+</code></pre>
+</div>
 
-  <span class="k">def</span> <span class="nf">full_name</span><span class="p">(</span><span class="n">user</span><span class="p">)</span> <span class="k">do</span>
-    <span class="s2">"</span><span class="si">#{</span><span class="n">user</span><span class="p">.</span><span class="nf">first</span><span class="si">}</span><span class="s2"> </span><span class="si">#{</span><span class="n">user</span><span class="p">.</span><span class="nf">last</span><span class="si">}</span><span class="s2">"</span>
-  <span class="k">end</span>
-<span class="k">end</span>
+<p>Since select returns an array, you can cascade select calls. For
+example, you could have a select block select even numbers and then
+square them using a map call. For example:</p>
 
-<span class="n">user</span> <span class="o">=</span> <span class="o">%</span><span class="no">User</span><span class="p">{</span><span class="ss">first: </span><span class="s2">"George"</span><span class="p">,</span> <span class="ss">last: </span><span class="s2">"Tinix"</span><span class="p">}</span>
-<span class="no">User</span><span class="p">.</span><span class="nf">full_name</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
-<span class="c1">#=&gt; "George Tinix"</span>
- </code></pre></figure>
+<div class="highlighter-rouge"><pre class="highlight"><code>[1,2,3,4,5].select do |number|
+    number%2==0
+end.map do |even_number|
+    even_number * even_number
+end
+=&gt; [4, 16]
+</code></pre>
+</div>
 
-<h1 id="embrace-pattern-matching">Embrace Pattern Matching</h1>
-<p>In Ruby, conditionals are predominant, but in Elixir it is more favorable to use pattern matching.</p>
-
-<p>In Ruby, you might see something like this:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">notify_user</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
-  <span class="k">if</span> <span class="n">user</span><span class="p">.</span><span class="nf">send_emails?</span> <span class="k">do</span>
-   <span class="c1">#Send emails</span>
-  <span class="k">end</span>
-<span class="k">end</span>
- </code></pre></figure>
-
-<p>In Elixir, we would use pattern matching against the data structure of the user argument:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"> <span class="k">def</span> <span class="nf">notify_user</span><span class="p">(</span><span class="o">%</span><span class="no">User</span><span class="p">{</span><span class="n">send_emails?</span><span class="p">:</span> <span class="kp">true</span><span class="p">})</span> <span class="k">do</span>
-  <span class="c1">#Send emails</span>
-<span class="k">end</span>
-<span class="k">def</span> <span class="nf">notify_user</span><span class="p">(</span><span class="n">user</span><span class="p">),</span> <span class="ss">do: </span><span class="n">user</span>
- </code></pre></figure>
-
-<p>The above example shows the use of pattern matching within function definitions but we can also use pattern matching to control the flow of logic.</p>
-
-<p>In Rails, this could be considered the equivalent of returning a Result object for handling outcomes beyond just true or false.</p>
-
-<p>In Elixir, you would utilize pattern matching on a function’s result. The following is quite common to see in Phoenix controllers:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"> <span class="k">case</span> <span class="no">MyApp</span><span class="p">.</span><span class="nf">do_something</span><span class="p">()</span> <span class="k">do</span>
-  <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">value</span><span class="p">}</span>     <span class="o">-&gt;</span> <span class="c1"># do stuff ...</span>
-  <span class="p">{</span><span class="ss">:error</span><span class="p">,</span> <span class="n">errors</span><span class="p">}</span> <span class="o">-&gt;</span> <span class="c1"># do different stuff...</span>
-<span class="k">end</span>
- </code></pre></figure>
-
-<hr />
-
+<p>A number of the more complex operations can be solved by cascading
+with select calls.</p>
 
         
 <div id="disqus_thread"></div>

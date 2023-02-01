@@ -52,6 +52,12 @@
           
         
           
+          <a class="page-link" href="/ruby-select.html">Ruby Select</a>
+          
+        
+          
+        
+          
         
           
         
@@ -85,6 +91,97 @@
 
   <script id="dsq-count-scr" src="//tinixgit.disqus.com/count.js" async></script>
 
+
+  <h1><a href="/golang/2021/10/29/go-errors.html">Go Errors</a></h1>
+  <p class="author">
+    <span class="date">2021-10-29 00:19:13 -0300</span>
+  </p>
+  <div class="content">
+    <p>In Go it’s idiomatic to communicate errors via an explicit, separate return value. This contrasts with the exceptions used in languages like Java and Ruby and the overloaded single result / error value sometimes used in C. Go’s approach makes it easy to see which functions return errors and to handle them using the same language constructs employed for any other, non-error tasks</p>
+
+<p>By convention, errors are the last return value and have type error, a built-in interface.</p>
+
+<p>errors.New constructs a basic error value with the given error message.</p>
+
+<p>A nil value in the error position indicates that there was no error.</p>
+
+<p>It’s possible to use custom types as errors by implementing the Error() method on them. Here’s a variant on the example above that uses a custom type to explicitly represent an argument error.</p>
+
+<p>In this case we use &amp;argError syntax to build a new struct, supplying values for the two fields arg and prob.</p>
+
+<p>The two loops below test out each of our error-returning functions. Note that the use of an inline error check on the if line is a common idiom in Go code.</p>
+
+<p>If you want to programmatically use the data in a custom error, you’ll need to get the error as an instance of the custom error type via type assertion.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">package</span> <span class="n">main</span>
+
+<span class="n">import</span> <span class="p">(</span>
+    <span class="s2">"errors"</span>
+    <span class="s2">"fmt"</span>
+<span class="p">)</span>
+
+<span class="n">func</span> <span class="n">f1</span><span class="p">(</span><span class="n">arg</span> <span class="n">int</span><span class="p">)</span> <span class="p">(</span><span class="n">int</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="n">arg</span> <span class="o">==</span> <span class="mi">42</span> <span class="p">{</span>
+
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">errors</span><span class="o">.</span><span class="no">New</span><span class="p">(</span><span class="s2">"can't work with 42"</span><span class="p">)</span>
+
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">arg</span> <span class="o">+</span> <span class="mi">3</span><span class="p">,</span> <span class="kp">nil</span>
+<span class="p">}</span>
+
+<span class="n">type</span> <span class="n">argError</span> <span class="n">struct</span> <span class="p">{</span>
+    <span class="n">arg</span>  <span class="n">int</span>
+    <span class="n">prob</span> <span class="n">string</span>
+<span class="p">}</span>
+
+<span class="n">func</span> <span class="p">(</span><span class="n">e</span> <span class="o">*</span><span class="n">argError</span><span class="p">)</span> <span class="no">Error</span><span class="p">()</span> <span class="n">string</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">fmt</span><span class="o">.</span><span class="no">Sprintf</span><span class="p">(</span><span class="s2">"%d - %s"</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="nf">arg</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="nf">prob</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="n">func</span> <span class="n">f2</span><span class="p">(</span><span class="n">arg</span> <span class="n">int</span><span class="p">)</span> <span class="p">(</span><span class="n">int</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="n">arg</span> <span class="o">==</span> <span class="mi">42</span> <span class="p">{</span>
+
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">argError</span><span class="p">{</span><span class="n">arg</span><span class="p">,</span> <span class="s2">"can't work with it"</span><span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">arg</span> <span class="o">+</span> <span class="mi">3</span><span class="p">,</span> <span class="kp">nil</span>
+<span class="p">}</span>
+
+<span class="n">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">i</span> <span class="p">:</span><span class="o">=</span> <span class="n">range</span> <span class="p">[]</span><span class="n">int</span><span class="p">{</span><span class="mi">7</span><span class="p">,</span> <span class="mi">42</span><span class="p">}</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="n">r</span><span class="p">,</span> <span class="n">e</span> <span class="p">:</span><span class="o">=</span> <span class="n">f1</span><span class="p">(</span><span class="n">i</span><span class="p">);</span> <span class="n">e</span> <span class="o">!=</span> <span class="kp">nil</span> <span class="p">{</span>
+            <span class="n">fmt</span><span class="o">.</span><span class="no">Println</span><span class="p">(</span><span class="s2">"f1 failed:"</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">fmt</span><span class="o">.</span><span class="no">Println</span><span class="p">(</span><span class="s2">"f1 worked:"</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">i</span> <span class="p">:</span><span class="o">=</span> <span class="n">range</span> <span class="p">[]</span><span class="n">int</span><span class="p">{</span><span class="mi">7</span><span class="p">,</span> <span class="mi">42</span><span class="p">}</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="n">r</span><span class="p">,</span> <span class="n">e</span> <span class="p">:</span><span class="o">=</span> <span class="n">f2</span><span class="p">(</span><span class="n">i</span><span class="p">);</span> <span class="n">e</span> <span class="o">!=</span> <span class="kp">nil</span> <span class="p">{</span>
+            <span class="n">fmt</span><span class="o">.</span><span class="no">Println</span><span class="p">(</span><span class="s2">"f2 failed:"</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">fmt</span><span class="o">.</span><span class="no">Println</span><span class="p">(</span><span class="s2">"f2 worked:"</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">_</span><span class="p">,</span> <span class="n">e</span> <span class="p">:</span><span class="o">=</span> <span class="n">f2</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ae</span><span class="p">,</span> <span class="n">ok</span> <span class="p">:</span><span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="p">(</span><span class="o">*</span><span class="n">argError</span><span class="p">);</span> <span class="n">ok</span> <span class="p">{</span>
+        <span class="n">fmt</span><span class="o">.</span><span class="no">Println</span><span class="p">(</span><span class="n">ae</span><span class="p">.</span><span class="nf">arg</span><span class="p">)</span>
+        <span class="n">fmt</span><span class="o">.</span><span class="no">Println</span><span class="p">(</span><span class="n">ae</span><span class="p">.</span><span class="nf">prob</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">go</span> <span class="n">run</span> <span class="n">errors</span><span class="p">.</span><span class="nf">go</span>
+<span class="n">f1</span> <span class="ss">worked: </span><span class="mi">10</span>
+<span class="n">f1</span> <span class="ss">failed: </span><span class="n">can</span><span class="s1">'t work with 42
+f2 worked: 10
+f2 failed: 42 - can'</span><span class="n">t</span> <span class="n">work</span> <span class="n">with</span> <span class="n">it</span>
+<span class="mi">42</span>
+<span class="n">can</span><span class="err">'</span><span class="n">t</span> <span class="n">work</span> <span class="n">with</span> <span class="n">it</span></code></pre></figure>
+
+<p>See this <a href="http://blog.golang.org/2011/07/error-handling-and-go.html">great pos</a>t on the Go blog for more on error handling.</p>
+
+  </div>
 
   <h1><a href="/ruby/2021/09/20/what-is-proc-in-ruby.html">What is Proc in Ruby</a></h1>
   <p class="author">
@@ -524,82 +621,6 @@ In Ruby, there is rake, in Elixir there is mix.</p>
 
   </div>
 
-  <h1><a href="/elixir/2018/09/28/ruby-vs-elixir-rails-vs-phoenix-part-1.html">Ruby vs Elixir ,  Rails vs Phoenix - part 1</a></h1>
-  <p class="author">
-    <span class="date">2018-09-28 16:52:56 -0300</span>
-  </p>
-  <div class="content">
-    <p><img src="http://localhost:3000/images/ruby-elixir.png" alt="useful image" /></p>
-
-<p>This is not a, “Which is better?”, post. It is more a way to help other developers, like myself, who have a background in Rails development and are interested in Elixir and Phoenix.</p>
-
-<p>Elixir != Ruby and Phoenix != Rails. Even though there may be some similarities between both, it is beneficial to stay open to innovative and often lateral approaches in Elixir/Phoenix.</p>
-
-<p>If you are a Ruby/Rails developer who is interested in adding Elixir/Phoenix to your toolbelt, then I hope this post serves as a helpful starting point.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">Struct</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">:first</span><span class="p">,</span> <span class="ss">:last</span><span class="p">)</span>
-  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">full_name</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
-    <span class="s2">"</span><span class="si">#{</span><span class="n">user</span><span class="p">.</span><span class="nf">first</span><span class="si">}</span><span class="s2"> </span><span class="si">#{</span><span class="n">user</span><span class="p">.</span><span class="nf">last</span><span class="si">}</span><span class="s2">"</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-
-<span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">"George"</span><span class="p">,</span> <span class="s2">"Tinix"</span><span class="p">)</span>
-<span class="no">User</span><span class="p">.</span><span class="nf">full_name</span><span class="p">(</span><span class="n">user</span><span class="p">)</span> 
-<span class="c1">#=&gt; "George Tinix"</span>
- </code></pre></figure>
-
-<p>Notice that we pass user to the full_name method. There are no “object instances” to call methods on in Elixir.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">defmodule</span> <span class="no">User</span> <span class="k">do</span>
-  <span class="n">defstruct</span> <span class="p">[</span><span class="ss">:first</span><span class="p">,</span> <span class="ss">:last</span><span class="p">]</span>
-
-  <span class="k">def</span> <span class="nf">full_name</span><span class="p">(</span><span class="n">user</span><span class="p">)</span> <span class="k">do</span>
-    <span class="s2">"</span><span class="si">#{</span><span class="n">user</span><span class="p">.</span><span class="nf">first</span><span class="si">}</span><span class="s2"> </span><span class="si">#{</span><span class="n">user</span><span class="p">.</span><span class="nf">last</span><span class="si">}</span><span class="s2">"</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-
-<span class="n">user</span> <span class="o">=</span> <span class="o">%</span><span class="no">User</span><span class="p">{</span><span class="ss">first: </span><span class="s2">"George"</span><span class="p">,</span> <span class="ss">last: </span><span class="s2">"Tinix"</span><span class="p">}</span>
-<span class="no">User</span><span class="p">.</span><span class="nf">full_name</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
-<span class="c1">#=&gt; "George Tinix"</span>
- </code></pre></figure>
-
-<h1 id="embrace-pattern-matching">Embrace Pattern Matching</h1>
-<p>In Ruby, conditionals are predominant, but in Elixir it is more favorable to use pattern matching.</p>
-
-<p>In Ruby, you might see something like this:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">notify_user</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
-  <span class="k">if</span> <span class="n">user</span><span class="p">.</span><span class="nf">send_emails?</span> <span class="k">do</span>
-   <span class="c1">#Send emails</span>
-  <span class="k">end</span>
-<span class="k">end</span>
- </code></pre></figure>
-
-<p>In Elixir, we would use pattern matching against the data structure of the user argument:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"> <span class="k">def</span> <span class="nf">notify_user</span><span class="p">(</span><span class="o">%</span><span class="no">User</span><span class="p">{</span><span class="n">send_emails?</span><span class="p">:</span> <span class="kp">true</span><span class="p">})</span> <span class="k">do</span>
-  <span class="c1">#Send emails</span>
-<span class="k">end</span>
-<span class="k">def</span> <span class="nf">notify_user</span><span class="p">(</span><span class="n">user</span><span class="p">),</span> <span class="ss">do: </span><span class="n">user</span>
- </code></pre></figure>
-
-<p>The above example shows the use of pattern matching within function definitions but we can also use pattern matching to control the flow of logic.</p>
-
-<p>In Rails, this could be considered the equivalent of returning a Result object for handling outcomes beyond just true or false.</p>
-
-<p>In Elixir, you would utilize pattern matching on a function’s result. The following is quite common to see in Phoenix controllers:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"> <span class="k">case</span> <span class="no">MyApp</span><span class="p">.</span><span class="nf">do_something</span><span class="p">()</span> <span class="k">do</span>
-  <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">value</span><span class="p">}</span>     <span class="o">-&gt;</span> <span class="c1"># do stuff ...</span>
-  <span class="p">{</span><span class="ss">:error</span><span class="p">,</span> <span class="n">errors</span><span class="p">}</span> <span class="o">-&gt;</span> <span class="c1"># do different stuff...</span>
-<span class="k">end</span>
- </code></pre></figure>
-
-<hr />
-
-
-  </div>
-
 <br>
 <!--Pagination links  -->
 
@@ -635,6 +656,10 @@ In Ruby, there is rake, in Elixir there is mix.</p>
   
   
   <a href="/page7">7</a>
+  
+  
+  
+  <a href="/page8">8</a>
   
   
 
