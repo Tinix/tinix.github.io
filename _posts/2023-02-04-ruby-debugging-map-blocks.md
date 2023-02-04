@@ -1,7 +1,7 @@
 ---
 title: Ruby Debugging Map Blocks
 layout: post
-date: '2023-02-04 12:57:11'
+date: '2023-02-04 13:05:04'
 categories: ruby
 comments: true
 ---
@@ -17,6 +17,7 @@ the block operated on each element.
     result
 end
 ```
+
 
 It is important to save the result in a local variable so that you can
 return it as the last statement of the block. If you don’t, the result of the

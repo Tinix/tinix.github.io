@@ -6,8 +6,8 @@
 </description>
     <link>http://localhost:3000/</link>
     <atom:link href="http://localhost:3000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 04 Feb 2023 10:01:08 -0300</pubDate>
-    <lastBuildDate>Sat, 04 Feb 2023 10:01:08 -0300</lastBuildDate>
+    <pubDate>Sat, 04 Feb 2023 10:07:57 -0300</pubDate>
+    <lastBuildDate>Sat, 04 Feb 2023 10:07:57 -0300</lastBuildDate>
     <generator>Jekyll v3.3.1</generator>
     
       <item>
@@ -28,7 +28,7 @@ end
 return it as the last statement of the block. If you don’t, the result of the
 puts statement will be returned (usually nil).&lt;/p&gt;
 </description>
-        <pubDate>Sat, 04 Feb 2023 12:57:11 -0300</pubDate>
+        <pubDate>Sat, 04 Feb 2023 13:05:04 -0300</pubDate>
         <link>http://localhost:3000/ruby/2023/02/04/ruby-debugging-map-blocks.html</link>
         <guid isPermaLink="true">http://localhost:3000/ruby/2023/02/04/ruby-debugging-map-blocks.html</guid>
         
