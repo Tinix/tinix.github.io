@@ -52,10 +52,6 @@
           
         
           
-          <a class="page-link" href="/ruby-select.html">Ruby Select</a>
-          
-        
-          
         
           
         
@@ -91,6 +87,74 @@
 
   <script id="dsq-count-scr" src="//tinixgit.disqus.com/count.js" async></script>
 
+
+  <h1><a href="/ruby/2023/01/16/ruby-block-passing-syntax.html">Ruby Block passing Syntax</a></h1>
+  <p class="author">
+    <span class="date">2023-01-16 19:22:05 -0300</span>
+  </p>
+  <div class="content">
+    <p>Ruby is one of many languages that allow lexical closures, otherwise
+known (kind of ) as anonymous functions or blocks. These functions are
+dynamically created. The function can take the form of a defined function.
+For example:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">irb</span><span class="o">&gt;</span> <span class="k">def</span> <span class="nf">plus_two</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+<span class="n">irb</span><span class="o">&gt;</span>   <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="mi">2</span>
+<span class="n">irb</span><span class="o">&gt;</span> <span class="k">end</span>
+<span class="n">irb</span><span class="o">&gt;</span> <span class="n">plus_two</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="o">=&gt;</span> <span class="mi">9</span></code></pre></figure>
+
+<p>Or, you could define it as follows:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">irb</span><span class="o">&gt;</span> <span class="n">plus_two</span> <span class="o">=</span> <span class="o">-&gt;</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span> <span class="k">do</span>
+<span class="n">irb</span><span class="o">&gt;</span>   <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="mi">2</span>
+<span class="n">irb</span><span class="o">&gt;</span> <span class="k">end</span></code></pre></figure>
+
+<p>Or, you could define it this way:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">irb</span><span class="o">&gt;</span> <span class="n">plus_three</span> <span class="o">=</span> <span class="o">-&gt;</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">){</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="mi">3</span><span class="p">}</span>
+<span class="n">irb</span><span class="o">&gt;</span> <span class="n">plus_three</span><span class="p">.</span><span class="nf">call</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">)</span>
+<span class="o">=&gt;</span> <span class="mi">15</span></code></pre></figure>
+
+<p>Now, anonymous functions or blocks can be passed to other functions
+as parameters. A function that takes a function (defined or anonymous)
+as a parameter will optionally execute the function in its program flow.
+Suppose there is a function called printit() defined as follows:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">irb</span><span class="o">&gt;</span> <span class="n">printit</span> <span class="o">=</span> <span class="o">-&gt;</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="k">do</span>
+<span class="n">irb</span><span class="o">&gt;</span>   <span class="nb">puts</span> <span class="n">a</span><span class="p">.</span><span class="nf">inspect</span>
+<span class="n">irb</span><span class="o">&gt;</span> <span class="k">end</span></code></pre></figure>
+
+<p>Now, suppose you want to print each element of a range. You will call
+each on the array, which will run the block passed to each for each element
+of the array.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">irb</span><span class="o">&gt;</span> <span class="p">(</span><span class="mi">1</span><span class="p">.</span><span class="nf">.</span><span class="mi">5</span><span class="p">).</span><span class="nf">each</span><span class="p">(</span><span class="o">&amp;</span><span class="n">printit</span><span class="p">)</span>
+<span class="mi">1</span>
+<span class="mi">2</span>
+<span class="mi">3</span>
+<span class="mi">4</span>
+<span class="mi">5</span>
+<span class="o">=&gt;</span> <span class="p">(</span><span class="mi">1</span><span class="p">.</span><span class="nf">.</span><span class="mi">5</span><span class="p">)</span></code></pre></figure>
+
+<p>You could also pass an actual block of code to run. The block is
+surrounded by do and end or { and }. Objects between the vertical bars are
+optionally passed to the block (depending on the definition of the block),
+and they are used by the block to execute. The return value of a block is the
+value of the last expression in the block.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">irb</span><span class="o">&gt;</span> <span class="p">(</span><span class="mi">1</span><span class="p">.</span><span class="nf">.</span><span class="mi">5</span><span class="p">).</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">num</span><span class="o">|</span>
+<span class="n">irb</span><span class="o">&gt;</span>   <span class="nb">puts</span> <span class="n">num</span><span class="p">.</span><span class="nf">inspect</span>
+<span class="n">irb</span><span class="o">&gt;</span> <span class="k">end</span></code></pre></figure>
+
+<p>You will get the same output as earlier. Ditto for the following:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">irb</span><span class="o">&gt;</span> <span class="p">(</span><span class="mi">1</span><span class="p">.</span><span class="nf">.</span><span class="mi">5</span><span class="p">).</span><span class="nf">each</span><span class="p">{</span><span class="o">|</span><span class="n">num</span><span class="o">|</span> <span class="nb">puts</span> <span class="n">num</span><span class="p">.</span><span class="nf">inspect</span> <span class="p">}</span></code></pre></figure>
+
+<p>In Ruby, map, reduce, and select all take a code block as a parameter,
+and the code block is executed as defined by the function</p>
+
+  </div>
 
   <h1><a href="/rust/2023/01/08/rust-hello-world-in-three-languages.html">Rust “Hello World!” in three languages</a></h1>
   <p class="author">
@@ -366,61 +430,6 @@ have the option to redefine either == or eql? and compare objects in different w
 <span class="o">=&gt;</span> <span class="kp">false</span></code></pre></figure>
 
 <p>Ruby gives you a suite of tools for object comparisons, and not always just comparison for equality.</p>
-
-  </div>
-
-  <h1><a href="/ruby/2021/10/31/ruby-rails-remember-a-method-name.html">Ruby remember a method name</a></h1>
-  <p class="author">
-    <span class="date">2021-10-31 01:19:49 -0300</span>
-  </p>
-  <div class="content">
-    <p>Trying to remember a method name or just discover what you can call on an object? Ruby has you covered! Check out examples below</p>
-
-<h4 id="list-all-methods">List all methods</h4>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">User</span><span class="p">.</span><span class="nf">methods</span></code></pre></figure>
-
-<h4 id="list-all-direct-methods-except-object-class-methods">List all direct methods except Object class methods</h4>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">User</span><span class="p">.</span><span class="nf">methods</span> <span class="o">-</span> <span class="no">Object</span><span class="p">.</span><span class="nf">methods</span></code></pre></figure>
-
-<h4 id="list-all-direct-methods--not-comming-from-a-parent-class-">List all direct methods ( not comming from a parent class )</h4>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">User</span><span class="p">.</span><span class="nf">methods</span><span class="p">(</span><span class="kp">false</span><span class="p">)</span></code></pre></figure>
-
-<h4 id="list-all-instance-methods">List all instance methods</h4>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">User</span><span class="p">.</span><span class="nf">instance_methods</span></code></pre></figure>
-
-<h4 id="list-all-direct-instance-methods">List all direct instance methods</h4>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">User</span><span class="p">.</span><span class="nf">instance_methods</span><span class="p">(</span><span class="kp">false</span><span class="p">)</span></code></pre></figure>
-
-<h4 id="list-all-methods-and-then-grep-on-them">List all methods and then grep on them</h4>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">User</span><span class="p">.</span><span class="nf">methods</span><span class="p">.</span><span class="nf">grep</span><span class="p">(</span><span class="sr">/find/</span><span class="p">)</span>
-<span class="o">=&gt;</span> <span class="p">[</span><span class="ss">:find_for_database_authentication</span><span class="p">,</span>
- <span class="ss">:find_for_authentication</span><span class="p">,</span>
- <span class="ss">:find_first_by_auth_conditions</span><span class="p">,</span>
- <span class="ss">:find_or_initialize_with_error_by</span><span class="p">,</span>
- <span class="ss">:find_or_initialize_with_errors</span><span class="p">,</span>
- <span class="ss">:_find_callbacks</span><span class="p">,</span>
- <span class="ss">:_find_callbacks</span><span class="o">=</span><span class="p">,</span>
- <span class="ss">:after_find</span><span class="p">,</span>
- <span class="ss">:finder_needs_type_condition?</span><span class="p">,</span>
- <span class="ss">:find_by!</span><span class="p">,</span>
- <span class="ss">:cached_find_by_statement</span><span class="p">,</span>
- <span class="ss">:find_by</span><span class="p">,</span>
- <span class="ss">:initialize_find_by_cache</span><span class="p">,</span>
- <span class="ss">:find</span><span class="p">,</span>
- <span class="ss">:find_or_create_by</span><span class="p">,</span>
- <span class="ss">:find_or_create_by!</span><span class="p">,</span>
- <span class="ss">:find_or_initialize_by</span><span class="p">,</span>
- <span class="ss">:create_or_find_by</span><span class="p">,</span>
- <span class="ss">:create_or_find_by!</span><span class="p">,</span>
- <span class="ss">:find_each</span><span class="p">,</span>
- <span class="ss">:find_in_batches</span><span class="p">,</span>
- <span class="ss">:find_by_sql</span><span class="p">]</span></code></pre></figure>
 
   </div>
 

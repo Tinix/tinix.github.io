@@ -52,10 +52,6 @@
           
         
           
-          <a class="page-link" href="/ruby-select.html">Ruby Select</a>
-          
-        
-          
         
           
         
@@ -91,6 +87,68 @@
 
   <script id="dsq-count-scr" src="//tinixgit.disqus.com/count.js" async></script>
 
+
+  <h1><a href="/ruby/2018/01/30/ruby-for-rails-blocks.html">Ruby for Rails: Blocks</a></h1>
+  <p class="author">
+    <span class="date">2018-01-30 12:06:31 -0300</span>
+  </p>
+  <div class="content">
+    <p>This post is the first in a series of blog posts about Ruby for Rails beginners. These are specifically for Rails developers who want to solidify their grasp of the Ruby language.</p>
+
+<p>More than a decade ago, I started learning Rails before I knew any Ruby. Rails is written in Ruby of course, so when writing Rails code you are writing Ruby code. But at the beginning, I didn’t fully understand how Ruby worked. And that’s fine. A lot of people started learning Rails and picked up Ruby along the way.</p>
+
+<p>The “Ruby for Rails” series will help you learn Ruby to make you a better Rails programmer.</p>
+
+<p>In this blog post, we’ll talk about blocks. Ruby blocks can be confusing to beginners but it’s important that you learn them because you’ll keep on using them on your Rails application.</p>
+
+<p>One of the first code you’ll see with blocks is with loops.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">(</span><span class="mi">1</span><span class="p">.</span><span class="nf">.</span><span class="mi">10</span><span class="p">).</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">i</span><span class="o">|</span>
+  <span class="nb">puts</span> <span class="n">i</span>
+<span class="k">end</span></code></pre></figure>
+
+<p>The block is inside <strong style="color: #C00;">do</strong> and <strong style="color: #C00;">end</strong>. This code displays the numbers 1 to 10. When you read it, it kind of makes sense. From 1 to 10, for each i, puts i. If you have experience with other programming languages, you might think this is just a more complicated way to do loops.</p>
+
+<p><strong style="color: #C00;">each</strong> isn’t only for numbers. You can also iterate through an array.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="s2">"Alice"</span><span class="p">,</span> <span class="s2">"Bob"</span><span class="p">,</span> <span class="s2">"Eve"</span><span class="p">].</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="nb">name</span><span class="o">|</span>
+  <span class="nb">puts</span> <span class="nb">name</span>
+<span class="k">end</span></code></pre></figure>
+
+<p>This code iterates through each element and prints the name. In Rails, you commonly use each when iterating through your model.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">Post</span><span class="p">.</span><span class="nf">all</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">post</span><span class="o">|</span>
+  <span class="nb">puts</span> <span class="n">post</span><span class="p">.</span><span class="nf">title</span>
+<span class="k">end</span></code></pre></figure>
+
+<p>Say you have a Post model with a title. When you call  <strong style="color: #C00;">each</strong>  on  <strong style="color: #C00;">Post.all</strong> , you iterate on each of those posts and the value is assigned to **post **which is inside  <code class="highlighter-rouge">||</code> . Since <strong style="color: #C00;">post</strong>  is a Post object, you can call  <strong style="color: #C00;">post.title</strong>  inside the block.</p>
+
+<p>The examples so far show that blocks can be used to iterate through some objects. But the iteration is a by product of the <strong style="color: #C00;">each</strong> method. Blocks aren’t just for iteration. Here’s another common code in Rails.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="sx">%= form_with Post.new do |form| %&gt;
+  &lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">text_field</span> <span class="ss">:title</span> <span class="o">%&gt;</span>
+  <span class="o">&lt;</span><span class="sx">%= form.text_area :body %&gt;
+&lt;% end %&gt;</span></code></pre></figure>
+
+<table>
+  <tbody>
+    <tr>
+      <td>We use <strong style="color: #C00;">&lt;%%&gt;</strong>  because this code appears on ERB templates. form_with is used to display an HTML form. Here, we call the <strong style="color: #C00;">form_with</strong> method and passes the Post.new parameter. form_with yields an object which we assign to form. You can use any variable inside</td>
+      <td> </td>
+      <td>. We could have used f here instead of form.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>In the examples above that used each, we yield each of the objects we’re iterating through. In form_with, we yield exactly one object which is the FormBuilder associated with the model. Inside the block you can use FormBuilder’s methods to generate fields like <strong style="color: #C00;">text_field, text_area, check_box, button,</strong>  etc.</p>
+
+<p>All the fields inside the block are captured and displayed inside the HTML <strong style="color: #C00;">form</strong>  element.</p>
+
+<p>These are just a few examples of blocks. You’ll see more when writing Rails code. So don’t get blocked out when coding!</p>
+
+<p>I’d like this… original post by <a href="https://www.engineyard.com/blog/ruby-for-rails-blocks">https://www.engineyard.com/blog/ruby-for-rails-blocks</a></p>
+
+  </div>
 
   <h1><a href="/ruby/2018/01/29/what-is-attr-accessor-in-rails.html">What is attr_accessor in Rails?</a></h1>
   <p class="author">
@@ -481,62 +539,6 @@ Suppose oif you are sending a mail to all the users who have subscribed for a ma
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">NotificationMailer</span><span class="p">.</span><span class="nf">delay</span><span class="p">.</span><span class="nf">notification_email</span><span class="p">(</span><span class="n">email</span><span class="p">)</span></code></pre></figure>
 
 <p>Here notification mailer is the name of the mailer and notification_email is the method through which the mail is being sent. Now the mail will be sent to all users in the background and the execution of the method wont be delayed.</p>
-
-  </div>
-
-  <h1><a href="/ruby/,/rails/2017/09/26/before-validation-and-after-touch-callback-in-rails.html">Before_validation and  after_touch callbacks in Rails</a></h1>
-  <p class="author">
-    <span class="date">2017-09-26 09:00:40 -0300</span>
-  </p>
-  <div class="content">
-    <p>Rails provide us with some pre-defined methods or hooks which can be invoked after or before the execution of a certain method in the object life cycle.
-Callbacks are called in certain moments of object’s life cycle which we will get to know in this blog.
-Today we will be studying about three callbacks as follows :
-before_validation
-As the name suggests, this method is called before validation of all the fields of the form.
-For example, there is a registration form which has an email field, so as soon as the user will fill the email field and submit the form before the value gets saved into the database we have to make sure that all characters in the email should be down case.
-So in this case, we will invoke a before_validation callback in which we will define a method to be called before the create method is called.
-In this method, we will convert the whole string into down case and after that, the create method will be called like this.</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>class Employee &lt; ApplicationRecord
-  
-  before_validation :normalize_email, on: :create
- 
-  # :on takes an array as well
-  
-  def create
-    ...
-  end 
-  protected
-    def normalize_email
-      self.email = email.downcase.titleize
-    end
-end
-</code></pre>
-</div>
-
-<p>after_touch
-Whenever an object is being touched the after_touch callback is called .
-For example
-We create an employee object and as soon as we touch the object the after_touch callback is invoked.</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>class Employee &lt; ApplicationRecord
-  
-  after_touch do |employee|
-    puts "The object has been touched"
-  end
-end
- 
-&gt;&gt; e = Employee.create(name: 'Tom')
-=&gt; #&lt;Employee id: 1, name: "Tom", created_at: "2013-11-25 12:17:49", updated_at: "2013-11-25 12:17:49"&gt;
- 
-&gt;&gt; e.touch
-The object has been touched
-=&gt; true
-</code></pre>
-</div>
-
-<p>So hope this article was helpful to understand both the callbacks.</p>
 
   </div>
 

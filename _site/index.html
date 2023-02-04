@@ -52,10 +52,6 @@
           
         
           
-          <a class="page-link" href="/ruby-select.html">Ruby Select</a>
-          
-        
-          
         
           
         
@@ -91,6 +87,29 @@
 
   <script id="dsq-count-scr" src="//tinixgit.disqus.com/count.js" async></script>
 
+
+  <h1><a href="/ruby/2023/02/04/ruby-debugging-map-blocks.html">Ruby Debugging Map Blocks</a></h1>
+  <p class="author">
+    <span class="date">2023-02-04 12:57:11 -0300</span>
+  </p>
+  <div class="content">
+    <p>The thing to remember is that map operates on each element of the
+collection for each run of the block. When debugging, you want to see how
+the block operated on each element.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[1,2,3,4,5].map do |number|
+    result = number*number
+    puts "The result of the function on element: #{number} is #{result}"
+    result
+end
+</code></pre>
+</div>
+
+<p>It is important to save the result in a local variable so that you can
+return it as the last statement of the block. If you don’t, the result of the
+puts statement will be returned (usually nil).</p>
+
+  </div>
 
   <h1><a href="/ruby/2023/02/01/ruby-select.html">Ruby Select</a></h1>
   <p class="author">
@@ -503,74 +522,6 @@ block add 100. For example:</p>
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">=&gt;</span> <span class="p">[</span><span class="mi">101</span><span class="p">,</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">109</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">125</span><span class="p">]</span></code></pre></figure>
 
 <p>A number of the more complex operations can be solved by cascading with map calls.</p>
-
-  </div>
-
-  <h1><a href="/ruby/2023/01/16/ruby-block-passing-syntax.html">Ruby Block passing Syntax</a></h1>
-  <p class="author">
-    <span class="date">2023-01-16 19:22:05 -0300</span>
-  </p>
-  <div class="content">
-    <p>Ruby is one of many languages that allow lexical closures, otherwise
-known (kind of ) as anonymous functions or blocks. These functions are
-dynamically created. The function can take the form of a defined function.
-For example:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">irb</span><span class="o">&gt;</span> <span class="k">def</span> <span class="nf">plus_two</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
-<span class="n">irb</span><span class="o">&gt;</span>   <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="mi">2</span>
-<span class="n">irb</span><span class="o">&gt;</span> <span class="k">end</span>
-<span class="n">irb</span><span class="o">&gt;</span> <span class="n">plus_two</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
-<span class="o">=&gt;</span> <span class="mi">9</span></code></pre></figure>
-
-<p>Or, you could define it as follows:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">irb</span><span class="o">&gt;</span> <span class="n">plus_two</span> <span class="o">=</span> <span class="o">-&gt;</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span> <span class="k">do</span>
-<span class="n">irb</span><span class="o">&gt;</span>   <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="mi">2</span>
-<span class="n">irb</span><span class="o">&gt;</span> <span class="k">end</span></code></pre></figure>
-
-<p>Or, you could define it this way:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">irb</span><span class="o">&gt;</span> <span class="n">plus_three</span> <span class="o">=</span> <span class="o">-&gt;</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">){</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="mi">3</span><span class="p">}</span>
-<span class="n">irb</span><span class="o">&gt;</span> <span class="n">plus_three</span><span class="p">.</span><span class="nf">call</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">)</span>
-<span class="o">=&gt;</span> <span class="mi">15</span></code></pre></figure>
-
-<p>Now, anonymous functions or blocks can be passed to other functions
-as parameters. A function that takes a function (defined or anonymous)
-as a parameter will optionally execute the function in its program flow.
-Suppose there is a function called printit() defined as follows:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">irb</span><span class="o">&gt;</span> <span class="n">printit</span> <span class="o">=</span> <span class="o">-&gt;</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="k">do</span>
-<span class="n">irb</span><span class="o">&gt;</span>   <span class="nb">puts</span> <span class="n">a</span><span class="p">.</span><span class="nf">inspect</span>
-<span class="n">irb</span><span class="o">&gt;</span> <span class="k">end</span></code></pre></figure>
-
-<p>Now, suppose you want to print each element of a range. You will call
-each on the array, which will run the block passed to each for each element
-of the array.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">irb</span><span class="o">&gt;</span> <span class="p">(</span><span class="mi">1</span><span class="p">.</span><span class="nf">.</span><span class="mi">5</span><span class="p">).</span><span class="nf">each</span><span class="p">(</span><span class="o">&amp;</span><span class="n">printit</span><span class="p">)</span>
-<span class="mi">1</span>
-<span class="mi">2</span>
-<span class="mi">3</span>
-<span class="mi">4</span>
-<span class="mi">5</span>
-<span class="o">=&gt;</span> <span class="p">(</span><span class="mi">1</span><span class="p">.</span><span class="nf">.</span><span class="mi">5</span><span class="p">)</span></code></pre></figure>
-
-<p>You could also pass an actual block of code to run. The block is
-surrounded by do and end or { and }. Objects between the vertical bars are
-optionally passed to the block (depending on the definition of the block),
-and they are used by the block to execute. The return value of a block is the
-value of the last expression in the block.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">irb</span><span class="o">&gt;</span> <span class="p">(</span><span class="mi">1</span><span class="p">.</span><span class="nf">.</span><span class="mi">5</span><span class="p">).</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">num</span><span class="o">|</span>
-<span class="n">irb</span><span class="o">&gt;</span>   <span class="nb">puts</span> <span class="n">num</span><span class="p">.</span><span class="nf">inspect</span>
-<span class="n">irb</span><span class="o">&gt;</span> <span class="k">end</span></code></pre></figure>
-
-<p>You will get the same output as earlier. Ditto for the following:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">irb</span><span class="o">&gt;</span> <span class="p">(</span><span class="mi">1</span><span class="p">.</span><span class="nf">.</span><span class="mi">5</span><span class="p">).</span><span class="nf">each</span><span class="p">{</span><span class="o">|</span><span class="n">num</span><span class="o">|</span> <span class="nb">puts</span> <span class="n">num</span><span class="p">.</span><span class="nf">inspect</span> <span class="p">}</span></code></pre></figure>
-
-<p>In Ruby, map, reduce, and select all take a code block as a parameter,
-and the code block is executed as defined by the function</p>
 
   </div>
 

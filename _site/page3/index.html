@@ -52,10 +52,6 @@
           
         
           
-          <a class="page-link" href="/ruby-select.html">Ruby Select</a>
-          
-        
-          
         
           
         
@@ -91,6 +87,61 @@
 
   <script id="dsq-count-scr" src="//tinixgit.disqus.com/count.js" async></script>
 
+
+  <h1><a href="/ruby/2021/10/31/ruby-rails-remember-a-method-name.html">Ruby remember a method name</a></h1>
+  <p class="author">
+    <span class="date">2021-10-31 01:19:49 -0300</span>
+  </p>
+  <div class="content">
+    <p>Trying to remember a method name or just discover what you can call on an object? Ruby has you covered! Check out examples below</p>
+
+<h4 id="list-all-methods">List all methods</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">User</span><span class="p">.</span><span class="nf">methods</span></code></pre></figure>
+
+<h4 id="list-all-direct-methods-except-object-class-methods">List all direct methods except Object class methods</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">User</span><span class="p">.</span><span class="nf">methods</span> <span class="o">-</span> <span class="no">Object</span><span class="p">.</span><span class="nf">methods</span></code></pre></figure>
+
+<h4 id="list-all-direct-methods--not-comming-from-a-parent-class-">List all direct methods ( not comming from a parent class )</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">User</span><span class="p">.</span><span class="nf">methods</span><span class="p">(</span><span class="kp">false</span><span class="p">)</span></code></pre></figure>
+
+<h4 id="list-all-instance-methods">List all instance methods</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">User</span><span class="p">.</span><span class="nf">instance_methods</span></code></pre></figure>
+
+<h4 id="list-all-direct-instance-methods">List all direct instance methods</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">User</span><span class="p">.</span><span class="nf">instance_methods</span><span class="p">(</span><span class="kp">false</span><span class="p">)</span></code></pre></figure>
+
+<h4 id="list-all-methods-and-then-grep-on-them">List all methods and then grep on them</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">User</span><span class="p">.</span><span class="nf">methods</span><span class="p">.</span><span class="nf">grep</span><span class="p">(</span><span class="sr">/find/</span><span class="p">)</span>
+<span class="o">=&gt;</span> <span class="p">[</span><span class="ss">:find_for_database_authentication</span><span class="p">,</span>
+ <span class="ss">:find_for_authentication</span><span class="p">,</span>
+ <span class="ss">:find_first_by_auth_conditions</span><span class="p">,</span>
+ <span class="ss">:find_or_initialize_with_error_by</span><span class="p">,</span>
+ <span class="ss">:find_or_initialize_with_errors</span><span class="p">,</span>
+ <span class="ss">:_find_callbacks</span><span class="p">,</span>
+ <span class="ss">:_find_callbacks</span><span class="o">=</span><span class="p">,</span>
+ <span class="ss">:after_find</span><span class="p">,</span>
+ <span class="ss">:finder_needs_type_condition?</span><span class="p">,</span>
+ <span class="ss">:find_by!</span><span class="p">,</span>
+ <span class="ss">:cached_find_by_statement</span><span class="p">,</span>
+ <span class="ss">:find_by</span><span class="p">,</span>
+ <span class="ss">:initialize_find_by_cache</span><span class="p">,</span>
+ <span class="ss">:find</span><span class="p">,</span>
+ <span class="ss">:find_or_create_by</span><span class="p">,</span>
+ <span class="ss">:find_or_create_by!</span><span class="p">,</span>
+ <span class="ss">:find_or_initialize_by</span><span class="p">,</span>
+ <span class="ss">:create_or_find_by</span><span class="p">,</span>
+ <span class="ss">:create_or_find_by!</span><span class="p">,</span>
+ <span class="ss">:find_each</span><span class="p">,</span>
+ <span class="ss">:find_in_batches</span><span class="p">,</span>
+ <span class="ss">:find_by_sql</span><span class="p">]</span></code></pre></figure>
+
+  </div>
 
   <h1><a href="/golang/2021/10/29/go-errors.html">Go Errors</a></h1>
   <p class="author">
@@ -549,75 +600,6 @@ The GPG key is a security feature.</p>
 <p>that’s all folks..!!</p>
 
 <hr />
-
-  </div>
-
-  <h1><a href="/elixir/2018/09/28/ruby-vs-elixir-rails-vs-phoenix-part-2.html">Ruby vs Elixir ,  Rails vs Phoenix - part 2</a></h1>
-  <p class="author">
-    <span class="date">2018-09-28 16:52:56 -0300</span>
-  </p>
-  <div class="content">
-    <p><img src="http://localhost:3000/images/phoenix-vs-rails.png" alt="useful image" /></p>
-
-<p>Dev Tools
-rake vs. mix
-In Ruby, there is rake, in Elixir there is mix.</p>
-
-<p>Mix is a build tool that provides tasks for creating, compiling, and testing Elixir projects, managing its dependencies, and more.</p>
-
-<p>Like Rails, Phoenix provides various mix commands to handle common tasks. Most of these commands should feel familiar:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">mix</span> <span class="n">phoenix</span><span class="p">.</span><span class="nf">new</span> <span class="n">my_app</span>
-<span class="n">mix</span> <span class="n">phoenix</span><span class="p">.</span><span class="nf">server</span>
-<span class="n">mix</span> <span class="n">ecto</span><span class="p">.</span><span class="nf">migrate</span>
-<span class="n">mix</span> <span class="n">phoenix</span><span class="p">.</span><span class="nf">gen</span><span class="p">.</span><span class="nf">html</span> <span class="no">User</span> <span class="n">users</span> <span class="n">email</span><span class="ss">:string</span>
-<span class="n">mix</span> <span class="nb">test</span>
-<span class="no">MIX_ENV</span><span class="o">=</span><span class="nb">test</span> <span class="n">mix</span> <span class="n">ecto</span><span class="p">.</span><span class="nf">migrate</span>
- </code></pre></figure>
-
-<p># irb vs. iex
- Ruby gives us the Interactive Ruby Shell (IRB or irb). IEx is Elixir’s Interactive Shell.</p>
-
-<p>Run it within your Elixir project using the command: iex -S mix. The -S tells iex to execute the Mixfile (mix.exs), which handles configuring the project.</p>
-
-<p>Unlike irb, you will have to hit Ctrl-C twice to exit, instead of Ctrl-D.</p>
-
-<p>If you are like me and prefer to have a console session open while developing, usually with some state built up, then the recompile() helper will come in handy. Calling it eliminates having to start a new iex session (and lose all your state) when you’ve made changes to a file.</p>
-
-<p>Another handy, time-saving tip:</p>
-
-<p>Create a .iex.exs file in your project root to alias your project’s modules so you can call, Repo.all, instead of, MyApp.Repo.all.</p>
-
-<p>The first time I fired up iex and wanted to grab the first User in the database, I got hit with:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">(</span><span class="no">UndefinedFunctionError</span><span class="p">)</span> <span class="n">function</span> <span class="no">MyApp</span><span class="o">.</span><span class="no">User</span><span class="p">.</span><span class="nf">first</span><span class="o">/</span><span class="mi">0</span> <span class="n">is</span> <span class="n">undefined</span> <span class="n">or</span> <span class="n">privateefinedFunctionError</span><span class="p">)</span> <span class="n">function</span>
- </code></pre></figure>
-
-<p>Remember, Elixir is functional, so we can’t do things like User.first.</p>
-
-<p>Here is the equivalent in Phoenix (technically Ecto, the database layer):</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">User</span> <span class="o">|&gt;</span> <span class="no">Repo</span><span class="p">.</span><span class="nf">all</span> <span class="o">|&gt;</span> <span class="no">List</span><span class="p">.</span><span class="nf">first</span>
- </code></pre></figure>
-
-<p>That is a lot of typing. Adding a couple convenience functions to my project’s Repo module allows me to call Repo.first User. That is better.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">defmodule</span> <span class="no">MyApp</span><span class="o">.</span><span class="no">Repo</span> <span class="k">do</span>
-  <span class="n">use</span> <span class="no">Ecto</span><span class="o">.</span><span class="no">Repo</span><span class="p">,</span> <span class="ss">otp_app: :elformo</span>
-  <span class="k">alias</span> <span class="n">__MODULE__</span>
-
-  <span class="k">def</span> <span class="nf">first</span><span class="p">(</span><span class="n">query</span><span class="p">)</span> <span class="k">do</span>
-    <span class="n">query</span> <span class="o">|&gt;</span> <span class="no">Ecto</span><span class="o">.</span><span class="no">Query</span><span class="p">.</span><span class="nf">first</span> <span class="o">|&gt;</span> <span class="no">Repo</span><span class="p">.</span><span class="nf">one</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="nf">last</span><span class="p">(</span><span class="n">query</span><span class="p">)</span> <span class="k">do</span>
-    <span class="n">query</span> <span class="o">|&gt;</span> <span class="no">Ecto</span><span class="o">.</span><span class="no">Query</span><span class="p">.</span><span class="nf">last</span> <span class="o">|&gt;</span> <span class="no">Repo</span><span class="p">.</span><span class="nf">one</span>
-  <span class="k">end</span>
-<span class="k">end</span>
- </code></pre></figure>
-
-<hr />
-
 
   </div>
 

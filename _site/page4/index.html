@@ -52,10 +52,6 @@
           
         
           
-          <a class="page-link" href="/ruby-select.html">Ruby Select</a>
-          
-        
-          
         
           
         
@@ -91,6 +87,75 @@
 
   <script id="dsq-count-scr" src="//tinixgit.disqus.com/count.js" async></script>
 
+
+  <h1><a href="/elixir/2018/09/28/ruby-vs-elixir-rails-vs-phoenix-part-2.html">Ruby vs Elixir ,  Rails vs Phoenix - part 2</a></h1>
+  <p class="author">
+    <span class="date">2018-09-28 16:52:56 -0300</span>
+  </p>
+  <div class="content">
+    <p><img src="http://localhost:3000/images/phoenix-vs-rails.png" alt="useful image" /></p>
+
+<p>Dev Tools
+rake vs. mix
+In Ruby, there is rake, in Elixir there is mix.</p>
+
+<p>Mix is a build tool that provides tasks for creating, compiling, and testing Elixir projects, managing its dependencies, and more.</p>
+
+<p>Like Rails, Phoenix provides various mix commands to handle common tasks. Most of these commands should feel familiar:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">mix</span> <span class="n">phoenix</span><span class="p">.</span><span class="nf">new</span> <span class="n">my_app</span>
+<span class="n">mix</span> <span class="n">phoenix</span><span class="p">.</span><span class="nf">server</span>
+<span class="n">mix</span> <span class="n">ecto</span><span class="p">.</span><span class="nf">migrate</span>
+<span class="n">mix</span> <span class="n">phoenix</span><span class="p">.</span><span class="nf">gen</span><span class="p">.</span><span class="nf">html</span> <span class="no">User</span> <span class="n">users</span> <span class="n">email</span><span class="ss">:string</span>
+<span class="n">mix</span> <span class="nb">test</span>
+<span class="no">MIX_ENV</span><span class="o">=</span><span class="nb">test</span> <span class="n">mix</span> <span class="n">ecto</span><span class="p">.</span><span class="nf">migrate</span>
+ </code></pre></figure>
+
+<p># irb vs. iex
+ Ruby gives us the Interactive Ruby Shell (IRB or irb). IEx is Elixir’s Interactive Shell.</p>
+
+<p>Run it within your Elixir project using the command: iex -S mix. The -S tells iex to execute the Mixfile (mix.exs), which handles configuring the project.</p>
+
+<p>Unlike irb, you will have to hit Ctrl-C twice to exit, instead of Ctrl-D.</p>
+
+<p>If you are like me and prefer to have a console session open while developing, usually with some state built up, then the recompile() helper will come in handy. Calling it eliminates having to start a new iex session (and lose all your state) when you’ve made changes to a file.</p>
+
+<p>Another handy, time-saving tip:</p>
+
+<p>Create a .iex.exs file in your project root to alias your project’s modules so you can call, Repo.all, instead of, MyApp.Repo.all.</p>
+
+<p>The first time I fired up iex and wanted to grab the first User in the database, I got hit with:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">(</span><span class="no">UndefinedFunctionError</span><span class="p">)</span> <span class="n">function</span> <span class="no">MyApp</span><span class="o">.</span><span class="no">User</span><span class="p">.</span><span class="nf">first</span><span class="o">/</span><span class="mi">0</span> <span class="n">is</span> <span class="n">undefined</span> <span class="n">or</span> <span class="n">privateefinedFunctionError</span><span class="p">)</span> <span class="n">function</span>
+ </code></pre></figure>
+
+<p>Remember, Elixir is functional, so we can’t do things like User.first.</p>
+
+<p>Here is the equivalent in Phoenix (technically Ecto, the database layer):</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">User</span> <span class="o">|&gt;</span> <span class="no">Repo</span><span class="p">.</span><span class="nf">all</span> <span class="o">|&gt;</span> <span class="no">List</span><span class="p">.</span><span class="nf">first</span>
+ </code></pre></figure>
+
+<p>That is a lot of typing. Adding a couple convenience functions to my project’s Repo module allows me to call Repo.first User. That is better.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">defmodule</span> <span class="no">MyApp</span><span class="o">.</span><span class="no">Repo</span> <span class="k">do</span>
+  <span class="n">use</span> <span class="no">Ecto</span><span class="o">.</span><span class="no">Repo</span><span class="p">,</span> <span class="ss">otp_app: :elformo</span>
+  <span class="k">alias</span> <span class="n">__MODULE__</span>
+
+  <span class="k">def</span> <span class="nf">first</span><span class="p">(</span><span class="n">query</span><span class="p">)</span> <span class="k">do</span>
+    <span class="n">query</span> <span class="o">|&gt;</span> <span class="no">Ecto</span><span class="o">.</span><span class="no">Query</span><span class="p">.</span><span class="nf">first</span> <span class="o">|&gt;</span> <span class="no">Repo</span><span class="p">.</span><span class="nf">one</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">last</span><span class="p">(</span><span class="n">query</span><span class="p">)</span> <span class="k">do</span>
+    <span class="n">query</span> <span class="o">|&gt;</span> <span class="no">Ecto</span><span class="o">.</span><span class="no">Query</span><span class="p">.</span><span class="nf">last</span> <span class="o">|&gt;</span> <span class="no">Repo</span><span class="p">.</span><span class="nf">one</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+ </code></pre></figure>
+
+<hr />
+
+
+  </div>
 
   <h1><a href="/elixir/2018/09/28/ruby-vs-elixir-rails-vs-phoenix-part-1.html">Ruby vs Elixir ,  Rails vs Phoenix - part 1</a></h1>
   <p class="author">
@@ -303,68 +368,6 @@ To install or update nvm, you can use the install script using cURL:</p>
 <span class="n">v9</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">0</span></code></pre></figure>
 
 <p>problem solved..!!!</p>
-
-  </div>
-
-  <h1><a href="/ruby/2018/01/30/ruby-for-rails-blocks.html">Ruby for Rails: Blocks</a></h1>
-  <p class="author">
-    <span class="date">2018-01-30 12:06:31 -0300</span>
-  </p>
-  <div class="content">
-    <p>This post is the first in a series of blog posts about Ruby for Rails beginners. These are specifically for Rails developers who want to solidify their grasp of the Ruby language.</p>
-
-<p>More than a decade ago, I started learning Rails before I knew any Ruby. Rails is written in Ruby of course, so when writing Rails code you are writing Ruby code. But at the beginning, I didn’t fully understand how Ruby worked. And that’s fine. A lot of people started learning Rails and picked up Ruby along the way.</p>
-
-<p>The “Ruby for Rails” series will help you learn Ruby to make you a better Rails programmer.</p>
-
-<p>In this blog post, we’ll talk about blocks. Ruby blocks can be confusing to beginners but it’s important that you learn them because you’ll keep on using them on your Rails application.</p>
-
-<p>One of the first code you’ll see with blocks is with loops.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">(</span><span class="mi">1</span><span class="p">.</span><span class="nf">.</span><span class="mi">10</span><span class="p">).</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">i</span><span class="o">|</span>
-  <span class="nb">puts</span> <span class="n">i</span>
-<span class="k">end</span></code></pre></figure>
-
-<p>The block is inside <strong style="color: #C00;">do</strong> and <strong style="color: #C00;">end</strong>. This code displays the numbers 1 to 10. When you read it, it kind of makes sense. From 1 to 10, for each i, puts i. If you have experience with other programming languages, you might think this is just a more complicated way to do loops.</p>
-
-<p><strong style="color: #C00;">each</strong> isn’t only for numbers. You can also iterate through an array.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="s2">"Alice"</span><span class="p">,</span> <span class="s2">"Bob"</span><span class="p">,</span> <span class="s2">"Eve"</span><span class="p">].</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="nb">name</span><span class="o">|</span>
-  <span class="nb">puts</span> <span class="nb">name</span>
-<span class="k">end</span></code></pre></figure>
-
-<p>This code iterates through each element and prints the name. In Rails, you commonly use each when iterating through your model.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">Post</span><span class="p">.</span><span class="nf">all</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">post</span><span class="o">|</span>
-  <span class="nb">puts</span> <span class="n">post</span><span class="p">.</span><span class="nf">title</span>
-<span class="k">end</span></code></pre></figure>
-
-<p>Say you have a Post model with a title. When you call  <strong style="color: #C00;">each</strong>  on  <strong style="color: #C00;">Post.all</strong> , you iterate on each of those posts and the value is assigned to **post **which is inside  <code class="highlighter-rouge">||</code> . Since <strong style="color: #C00;">post</strong>  is a Post object, you can call  <strong style="color: #C00;">post.title</strong>  inside the block.</p>
-
-<p>The examples so far show that blocks can be used to iterate through some objects. But the iteration is a by product of the <strong style="color: #C00;">each</strong> method. Blocks aren’t just for iteration. Here’s another common code in Rails.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="sx">%= form_with Post.new do |form| %&gt;
-  &lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">text_field</span> <span class="ss">:title</span> <span class="o">%&gt;</span>
-  <span class="o">&lt;</span><span class="sx">%= form.text_area :body %&gt;
-&lt;% end %&gt;</span></code></pre></figure>
-
-<table>
-  <tbody>
-    <tr>
-      <td>We use <strong style="color: #C00;">&lt;%%&gt;</strong>  because this code appears on ERB templates. form_with is used to display an HTML form. Here, we call the <strong style="color: #C00;">form_with</strong> method and passes the Post.new parameter. form_with yields an object which we assign to form. You can use any variable inside</td>
-      <td> </td>
-      <td>. We could have used f here instead of form.</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>In the examples above that used each, we yield each of the objects we’re iterating through. In form_with, we yield exactly one object which is the FormBuilder associated with the model. Inside the block you can use FormBuilder’s methods to generate fields like <strong style="color: #C00;">text_field, text_area, check_box, button,</strong>  etc.</p>
-
-<p>All the fields inside the block are captured and displayed inside the HTML <strong style="color: #C00;">form</strong>  element.</p>
-
-<p>These are just a few examples of blocks. You’ll see more when writing Rails code. So don’t get blocked out when coding!</p>
-
-<p>I’d like this… original post by <a href="https://www.engineyard.com/blog/ruby-for-rails-blocks">https://www.engineyard.com/blog/ruby-for-rails-blocks</a></p>
 
   </div>
 

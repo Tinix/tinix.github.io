@@ -9,11 +9,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Ruby Select</title>
-  <meta name="description" content="Also known as Tinix , Degree in Computer Science FaMAF,Writer Software, Ruby, Elixir, Rust, Go, Linux and FreeBSD, I like have Mate, 4 lang​​, but all that means almost nothing..
-">
+  <title>Ruby Debugging Map Blocks</title>
+  <meta name="description" content="The thing to remember is that map operates on each element of thecollection for each run of the block. When debugging, you want to see howthe block operated ...">
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://localhost:3000/ruby-select.html">
+  <link rel="canonical" href="http://localhost:3000/ruby/2023/02/04/ruby-debugging-map-blocks.html">
   <link rel="alternate" type="application/rss+xml" title="Tinix&#39;s different point of view." href="http://localhost:3000/feed.xml">
 </head>
 
@@ -52,10 +51,6 @@
           
         
           
-          <a class="page-link" href="/ruby-select.html">Ruby Select</a>
-          
-        
-          
         
           
         
@@ -82,75 +77,25 @@
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">Ruby Select</h1>
+    <h1 class="post-title" itemprop="name headline">Ruby Debugging Map Blocks</h1>
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p>This function of the Ruby Enumerable library is very simple. The select()
-method is applied to an array or a hash. The job of select() is to select
-elements that return true for a predicate applied to the element. (A predicate
-is an expression that returns true or false, and it runs in the block passed
-to select).
-The following trivial example has the predicate always return true,
-and therefore all members of the set are selected. In this case, the set is
-[1,2,3,4,5] and the predicate is true:</p>
+    <p>The thing to remember is that map operates on each element of the
+collection for each run of the block. When debugging, you want to see how
+the block operated on each element.</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>[1,2,3,4,5].select do |element|
-    true
+<div class="highlighter-rouge"><pre class="highlight"><code>[1,2,3,4,5].map do |number|
+    result = number*number
+    puts "The result of the function on element: #{number} is #{result}"
+    result
 end
 </code></pre>
 </div>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>=&gt; [1,2,3,4,5]
-</code></pre>
-</div>
-
-<p>A slightly less trivial example selects even numbers (i.e., where the
-predicate is **element % 2 == 0 ** ) from the original set of [1,2,3,4,5]:</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>[1,2,3,4,5].select do |element|
-    element % 2 == 0
-end
-</code></pre>
-</div>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>=&gt; [2,4]
-</code></pre>
-</div>
-
-<p>Selects can be cascaded. Suppose you want to find the even numbers
-between 1 and 100 starting with a 7. First, you select the even numbers.
-Then, you select the numbers starting with a 7:</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>irb&gt;  (1..100).select{|number| number % 2 == 0}\
-irb*&gt; .select{|even_number| even_number.to_s[0] == "7"}
-=&gt; [70,72.74,76,78]
-</code></pre>
-</div>
-
-<p>You could also reverse the cascade:</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>irb&gt;  (1..100).select{|number| number.to_s[0] == "7"}\
-irb*&gt; .select{|seven_number| seven_number % 2 == 0}
-=&gt; [70,72.74,76,78]
-</code></pre>
-</div>
-
-<p>Since select returns an array, you can cascade select calls. For
-example, you could have a select block select even numbers and then
-square them using a map call. For example:</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>[1,2,3,4,5].select do |number|
-    number%2==0
-end.map do |even_number|
-    even_number * even_number
-end
-=&gt; [4, 16]
-</code></pre>
-</div>
-
-<p>A number of the more complex operations can be solved by cascading
-with select calls.</p>
+<p>It is important to save the result in a local variable so that you can
+return it as the last statement of the block. If you don’t, the result of the
+puts statement will be returned (usually nil).</p>
 
         
 <div id="disqus_thread"></div>
