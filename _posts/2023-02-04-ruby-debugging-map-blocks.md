@@ -10,13 +10,13 @@ The thing to remember is that map operates on each element of the
 collection for each run of the block. When debugging, you want to see how
 the block operated on each element.
 
-```
+{% highlight ruby %}
 [1,2,3,4,5].map do |number|
-    result = number*number
-    puts "The result of the function on element: #{number} is #{result}"
-    result
+  result = number* number
+  puts "The result of the function on element: #{number} is #{result}"
+  result
 end
-```
+{% endhighlight %}
 
 
 It is important to save the result in a local variable so that you can

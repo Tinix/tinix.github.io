@@ -9,10 +9,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Welcome to Jekyll!</title>
-  <meta name="description" content="You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different wa...">
+  <title>Ruby Debugging Reduce Blocks</title>
+  <meta name="description" content="Debugging reduce is a bit different because the memo is carried fromelement to element. Therefore, you want to print out the element as well asthe memo.">
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://localhost:3000/jekyll/update/2016/03/12/welcome-to-jekyll.html">
+  <link rel="canonical" href="http://localhost:3000/ruby/2023/02/04/ruby-debugging-reduce-blocks.html">
   <link rel="alternate" type="application/rss+xml" title="Tinix&#39;s different point of view." href="http://localhost:3000/feed.xml">
 </head>
 
@@ -77,26 +77,58 @@
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">Welcome to Jekyll!</h1>
+    <h1 class="post-title" itemprop="name headline">Ruby Debugging Reduce Blocks</h1>
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p>You’ll find this post in your <code class="highlighter-rouge">_posts</code> directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run <code class="highlighter-rouge">jekyll serve</code>, which launches a web server and auto-regenerates your site when a file is updated.</p>
+    <p>Debugging reduce is a bit different because the memo is carried from
+element to element. Therefore, you want to print out the element as well as
+the memo.</p>
 
-<p>To add new posts, simply add a file in the <code class="highlighter-rouge">_posts</code> directory that follows the convention <code class="highlighter-rouge">YYYY-MM-DD-name-of-post.ext</code> and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.</p>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">final_answer</span> <span class="o">=</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">reduce</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">memo</span><span class="p">,</span> <span class="n">number</span><span class="o">|</span>
+  <span class="n">memo</span> <span class="o">=</span> <span class="n">memo</span> <span class="o">+</span> <span class="n">number</span>
+  <span class="nb">puts</span> <span class="s2">"After operating on number: </span><span class="si">#{</span><span class="n">number</span><span class="si">}</span><span class="s2">, the memo is </span><span class="si">#{</span><span class="n">memo</span><span class="p">.</span><span class="nf">inspect</span><span class="si">}</span><span class="s2"> "</span>
+  <span class="n">memo</span>
+<span class="k">end</span></code></pre></figure>
 
-<p>Jekyll also offers powerful support for code snippets:</p>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">After</span> <span class="n">operating</span> <span class="n">on</span> <span class="ss">number: </span><span class="mi">1</span><span class="p">,</span> <span class="n">the</span> <span class="n">memo</span> <span class="n">is</span> <span class="mi">1</span>
+<span class="no">After</span> <span class="n">operating</span> <span class="n">on</span> <span class="ss">number: </span><span class="mi">2</span><span class="p">,</span> <span class="n">the</span> <span class="n">memo</span> <span class="n">is</span> <span class="mi">3</span>
+<span class="no">After</span> <span class="n">operating</span> <span class="n">on</span> <span class="ss">number: </span><span class="mi">3</span><span class="p">,</span> <span class="n">the</span> <span class="n">memo</span> <span class="n">is</span> <span class="mi">6</span>
+<span class="no">After</span> <span class="n">operating</span> <span class="n">on</span> <span class="ss">number: </span><span class="mi">4</span><span class="p">,</span> <span class="n">the</span> <span class="n">memo</span> <span class="n">is</span> <span class="mi">10</span>
+<span class="no">After</span> <span class="n">operating</span> <span class="n">on</span> <span class="ss">number: </span><span class="mi">5</span><span class="p">,</span> <span class="n">the</span> <span class="n">memo</span> <span class="n">is</span> <span class="mi">15</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">print_hi</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
-  <span class="nb">puts</span> <span class="s2">"Hi, </span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">"</span>
-<span class="k">end</span>
-<span class="n">print_hi</span><span class="p">(</span><span class="s1">'Tom'</span><span class="p">)</span>
-<span class="c1">#=&gt; prints 'Hi, Tom' to STDOUT.</span></code></pre></figure>
-
-<p>Check out the <a href="http://jekyllrb.com/docs/home">Jekyll docs</a> for more info on how to get the most out of Jekyll. File all bugs/feature requests at <a href="https://github.com/jekyll/jekyll">Jekyll’s GitHub repo</a>. If you have questions, you can ask them on <a href="https://talk.jekyllrb.com/">Jekyll Talk</a>.</p>
-
+<p>Again, make sure that you save the memo before printing it, then
+return it at the end of the block.
+If you are using memo to build a different data structure as a part of
+the reduce block, inspecting the memo becomes extremely useful in
+converging on a good solution.</p>
 
         
+<div id="disqus_thread"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+    /*
+    var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        
+        s.src = '//tinixgit.disqus.com/embed.js';
+        
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">Comments powered by Disqus.</a></noscript>
+ <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
   
 
 

@@ -88,6 +88,36 @@
   <script id="dsq-count-scr" src="//tinixgit.disqus.com/count.js" async></script>
 
 
+  <h1><a href="/ruby/2023/02/04/ruby-debugging-reduce-blocks.html">Ruby Debugging Reduce Blocks</a></h1>
+  <p class="author">
+    <span class="date">2023-02-04 13:09:45 -0300</span>
+  </p>
+  <div class="content">
+    <p>Debugging reduce is a bit different because the memo is carried from
+element to element. Therefore, you want to print out the element as well as
+the memo.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">final_answer</span> <span class="o">=</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">reduce</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">memo</span><span class="p">,</span> <span class="n">number</span><span class="o">|</span>
+  <span class="n">memo</span> <span class="o">=</span> <span class="n">memo</span> <span class="o">+</span> <span class="n">number</span>
+  <span class="nb">puts</span> <span class="s2">"After operating on number: </span><span class="si">#{</span><span class="n">number</span><span class="si">}</span><span class="s2">, the memo is </span><span class="si">#{</span><span class="n">memo</span><span class="p">.</span><span class="nf">inspect</span><span class="si">}</span><span class="s2"> "</span>
+  <span class="n">memo</span>
+<span class="k">end</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">After</span> <span class="n">operating</span> <span class="n">on</span> <span class="ss">number: </span><span class="mi">1</span><span class="p">,</span> <span class="n">the</span> <span class="n">memo</span> <span class="n">is</span> <span class="mi">1</span>
+<span class="no">After</span> <span class="n">operating</span> <span class="n">on</span> <span class="ss">number: </span><span class="mi">2</span><span class="p">,</span> <span class="n">the</span> <span class="n">memo</span> <span class="n">is</span> <span class="mi">3</span>
+<span class="no">After</span> <span class="n">operating</span> <span class="n">on</span> <span class="ss">number: </span><span class="mi">3</span><span class="p">,</span> <span class="n">the</span> <span class="n">memo</span> <span class="n">is</span> <span class="mi">6</span>
+<span class="no">After</span> <span class="n">operating</span> <span class="n">on</span> <span class="ss">number: </span><span class="mi">4</span><span class="p">,</span> <span class="n">the</span> <span class="n">memo</span> <span class="n">is</span> <span class="mi">10</span>
+<span class="no">After</span> <span class="n">operating</span> <span class="n">on</span> <span class="ss">number: </span><span class="mi">5</span><span class="p">,</span> <span class="n">the</span> <span class="n">memo</span> <span class="n">is</span> <span class="mi">15</span></code></pre></figure>
+
+<p>Again, make sure that you save the memo before printing it, then
+return it at the end of the block.
+If you are using memo to build a different data structure as a part of
+the reduce block, inspecting the memo becomes extremely useful in
+converging on a good solution.</p>
+
+  </div>
+
   <h1><a href="/ruby/2023/02/04/ruby-debugging-map-blocks.html">Ruby Debugging Map Blocks</a></h1>
   <p class="author">
     <span class="date">2023-02-04 13:05:04 -0300</span>
@@ -97,13 +127,11 @@
 collection for each run of the block. When debugging, you want to see how
 the block operated on each element.</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>[1,2,3,4,5].map do |number|
-    result = number*number
-    puts "The result of the function on element: #{number} is #{result}"
-    result
-end
-</code></pre>
-</div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">number</span><span class="o">|</span>
+  <span class="n">result</span> <span class="o">=</span> <span class="n">number</span><span class="o">*</span> <span class="n">number</span>
+  <span class="nb">puts</span> <span class="s2">"The result of the function on element: </span><span class="si">#{</span><span class="n">number</span><span class="si">}</span><span class="s2"> is </span><span class="si">#{</span><span class="n">result</span><span class="si">}</span><span class="s2">"</span>
+  <span class="n">result</span>
+<span class="k">end</span></code></pre></figure>
 
 <p>It is important to save the result in a local variable so that you can
 return it as the last statement of the block. If you don’t, the result of the
@@ -125,53 +153,43 @@ The following trivial example has the predicate always return true,
 and therefore all members of the set are selected. In this case, the set is
 [1,2,3,4,5] and the predicate is true:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>[1,2,3,4,5].select do |element|
-    true
-end
-=&gt; [1,2,3,4,5]
-</code></pre>
-</div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">select</span> <span class="k">do</span> <span class="o">|</span><span class="n">element</span><span class="o">|</span>
+   <span class="kp">true</span>
+<span class="k">end</span>
+<span class="o">=&gt;</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span></code></pre></figure>
 
 <p>A slightly less trivial example selects even numbers (i.e., where the
 predicate is **element % 2 == 0 ** ) from the original set of [1,2,3,4,5]:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>[1,2,3,4,5].select do |element|
-    element % 2 == 0
-end
-=&gt; [2,4]
-</code></pre>
-</div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">select</span> <span class="k">do</span> <span class="o">|</span><span class="n">element</span><span class="o">|</span>
+   <span class="n">element</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="k">end</span>
+<span class="o">=&gt;</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span></code></pre></figure>
 
 <p>Selects can be cascaded. Suppose you want to find the even numbers
 between 1 and 100 starting with a 7. First, you select the even numbers.
 Then, you select the numbers starting with a 7:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>irb&gt;  (1..100).select{|number| number % 2 == 0}\
-irb*&gt; .select{|even_number| even_number.to_s[0] == "7"}
-=&gt; [70,72.74,76,78]
-</code></pre>
-</div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">irb</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">1</span><span class="p">.</span><span class="nf">.</span><span class="mi">100</span><span class="p">).</span><span class="nf">select</span><span class="p">{</span><span class="o">|</span><span class="n">number</span><span class="o">|</span> <span class="n">number</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">}\</span>
+<span class="n">irb</span><span class="o">*&gt;</span> <span class="p">.</span><span class="nf">select</span><span class="p">{</span><span class="o">|</span><span class="n">even_number</span><span class="o">|</span> <span class="n">even_number</span><span class="p">.</span><span class="nf">to_s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"7"</span><span class="p">}</span>
+<span class="o">=&gt;</span> <span class="p">[</span><span class="mi">70</span><span class="p">,</span><span class="mi">72</span><span class="o">.</span><span class="mi">74</span><span class="p">,</span><span class="mi">76</span><span class="p">,</span><span class="mi">78</span><span class="p">]</span></code></pre></figure>
 
 <p>You could also reverse the cascade:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>irb&gt;  (1..100).select{|number| number.to_s[0] == "7"}\
-irb*&gt; .select{|seven_number| seven_number % 2 == 0}
-=&gt; [70,72.74,76,78]
-</code></pre>
-</div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">irb</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">1</span><span class="p">.</span><span class="nf">.</span><span class="mi">100</span><span class="p">).</span><span class="nf">select</span><span class="p">{</span><span class="o">|</span><span class="n">number</span><span class="o">|</span> <span class="n">number</span><span class="p">.</span><span class="nf">to_s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"7"</span><span class="p">}\</span>
+<span class="n">irb</span><span class="o">*&gt;</span> <span class="p">.</span><span class="nf">select</span><span class="p">{</span><span class="o">|</span><span class="n">seven_number</span><span class="o">|</span> <span class="n">seven_number</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">}</span>
+<span class="o">=&gt;</span> <span class="p">[</span><span class="mi">70</span><span class="p">,</span><span class="mi">72</span><span class="o">.</span><span class="mi">74</span><span class="p">,</span><span class="mi">76</span><span class="p">,</span><span class="mi">78</span><span class="p">]</span></code></pre></figure>
 
 <p>Since select returns an array, you can cascade select calls. For
 example, you could have a select block select even numbers and then
 square them using a map call. For example:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>[1,2,3,4,5].select do |number|
-    number%2==0
-end.map do |even_number|
-    even_number * even_number
-end
-=&gt; [4, 16]
-</code></pre>
-</div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">select</span> <span class="k">do</span> <span class="o">|</span><span class="n">number</span><span class="o">|</span>
+   <span class="n">number</span><span class="o">%</span><span class="mi">2</span><span class="o">==</span><span class="mi">0</span>
+<span class="k">end</span><span class="p">.</span><span class="nf">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">even_number</span><span class="o">|</span>
+   <span class="n">even_number</span> <span class="o">*</span> <span class="n">even_number</span>
+<span class="k">end</span>
+<span class="o">=&gt;</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">16</span><span class="p">]</span></code></pre></figure>
 
 <p>A number of the more complex operations can be solved by cascading
 with select calls.</p>
@@ -446,82 +464,6 @@ explore these programming mechanics later in the blog. It suffices to say
 that reduce can be used on both sides of a data-processing cascade. And
 please always remember that the input memo must be of the same class or
 structure as the output memo.</p>
-
-  </div>
-
-  <h1><a href="/ruby/2023/01/19/ruby-map.html">Ruby Map</a></h1>
-  <p class="author">
-    <span class="date">2023-01-19 23:46:38 -0300</span>
-  </p>
-  <div class="content">
-    <p>The Ruby library includes the module Enumerable. This library contains
-map(), reduce(), select(), and other functions.</p>
-
-<p>Map
-This function of the Ruby Enumerable library is simple but profound. The map() method is applied to an array or a hash. The job of map() is to apply a function or block to each member of the array and return a new array.
-So, when you see</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-  <span class="n">xx</span>
-<span class="k">end</span></code></pre></figure>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">output_array</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">number</span><span class="o">|</span>
-  <span class="n">f</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
-<span class="k">end</span></code></pre></figure>
-
-<p>you read, for each number in [1,2,3,4,5] apply f(x) to return the array
-[f(1), f(2), f(3), f(4), f(5)]. In this case, the answer is [1,4,9,16,25].
-One could encode it in traditional imperative programming as follows:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">output_array</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">number</span> <span class="k">in</span> <span class="mi">1</span><span class="p">.</span><span class="nf">.</span><span class="mi">5</span>
-  <span class="n">output_array</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span> <span class="n">f</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="p">)</span>
-<span class="k">end</span></code></pre></figure>
-
-<p>Using map, for example:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">output_array</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">number</span><span class="o">|</span>
-  <span class="n">number</span> <span class="o">*</span> <span class="n">number</span>
-<span class="k">end</span></code></pre></figure>
-
-<p>Or, you could encode it as follows:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">output_array</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">map</span><span class="p">{</span><span class="o">|</span><span class="n">element</span><span class="o">|</span> <span class="n">element</span> <span class="o">*</span> <span class="n">element</span><span class="p">}</span></code></pre></figure>
-
-<p>[1,2,3,4,5] is the array. The function (or block) to be applied to each
-element is {|element| element<em>element }.
-With the { } syntax, or the do-end syntax, the object in the vertical bars
-(represented by element) is the element of the array currently being acted
-upon by the block, and the last object in any function or block is the return
-value, so element</em>element is returned. The net result is the following:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">25</span><span class="p">]</span></code></pre></figure>
-
-<p>Suppose you wanted to provide data to a graphing program that
-plotted the square of the value.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">map</span><span class="p">{</span><span class="o">|</span><span class="n">element</span><span class="o">|</span> <span class="p">[</span><span class="n">element</span><span class="p">,</span> <span class="n">element</span><span class="o">*</span> <span class="n">element</span><span class="p">]}</span></code></pre></figure>
-
-<p>In this case, each “point” is a tuple (array) with an element and its
-square. This returns the following:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">9</span><span class="p">],[</span><span class="mi">4</span><span class="p">,</span><span class="mi">16</span><span class="p">],[</span><span class="mi">5</span><span class="p">,</span><span class="mi">25</span><span class="p">]]</span></code></pre></figure>
-
-<p>The difference is that the block returns an array each time with the
-number and its square, so the result is an array of arrays.
-Since map returns an array, you can cascade map calls. For example,
-you could have a map block square each element, and then a second map
-block add 100. For example:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">number</span><span class="o">|</span>
-  <span class="n">number</span> <span class="o">*</span> <span class="n">number</span>
-<span class="k">end</span><span class="p">.</span><span class="nf">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">square</span><span class="o">|</span>
-  <span class="n">square</span> <span class="o">+</span> <span class="mi">100</span>
-<span class="k">end</span></code></pre></figure>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">=&gt;</span> <span class="p">[</span><span class="mi">101</span><span class="p">,</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">109</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">125</span><span class="p">]</span></code></pre></figure>
-
-<p>A number of the more complex operations can be solved by cascading with map calls.</p>
 
   </div>
 
