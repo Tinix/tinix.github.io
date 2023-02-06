@@ -88,6 +88,135 @@
   <script id="dsq-count-scr" src="//tinixgit.disqus.com/count.js" async></script>
 
 
+  <h1><a href="/ruby/2023/02/06/ruby-debugging-select-blocks.html">Ruby Debugging Select Blocks</a></h1>
+  <p class="author">
+    <span class="date">2023-02-06 21:23:05 -0300</span>
+  </p>
+  <div class="content">
+    <p>Debugging select is easy because the only thing you need to know is
+whether the predicate was true for a particular element.
+For example, a select filter that only keeps even numbers
+(number % 2== 0) could be debugged like this:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">select</span> <span class="k">do</span> <span class="o">|</span><span class="n">number</span><span class="o">|</span>
+  <span class="n">predicate</span> <span class="o">=</span> <span class="n">number</span> <span class="o">%</span> <span class="mi">2</span><span class="o">==</span> <span class="mi">0</span>
+  <span class="nb">puts</span> <span class="s2">"The predicate is </span><span class="si">#{</span><span class="n">predicate</span><span class="si">}</span><span class="s2"> for number </span><span class="si">#{</span><span class="n">number</span><span class="si">}</span><span class="s2">"</span>
+  <span class="n">predicate</span>
+<span class="k">end</span></code></pre></figure>
+
+<p>The predicate is false for number 1
+The predicate is true for number 2
+The predicate is false for number 3
+The predicate is true for number 4
+The predicate is false for number 5
+=&gt; [2, 4]</p>
+
+<p>Here, you can see that only the numbers for which the predicate was
+true ended up in the answer ([2,4]).</p>
+
+<h2 id="fizzbuzz">FizzBuzz</h2>
+<p>This program is used as a programming question. Write a program to go
+through a list of integers 1..N. If the number is divisible by 2, print “fizz”; if
+it is divisible by 3, print “buzz”; if it is divisible by 2 and 3, print “fizzbuzz”;
+otherwise, print the number.
+The input can be modeled as a range: (1..15).</p>
+
+<p>The output should look like this:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="mi">1</span>
+<span class="n">fizz</span>
+<span class="n">buzz</span>
+<span class="n">fizz</span>
+<span class="mi">5</span>
+<span class="n">fizzbuzz</span>
+<span class="mi">7</span>
+<span class="n">fizz</span>
+<span class="n">buzz</span>
+<span class="n">fizz</span>
+<span class="mi">11</span>
+<span class="n">fizzbuzz</span>
+<span class="mi">13</span>
+<span class="n">fizz</span>
+<span class="n">buzz</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">(</span><span class="mi">1</span><span class="p">.</span><span class="nf">.</span><span class="mi">15</span><span class="p">).</span><span class="nf">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">n</span><span class="o">|</span>
+<span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span>
+   <span class="s2">"fizz"</span>
+<span class="k">else</span>
+  <span class="n">n</span><span class="p">.</span><span class="nf">to_s</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></figure>
+
+<p>That gives us the following:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"1"</span><span class="p">,</span> <span class="s2">"fizz"</span><span class="p">,</span> <span class="s2">"3"</span><span class="p">,</span> <span class="s2">"fizz"</span><span class="p">,</span> <span class="s2">"5"</span><span class="p">,</span> <span class="s2">"fizz"</span><span class="p">,</span> <span class="s2">"7"</span><span class="p">,</span> <span class="s2">"fizz"</span><span class="p">,</span> <span class="s2">"9"</span><span class="p">,</span>
+<span class="s2">"fizz"</span><span class="p">,</span> <span class="s2">"11"</span><span class="p">,</span> <span class="p">.</span><span class="nf">.</span><span class="o">.</span> <span class="p">\</span> <span class="n">and</span> <span class="n">so</span> <span class="n">on</span></code></pre></figure>
+
+<p>That is close, but we didn’t address the buzz:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">(</span><span class="mi">1</span><span class="p">.</span><span class="nf">.</span><span class="mi">15</span><span class="p">).</span><span class="nf">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">n</span><span class="o">|</span>
+<span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span>
+   <span class="s2">"fizz"</span>
+<span class="k">elsif</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="s2">"buzz"</span>
+<span class="k">else</span>
+   <span class="n">n</span><span class="p">.</span><span class="nf">to_s</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></figure>
+
+<p>That gives us the following:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"1"</span><span class="p">,</span> <span class="s2">"fizz"</span><span class="p">,</span> <span class="s2">"buzz"</span><span class="p">,</span> <span class="s2">"fizz"</span><span class="p">,</span> <span class="s2">"5"</span><span class="p">,</span> <span class="s2">"fizz"</span><span class="p">,</span> <span class="s2">"7"</span><span class="p">,</span> <span class="s2">"fizz"</span><span class="p">,</span>
+<span class="s2">"buzz"</span><span class="p">,</span> <span class="s2">"fizz"</span><span class="p">,</span> <span class="s2">"11"</span><span class="p">,\</span>
+<span class="s2">"fizz"</span><span class="p">,</span> <span class="s2">"13"</span><span class="p">,</span> <span class="s2">"fizz"</span><span class="p">,</span> <span class="s2">"buzz"</span><span class="p">]</span></code></pre></figure>
+
+<p>That’s close, but the fizzbuzz examples didn’t happen at 6 and 12. Let’s
+add in another clause. To be divisible by 2 and 3 implies that it must be
+divisible by 6:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">fizzbuzz_list</span> <span class="o">=</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">.</span><span class="nf">.</span><span class="mi">15</span><span class="p">).</span><span class="nf">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">n</span><span class="o">|</span>
+   <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span>
+   <span class="s2">"fizz"</span>
+<span class="k">elsif</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span><span class="mi">0</span>
+   <span class="s2">"buzz"</span>
+<span class="k">elsif</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">6</span> <span class="o">==</span> <span class="mi">0</span>
+   <span class="s2">"fizzbuzz"</span>
+<span class="k">else</span>
+   <span class="n">n</span><span class="p">.</span><span class="nf">to_s</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></figure>
+
+<p>This yielded the same result as the previous attempt. A closer
+inspection of the code suggests that if the number is divisible by 6, it will
+always be even and will be caught by the n%2==0 clause. However, if we
+catch the n%6==0 clause first, what happens?</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">fizzbuzz_list</span> <span class="o">=</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">.</span><span class="nf">.</span><span class="mi">15</span><span class="p">).</span><span class="nf">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">n</span><span class="o">|</span>
+  <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">6</span> <span class="o">==</span> <span class="mi">0</span>
+   <span class="s2">"fizzbuzz"</span>
+<span class="k">elsif</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span><span class="mi">0</span>
+   <span class="s2">"buzz"</span>
+<span class="k">elsif</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span>
+   <span class="s2">"fizz"</span>
+<span class="k">else</span>
+   <span class="n">n</span><span class="p">.</span><span class="nf">to_s</span>
+   <span class="k">end</span>
+<span class="k">end</span></code></pre></figure>
+
+<p>That yields the following:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"1"</span><span class="p">,</span> <span class="s2">"fizz"</span><span class="p">,</span> <span class="s2">"buzz"</span><span class="p">,</span> <span class="s2">"fizz"</span><span class="p">,</span> <span class="s2">"5"</span><span class="p">,</span> <span class="s2">"fizzbuzz"</span><span class="p">,</span> <span class="s2">"7"</span><span class="p">,</span> <span class="s2">"fizz"</span><span class="p">,</span>
+<span class="s2">"buzz"</span><span class="p">,</span> <span class="s2">"fizz"</span><span class="p">,</span> <span class="s2">"\
+11"</span><span class="p">,</span> <span class="s2">"fizzbuzz"</span><span class="p">,</span> <span class="s2">"13"</span><span class="p">,</span> <span class="s2">"fizz"</span><span class="p">,</span> <span class="s2">"buzz"</span><span class="p">]</span></code></pre></figure>
+
+<p>To print it, just do the following:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">fizzbuzz_list</span><span class="p">.</span><span class="nf">each</span><span class="p">{</span><span class="o">|</span><span class="n">e</span><span class="o">|</span> <span class="nb">puts</span> <span class="n">e</span><span class="p">}</span></code></pre></figure>
+
+  </div>
+
   <h1><a href="/ruby/2023/02/04/ruby-debugging-reduce-blocks.html">Ruby Debugging Reduce Blocks</a></h1>
   <p class="author">
     <span class="date">2023-02-04 13:09:45 -0300</span>
@@ -331,139 +460,6 @@ end
 =&gt; 8
 </code></pre>
 </div>
-
-  </div>
-
-  <h1><a href="/ruby/2023/01/24/ruby-reduce.html">Ruby Reduce</a></h1>
-  <p class="author">
-    <span class="date">2023-01-24 21:21:27 -0300</span>
-  </p>
-  <div class="content">
-    <p>This function of the Ruby Enumerable library is more complex than map()
-and is quite powerful. The method is applied to a collection (for example,
-an array or a hash). The job of reduce() is to apply a function cumulatively
-to each member of the collection and then return an object (which could
-be an array, a single value, a hash, or anything).</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">reduce</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">:</span><span class="o">+</span><span class="p">)</span></code></pre></figure>
-
-<p>This is like saying for each member of the list, add (:+) the member to
-memo and save the memo for the next element. The initial value of memo is 0
-(the first parameter). Another way to code it is as follows:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">memo</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">each</span><span class="p">{</span><span class="o">|</span><span class="n">element</span><span class="o">|</span> <span class="n">memo</span> <span class="o">=</span> <span class="n">memo</span><span class="p">.</span><span class="nf">+</span><span class="p">(</span><span class="n">element</span><span class="p">)}</span></code></pre></figure>
-
-<p>Or, you can pass reduce a block of code to run. The block comes after
-the closing parenthesis and is surrounded by a do-end construct, or a {}
-construct. The emitted variables are always the memo first and the element
-second. (In this case, the initial value of memo is 33).</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">reduce</span><span class="p">(</span><span class="mi">33</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">memo</span><span class="p">,</span> <span class="n">element</span><span class="o">|</span>
-  <span class="n">memo</span><span class="p">.</span><span class="nf">+</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
-<span class="k">end</span>
-<span class="n">memo</span>
-<span class="o">=&gt;</span> <span class="mi">48</span></code></pre></figure>
-
-<p>(You don’t have to call them “memo” or “element,” but that is how they
-behave). After each iteration, the memo takes the value of the last object in
-the block. For example:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">reduce</span><span class="p">(</span><span class="mi">33</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">memo</span><span class="p">,</span> <span class="n">element</span><span class="o">|</span>
-  <span class="n">memo</span><span class="p">.</span><span class="nf">+</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
-  <span class="mi">77</span><span class="o">.</span><span class="mi">7</span>
-<span class="k">end</span>
-<span class="o">=&gt;</span> <span class="mi">77</span><span class="o">.</span><span class="mi">7</span></code></pre></figure>
-
-<p>This returned 77.7, because that was the last object in the block.
-Another thing to remember is that the memo returned by the block has
-to be of the same class as the memo emitted by the reduce function. For
-example, when you are using reduce() to build a Hash object, you must
-return the whole Hash object:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">reduce</span><span class="p">({})</span> <span class="k">do</span> <span class="o">|</span><span class="n">memo</span><span class="p">,</span> <span class="n">element</span><span class="o">|</span>
-  <span class="n">memo</span><span class="p">[</span><span class="n">element</span><span class="p">]</span> <span class="o">=</span> <span class="n">element</span><span class="p">.</span><span class="nf">to_s</span>
-<span class="k">end</span></code></pre></figure>
-
-<p>IndexError: index 2 out of string
-There is an error because the first run of the iteration returned
-memo[element], which is a String class, but the input expects it to be a
-Hash. To correct it, make sure that the memo of class Hash is explicitly the last
-object returned, as follows:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">reduce</span><span class="p">({})</span> <span class="k">do</span> <span class="o">|</span><span class="n">memo</span><span class="p">,</span> <span class="n">element</span><span class="o">|</span>
-  <span class="n">memo</span><span class="p">[</span><span class="n">element</span><span class="p">]</span> <span class="o">=</span> <span class="n">element</span><span class="p">.</span><span class="nf">to_s</span>
-  <span class="n">memo</span>
-<span class="k">end</span></code></pre></figure>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">=&gt;</span> <span class="p">{</span><span class="mi">1</span><span class="o">=&gt;</span><span class="s2">"1"</span><span class="p">,</span> <span class="mi">2</span><span class="o">=&gt;</span><span class="s2">"2"</span><span class="p">,</span> <span class="mi">3</span><span class="o">=&gt;</span><span class="s2">"3"</span><span class="p">,</span> <span class="mi">4</span><span class="o">=&gt;</span><span class="s2">"4"</span><span class="p">,</span> <span class="mi">5</span><span class="o">=&gt;</span><span class="s2">"5"</span><span class="p">}</span></code></pre></figure>
-
-<p>This worked because memo is a Hash class and was returned every time.
-You can think of the reduce operation as operating on each element
-and saving some kind of memo to carry forward to the operation on the
-next element. In the preceding example, where you calculate the sum of
-five numbers,</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">reduce</span><span class="p">(</span><span class="mi">0</span><span class="p">,:</span><span class="o">+</span><span class="p">)</span></code></pre></figure>
-
-<p>or</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">reduce</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">memo</span><span class="p">,</span> <span class="n">element</span><span class="o">|</span>
-  <span class="n">memo</span> <span class="o">+</span> <span class="n">element</span>
-<span class="k">end</span></code></pre></figure>
-
-<p>you are initializing the remembered quantity with a 0 and telling it to
-remember to add the current element to the previously reduced quantity
-and save it. The initial value of memo is an integer, and the last object
-returned by the reduce block is also an integer.
-You could remember other things in the memo too. For example,
-you could save the last two numbers of a sequence. You would start with
-an initial value of [nil,nil] for the last two remembered things. On every
-iteration, you would push the element onto the memo (end of the array),
-and then you would shift off the first element of the array.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">initial_memo</span> <span class="o">=</span> <span class="p">[</span><span class="kp">nil</span><span class="p">,</span><span class="kp">nil</span><span class="p">]</span>
-<span class="n">last_2</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">.</span><span class="nf">.</span><span class="mi">10</span><span class="p">).</span><span class="nf">reduce</span><span class="p">(</span><span class="n">initial_memo</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">memo</span><span class="p">,</span> <span class="n">element</span><span class="o">|</span>
-   <span class="n">initial_memo</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span> <span class="n">element</span> <span class="p">)</span>
-   <span class="n">initial_memo</span><span class="p">.</span><span class="nf">shift</span>
-   <span class="n">initial_memo</span>
-<span class="k">end</span>
-<span class="o">=&gt;</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">]</span></code></pre></figure>
-
-<p>In general, if you have to remember something about the previously
-used elements when operating on the current element, use reduce(). If
-you don’t need to remember anything, use map().
-Sometimes reduce returns an array, in which case you can cascade it
-with other reduce calls or map calls. For example, if you want to add the
-sum of squares, you can use a map call to square each element, and then a
-reduce call to add them. For example:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">number</span><span class="o">|</span>
-  <span class="n">number</span> <span class="o">*</span> <span class="n">number</span>
-<span class="k">end</span><span class="p">.</span><span class="nf">reduce</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">sum</span><span class="p">,</span> <span class="n">square</span><span class="o">|</span>
-  <span class="n">sum</span> <span class="o">+</span> <span class="n">square</span>
-<span class="k">end</span>
-<span class="o">=&gt;</span> <span class="mi">55</span></code></pre></figure>
-
-<p>Or, perhaps you want to find the odd numbers of the last five in a
-sequence:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">sequence</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">455</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">45</span><span class="p">,</span><span class="mi">66</span><span class="p">,</span><span class="mi">77</span><span class="p">,</span><span class="mi">54</span><span class="p">,</span><span class="mi">23</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">55</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">]</span></code></pre></figure>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">sequence</span><span class="p">.</span><span class="nf">reduce</span><span class="p">([</span><span class="kp">nil</span><span class="p">,</span><span class="kp">nil</span><span class="p">,</span><span class="kp">nil</span><span class="p">,</span><span class="kp">nil</span><span class="p">,</span><span class="kp">nil</span><span class="p">])</span> <span class="k">do</span> <span class="o">|</span><span class="n">memo</span><span class="p">,</span> <span class="n">number</span><span class="o">|</span>
-  <span class="n">memo</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
-  <span class="n">memo</span><span class="p">.</span><span class="nf">shift</span>
-  <span class="n">memo</span>
-<span class="k">end</span><span class="p">.</span><span class="nf">select</span> <span class="k">do</span> <span class="o">|</span><span class="n">one_of_last_5</span><span class="o">|</span>
-  <span class="n">one_of_last_5</span><span class="o">%</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span>
-<span class="k">end</span>
-<span class="o">=&gt;</span> <span class="p">[</span><span class="mi">23</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span></code></pre></figure>
-
-<p>If this seems complex and idiomatic, don’t worry, because we’ll
-explore these programming mechanics later in the blog. It suffices to say
-that reduce can be used on both sides of a data-processing cascade. And
-please always remember that the input memo must be of the same class or
-structure as the output memo.</p>
 
   </div>
 
