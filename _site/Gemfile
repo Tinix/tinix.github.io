@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # RUBY_VERSION
-ruby '2.4.0'
+ruby '2.7.0'
 
 
 gem 'jekyll', '~>3.3.1'

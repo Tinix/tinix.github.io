@@ -45,3 +45,12 @@ THE SOFTWARE.
 
 See the [LICENSE](https://github.com/jekyll/jekyll/blob/master/LICENSE) file.
 
+Prerequisites
+
+Ruby version 2.7.0
+
+Bundler version 2.2.19
+
+Jekyll version 3.3.1
+
+
