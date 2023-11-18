@@ -88,6 +88,61 @@
   <script id="dsq-count-scr" src="//tinixgit.disqus.com/count.js" async></script>
 
 
+  <h1><a href="/freebsd,/jekyll/,/programming,/emacs/2016/03/28/install-and-config-emacs-neotree.html">Install and config neotree on Emacs</a></h1>
+  <p class="author">
+    <span class="date">2016-03-28 00:00:00 -0300</span>
+  </p>
+  <div class="content">
+    <p>Installation</p>
+
+<p>Melpa</p>
+
+<p>You can install the plugin using the packages on melpa.</p>
+
+<p>Make sure you have something like the following in your Emacs startup file (~/.emacs.d/init.el, or ~/.emacs):</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">    <span class="p">(</span><span class="n">add</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">list</span> <span class="s1">'package-archives
+                 '</span><span class="p">(</span><span class="s2">"melpa"</span> <span class="o">.</span> <span class="s2">"http://melpa.org/packages/"</span><span class="p">))</span></code></pre></figure>
+
+<p>To make that take effect, either evaluate that elisp expression or restart Emacs.</p>
+
+<p>Then use M-x package-list-packages, select neotree from the list by pressing i, then press x to execute the changes. At that point, the package will be installed.</p>
+
+<p>Source</p>
+
+<p>Clone project:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">cd</span> <span class="sr">/some/</span><span class="n">path</span>
+<span class="err">$</span> <span class="n">git</span> <span class="nb">clone</span> <span class="n">https</span><span class="ss">:/</span><span class="o">/</span><span class="n">github</span><span class="p">.</span><span class="nf">com</span><span class="o">/</span><span class="n">jaypei</span><span class="o">/</span><span class="n">emacs</span><span class="o">-</span><span class="n">neotree</span><span class="p">.</span><span class="nf">git</span> <span class="n">neotree</span>
+<span class="err">$</span> <span class="n">cd</span> <span class="n">neotree</span>
+<span class="err">$</span> <span class="n">git</span> <span class="n">checkout</span> <span class="n">dev</span></code></pre></figure>
+
+<p>Add config to emacs:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">(</span><span class="n">add</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">list</span> <span class="s1">'load-path "/some/path/neotree")
+(require '</span><span class="n">neotree</span><span class="p">)</span>
+<span class="p">(</span><span class="n">global</span><span class="o">-</span><span class="n">set</span><span class="o">-</span><span class="n">key</span> <span class="p">[</span><span class="n">f12</span><span class="p">]</span> <span class="err">'</span><span class="n">neotree</span><span class="o">-</span><span class="n">toggle</span><span class="p">)</span></code></pre></figure>
+
+<p>Open (toggle) NeoTree:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="no">F12</span><span class="o">&gt;</span></code></pre></figure>
+
+<p>Screenshots</p>
+
+<!-- _include/neotree.html -->
+
+<div class="image-wrapper">
+  
+    <img src="http://localhost:3000/images/neotree-1.png" alt="emacs-neotree" />
+    
+  
+  <p class="image-caption">emacs-neotree is running!</p>
+  
+</div>
+
+
+  </div>
+
   <h1><a href="/freebsd,/jekyll/,/programming,/yandex/browser/2016/03/19/build-ports-from-package-rpm-or-deb.html">Build ports from package rpm or deb</a></h1>
   <p class="author">
     <span class="date">2016-03-19 00:00:00 -0300</span>
@@ -219,7 +274,13 @@ Make sure that <code class="highlighter-rouge">gem install libv8 -v ‘3.16.14.1
       <div class="footer-col footer-col-1">
         <ul class="contact-list">
           <!-- <li>Tinix&#39;s different point of view.</li> -->
+          <li><a href="https://danieltinivella.github.io">Daniel Tinivella</a></li>
           <li><a href="mailto:daniel.tinivella@gmail.com">daniel.tinivella@gmail.com</a></li>
+          <a href="https://opensource.org/licenses/MIT">
+            <img alt="Licencia MIT" src="https://img.shields.io/badge/Licencia-MIT-579E46?style=for-the-badge">
+          </a>
+
+
         </ul>
       </div>
 

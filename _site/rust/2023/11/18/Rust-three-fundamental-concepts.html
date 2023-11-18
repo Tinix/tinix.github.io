@@ -9,10 +9,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>A silly idea to compare Jekyll vs Octopress</title>
-  <meta name="description" content="Before switching to Jekyll, I tried out Octopress, a blogging framework built on top of Jekyll….I was really surprised to find out how much I disliked the ex...">
+  <title>Rust  three fundamental concepts: ownership, borrowing, and lifetimes.</title>
+  <meta name="description" content="In Rust, the ownership system is a key feature that enables memory safety without the need for a garbage collector. This system is based on three fundamental...">
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://localhost:3000/jekyll/2017/06/07/A-silly-idea-to-compare-jekyll-vs-octopress.html">
+  <link rel="canonical" href="http://localhost:3000/rust/2023/11/18/Rust-three-fundamental-concepts.html">
   <link rel="alternate" type="application/rss+xml" title="Tinix&#39;s different point of view." href="http://localhost:3000/feed.xml">
 </head>
 
@@ -77,24 +77,39 @@
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">A silly idea to compare Jekyll vs Octopress</h1>
+    <h1 class="post-title" itemprop="name headline">Rust  three fundamental concepts: ownership, borrowing, and lifetimes.</h1>
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p>Before switching to Jekyll, I tried out Octopress, a blogging framework built on top of Jekyll….
-I was really surprised to find out how much I disliked the experience with Octopress.
-I had an impression that it is a hacker friendly, simple and extensible blog platform, but it was the opposite of that. There are many layers of abstraction, themes are pretty complicated, it comes with many … pre-installed plugins out of the box, dozen depedencies (ruby gems), it uses Sass by default and so on. A fresh copy of Octopress blog consists of staggering 29 directories and 144 files it’s too much..!!</p>
+    <p>In Rust, the ownership system is a key feature that enables memory safety without the need for a garbage collector. This system is based on three fundamental concepts: ownership, borrowing, and lifetimes.</p>
 
-<p>Octopress works almost ok if you are willing to invest plenty of time to customize it or need to build something complex, but it wasn’t my particular use case. The complexity of Octopress defeats the whole purpose of a simple, generated static site. But you know what is “hacker friendly, simple and extensible blog platform”? That’s Jekyll! Jekyll is dead simple and practical. It was a pleasure to setup and customize the default theme. It took less than an hour to have a fully customized blog just the way I wanted. So I am staying with Jekyll this time. The directory structure is really simple and you start with the bare essentials, a simple layout and a CSS file. That’s it!</p>
+<p>Let’s take a look at a simple example to illustrate how Rust manages memory without garbage collection:</p>
 
-<p>I tend to prefer simplicity and unix-like philosophy when it comes to choose every day tools for specific tasks. I can always extend, build and combine on top of that, when the time comes.</p>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">fn</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">let</span> <span class="n">mut</span> <span class="n">str</span> <span class="o">=</span> <span class="no">String</span><span class="o">::</span><span class="n">from</span><span class="p">(</span><span class="s2">"Hello Rust!"</span><span class="p">);</span>
 
-<p>you can install jekyll with a simple command :</p>
+    <span class="n">str</span><span class="p">.</span><span class="nf">push_str</span><span class="p">(</span><span class="s2">" How are you?"</span><span class="p">);</span>
+    <span class="n">println!</span><span class="p">(</span><span class="s2">"{}"</span><span class="p">,</span> <span class="n">str</span><span class="p">);</span>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">gem</span> <span class="n">install</span> <span class="n">jekyll</span></code></pre></figure>
+    <span class="n">let</span> <span class="n">str2</span> <span class="o">=</span> <span class="n">takes_and_gives_back</span><span class="p">(</span><span class="n">str</span><span class="p">);</span>
 
-<p>Check out the <a href="http://jekyllrb.com/docs/home">Jekyll docs</a> for more info on how to get the most out of Jekyll. File all bugs/feature requests at <a href="https://github.com/jekyll/jekyll">Jekyll’s GitHub repo</a>. If you have questions, you can ask them on <a href="https://talk.jekyllrb.com/">Jekyll Talk</a>.</p>
+    <span class="n">println!</span><span class="p">(</span><span class="s2">"{}"</span><span class="p">,</span> <span class="n">str2</span><span class="p">);</span>
+<span class="p">}</span>
 
+
+<span class="n">fn</span> <span class="n">takes_and_gives_back</span><span class="p">(</span><span class="ss">some_string: </span><span class="no">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="no">String</span> <span class="p">{</span>
+    <span class="n">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">some_string</span> <span class="o">+</span> <span class="s2">" Have a great day!"</span><span class="p">;</span>
+
+    <span class="n">result</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>In this example:</p>
+
+<p>We create a String and manipulate it.
+The ownership of the String is transferred to the takes_and_gives_back function.
+Inside the function, we perform operations on the String, and then the ownership is transferred back to the calling function.
+The original String is now owned by the variable str2.
+Rust’s ownership system ensures that there is always one and only one owner for a piece of data. This guarantees memory safety without the need for garbage collection because the ownership system allows Rust to statically analyze the code and ensure that references to data are always valid. If you try to use a variable after it has been moved or deallocated, the Rust compiler will catch it at compile time, preventing common memory-related bugs.</p>
 
         
 <div id="disqus_thread"></div>

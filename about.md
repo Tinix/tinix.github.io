@@ -4,16 +4,5 @@ layout: page
 permalink: "/about/"
 ---
 
-Also known as Tinix , Software Engineer. Interested in low level programming and security, although my programming experience has been mostly related with Ruby
-
-{% include image.html
-img='images/tinix.png'
-title="Me!"
-caption="Hey, I am Tinix! " %}
-
-
-
-I love work with Ruby and another language also Free/Open Source technologies and being able to contribute to them. Always involved in several projects some personal..., 
-I enjoy trying new technologies and learning something new everyday. 
-I like to spend my free time with  my friends, and I like drinking Mate, and 4 languages, but all that means almost nothing…
-Vim is my favorite editor because is a highly configurable text editor built to make creating and changing any kind of text very efficient. It is included as "vi" with most UNIX systems and with Apple OS X.
+I am a dedicated Software Engineer from Argentina.
+I am prolific in Ruby software, along with several other programming languages such as Go, Rust, Elixir & Python. I like to spend my free time with my friends, and also I like drinking Mate. I enjoy every day while I'am working with operating system Linux.
