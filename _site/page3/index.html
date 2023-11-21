@@ -88,6 +88,54 @@
   <script id="dsq-count-scr" src="//tinixgit.disqus.com/count.js" async></script>
 
 
+  <h1><a href="/rust/2023/01/08/rust-hello-world-in-three-languages.html">Rust “Hello World!” in three languages</a></h1>
+  <p class="author">
+    <span class="date">2023-01-08 21:26:51 -0300</span>
+  </p>
+  <div class="content">
+    <p>For our first program, we want to write something that outputs the following text in
+multiple languages:
+Hello, world!
+Grüß Gott!
+ハロー・ワールド
+You have probably seen the first line. The other two are there to highlight a few of Rust’s features: easy iteration and built-in support for Unicode.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">fn</span> <span class="n">greet_world</span><span class="p">()</span> <span class="p">{</span> 
+  <span class="n">println!</span><span class="p">(</span><span class="s2">"Hello World"</span><span class="p">);</span>
+  <span class="n">let</span> <span class="n">southern_germany</span> <span class="o">=</span> <span class="s2">"Grüß Gott!"</span><span class="p">;</span>
+  <span class="n">let</span> <span class="n">japan</span> <span class="o">=</span> <span class="s2">"ハロー・ワールド"</span><span class="p">;</span>
+  <span class="n">let</span> <span class="n">regions</span> <span class="o">=</span> <span class="p">[</span><span class="n">southern_germany</span><span class="p">,</span> <span class="n">japan</span><span class="p">];</span>
+  <span class="k">for</span> <span class="n">region</span> <span class="k">in</span> <span class="n">regions</span><span class="p">.</span><span class="nf">iter</span><span class="p">()</span> <span class="p">{</span> 
+    <span class="n">println!</span><span class="p">(</span><span class="s2">"{}"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">region</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">fn</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span> 
+  <span class="n">greet_world</span><span class="p">();</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>Now that src/main.rs is updated, execute cargo run from the hello2/ directory. You
+should see three greetings appear after some output generated from cargo itself:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
+<span class="no">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="n">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mi">0</span><span class="o">.</span><span class="mi">95</span><span class="n">s</span>
+<span class="no">Running</span> <span class="sb">`target/debug/hello-world`</span>
+<span class="no">Hello</span><span class="p">,</span> <span class="n">world!</span>
+<span class="no">Gr</span><span class="err">üß</span> <span class="no">Gott</span><span class="o">!</span>
+<span class="err">ハロー・ワールド</span></code></pre></figure>
+
+<p>Let’s take a few moments to touch on some of the interesting elements of Rust from
+One of the first things that you are likely to notice is that strings in Rust are able to include a wide range of characters. Strings are guaranteed to be encoded as UTF-8.
+This means that you can use non-English languages with relative ease.
+The one character that might look out of place is the exclamation mark after
+println. If you have programmed in Ruby, you may be used to thinking that it is used
+to signal a destructive operation. In Rust, it signals the use of a macro. Macros can be
+thought of as fancy functions for now. These offer the ability to avoid boilerplate code.
+In the case of println!, there is a lot of type detection going on under the hood so
+that arbitrary data types can be printed to the screen.</p>
+
+  </div>
+
   <h1><a href="/ruby/2023/01/05/method-missing.html">Ruby method missing</a></h1>
   <p class="author">
     <span class="date">2023-01-05 23:54:32 -0300</span>
@@ -369,97 +417,6 @@ have the option to redefine either == or eql? and compare objects in different w
  <span class="ss">:find_each</span><span class="p">,</span>
  <span class="ss">:find_in_batches</span><span class="p">,</span>
  <span class="ss">:find_by_sql</span><span class="p">]</span></code></pre></figure>
-
-  </div>
-
-  <h1><a href="/golang/2021/10/29/go-errors.html">Go Errors</a></h1>
-  <p class="author">
-    <span class="date">2021-10-29 00:19:13 -0300</span>
-  </p>
-  <div class="content">
-    <p>In Go it’s idiomatic to communicate errors via an explicit, separate return value. This contrasts with the exceptions used in languages like Java and Ruby and the overloaded single result / error value sometimes used in C. Go’s approach makes it easy to see which functions return errors and to handle them using the same language constructs employed for any other, non-error tasks</p>
-
-<p>By convention, errors are the last return value and have type error, a built-in interface.</p>
-
-<p>errors.New constructs a basic error value with the given error message.</p>
-
-<p>A nil value in the error position indicates that there was no error.</p>
-
-<p>It’s possible to use custom types as errors by implementing the Error() method on them. Here’s a variant on the example above that uses a custom type to explicitly represent an argument error.</p>
-
-<p>In this case we use &amp;argError syntax to build a new struct, supplying values for the two fields arg and prob.</p>
-
-<p>The two loops below test out each of our error-returning functions. Note that the use of an inline error check on the if line is a common idiom in Go code.</p>
-
-<p>If you want to programmatically use the data in a custom error, you’ll need to get the error as an instance of the custom error type via type assertion.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">package</span> <span class="n">main</span>
-
-<span class="n">import</span> <span class="p">(</span>
-    <span class="s2">"errors"</span>
-    <span class="s2">"fmt"</span>
-<span class="p">)</span>
-
-<span class="n">func</span> <span class="n">f1</span><span class="p">(</span><span class="n">arg</span> <span class="n">int</span><span class="p">)</span> <span class="p">(</span><span class="n">int</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="n">arg</span> <span class="o">==</span> <span class="mi">42</span> <span class="p">{</span>
-
-        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">errors</span><span class="o">.</span><span class="no">New</span><span class="p">(</span><span class="s2">"can't work with 42"</span><span class="p">)</span>
-
-    <span class="p">}</span>
-
-    <span class="k">return</span> <span class="n">arg</span> <span class="o">+</span> <span class="mi">3</span><span class="p">,</span> <span class="kp">nil</span>
-<span class="p">}</span>
-
-<span class="n">type</span> <span class="n">argError</span> <span class="n">struct</span> <span class="p">{</span>
-    <span class="n">arg</span>  <span class="n">int</span>
-    <span class="n">prob</span> <span class="n">string</span>
-<span class="p">}</span>
-
-<span class="n">func</span> <span class="p">(</span><span class="n">e</span> <span class="o">*</span><span class="n">argError</span><span class="p">)</span> <span class="no">Error</span><span class="p">()</span> <span class="n">string</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="n">fmt</span><span class="o">.</span><span class="no">Sprintf</span><span class="p">(</span><span class="s2">"%d - %s"</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="nf">arg</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="nf">prob</span><span class="p">)</span>
-<span class="p">}</span>
-
-<span class="n">func</span> <span class="n">f2</span><span class="p">(</span><span class="n">arg</span> <span class="n">int</span><span class="p">)</span> <span class="p">(</span><span class="n">int</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="n">arg</span> <span class="o">==</span> <span class="mi">42</span> <span class="p">{</span>
-
-        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">argError</span><span class="p">{</span><span class="n">arg</span><span class="p">,</span> <span class="s2">"can't work with it"</span><span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="n">arg</span> <span class="o">+</span> <span class="mi">3</span><span class="p">,</span> <span class="kp">nil</span>
-<span class="p">}</span>
-
-<span class="n">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
-
-    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">i</span> <span class="p">:</span><span class="o">=</span> <span class="n">range</span> <span class="p">[]</span><span class="n">int</span><span class="p">{</span><span class="mi">7</span><span class="p">,</span> <span class="mi">42</span><span class="p">}</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="n">r</span><span class="p">,</span> <span class="n">e</span> <span class="p">:</span><span class="o">=</span> <span class="n">f1</span><span class="p">(</span><span class="n">i</span><span class="p">);</span> <span class="n">e</span> <span class="o">!=</span> <span class="kp">nil</span> <span class="p">{</span>
-            <span class="n">fmt</span><span class="o">.</span><span class="no">Println</span><span class="p">(</span><span class="s2">"f1 failed:"</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-            <span class="n">fmt</span><span class="o">.</span><span class="no">Println</span><span class="p">(</span><span class="s2">"f1 worked:"</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">i</span> <span class="p">:</span><span class="o">=</span> <span class="n">range</span> <span class="p">[]</span><span class="n">int</span><span class="p">{</span><span class="mi">7</span><span class="p">,</span> <span class="mi">42</span><span class="p">}</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="n">r</span><span class="p">,</span> <span class="n">e</span> <span class="p">:</span><span class="o">=</span> <span class="n">f2</span><span class="p">(</span><span class="n">i</span><span class="p">);</span> <span class="n">e</span> <span class="o">!=</span> <span class="kp">nil</span> <span class="p">{</span>
-            <span class="n">fmt</span><span class="o">.</span><span class="no">Println</span><span class="p">(</span><span class="s2">"f2 failed:"</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-            <span class="n">fmt</span><span class="o">.</span><span class="no">Println</span><span class="p">(</span><span class="s2">"f2 worked:"</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-
-    <span class="n">_</span><span class="p">,</span> <span class="n">e</span> <span class="p">:</span><span class="o">=</span> <span class="n">f2</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">ae</span><span class="p">,</span> <span class="n">ok</span> <span class="p">:</span><span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="p">(</span><span class="o">*</span><span class="n">argError</span><span class="p">);</span> <span class="n">ok</span> <span class="p">{</span>
-        <span class="n">fmt</span><span class="o">.</span><span class="no">Println</span><span class="p">(</span><span class="n">ae</span><span class="p">.</span><span class="nf">arg</span><span class="p">)</span>
-        <span class="n">fmt</span><span class="o">.</span><span class="no">Println</span><span class="p">(</span><span class="n">ae</span><span class="p">.</span><span class="nf">prob</span><span class="p">)</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre></figure>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">go</span> <span class="n">run</span> <span class="n">errors</span><span class="p">.</span><span class="nf">go</span>
-<span class="n">f1</span> <span class="ss">worked: </span><span class="mi">10</span>
-<span class="n">f1</span> <span class="ss">failed: </span><span class="n">can</span><span class="s1">'t work with 42
-f2 worked: 10
-f2 failed: 42 - can'</span><span class="n">t</span> <span class="n">work</span> <span class="n">with</span> <span class="n">it</span>
-<span class="mi">42</span>
-<span class="n">can</span><span class="err">'</span><span class="n">t</span> <span class="n">work</span> <span class="n">with</span> <span class="n">it</span></code></pre></figure>
-
-<p>See this <a href="http://blog.golang.org/2011/07/error-handling-and-go.html">great pos</a>t on the Go blog for more on error handling.</p>
 
   </div>
 

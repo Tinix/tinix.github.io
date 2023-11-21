@@ -88,6 +88,63 @@
   <script id="dsq-count-scr" src="//tinixgit.disqus.com/count.js" async></script>
 
 
+  <h1><a href="/ruby/2023/02/01/ruby-select.html">Ruby Select</a></h1>
+  <p class="author">
+    <span class="date">2023-02-01 20:29:35 -0300</span>
+  </p>
+  <div class="content">
+    <p>This function of the Ruby Enumerable library is very simple. The select()
+method is applied to an array or a hash. The job of select() is to select
+elements that return true for a predicate applied to the element. (A predicate
+is an expression that returns true or false, and it runs in the block passed
+to select).
+The following trivial example has the predicate always return true,
+and therefore all members of the set are selected. In this case, the set is
+[1,2,3,4,5] and the predicate is true:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">select</span> <span class="k">do</span> <span class="o">|</span><span class="n">element</span><span class="o">|</span>
+   <span class="kp">true</span>
+<span class="k">end</span>
+<span class="o">=&gt;</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span></code></pre></figure>
+
+<p>A slightly less trivial example selects even numbers (i.e., where the
+predicate is **element % 2 == 0 ** ) from the original set of [1,2,3,4,5]:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">select</span> <span class="k">do</span> <span class="o">|</span><span class="n">element</span><span class="o">|</span>
+   <span class="n">element</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="k">end</span>
+<span class="o">=&gt;</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span></code></pre></figure>
+
+<p>Selects can be cascaded. Suppose you want to find the even numbers
+between 1 and 100 starting with a 7. First, you select the even numbers.
+Then, you select the numbers starting with a 7:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">irb</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">1</span><span class="p">.</span><span class="nf">.</span><span class="mi">100</span><span class="p">).</span><span class="nf">select</span><span class="p">{</span><span class="o">|</span><span class="n">number</span><span class="o">|</span> <span class="n">number</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">}\</span>
+<span class="n">irb</span><span class="o">*&gt;</span> <span class="p">.</span><span class="nf">select</span><span class="p">{</span><span class="o">|</span><span class="n">even_number</span><span class="o">|</span> <span class="n">even_number</span><span class="p">.</span><span class="nf">to_s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"7"</span><span class="p">}</span>
+<span class="o">=&gt;</span> <span class="p">[</span><span class="mi">70</span><span class="p">,</span><span class="mi">72</span><span class="o">.</span><span class="mi">74</span><span class="p">,</span><span class="mi">76</span><span class="p">,</span><span class="mi">78</span><span class="p">]</span></code></pre></figure>
+
+<p>You could also reverse the cascade:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">irb</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">1</span><span class="p">.</span><span class="nf">.</span><span class="mi">100</span><span class="p">).</span><span class="nf">select</span><span class="p">{</span><span class="o">|</span><span class="n">number</span><span class="o">|</span> <span class="n">number</span><span class="p">.</span><span class="nf">to_s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"7"</span><span class="p">}\</span>
+<span class="n">irb</span><span class="o">*&gt;</span> <span class="p">.</span><span class="nf">select</span><span class="p">{</span><span class="o">|</span><span class="n">seven_number</span><span class="o">|</span> <span class="n">seven_number</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">}</span>
+<span class="o">=&gt;</span> <span class="p">[</span><span class="mi">70</span><span class="p">,</span><span class="mi">72</span><span class="o">.</span><span class="mi">74</span><span class="p">,</span><span class="mi">76</span><span class="p">,</span><span class="mi">78</span><span class="p">]</span></code></pre></figure>
+
+<p>Since select returns an array, you can cascade select calls. For
+example, you could have a select block select even numbers and then
+square them using a map call. For example:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">select</span> <span class="k">do</span> <span class="o">|</span><span class="n">number</span><span class="o">|</span>
+   <span class="n">number</span><span class="o">%</span><span class="mi">2</span><span class="o">==</span><span class="mi">0</span>
+<span class="k">end</span><span class="p">.</span><span class="nf">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">even_number</span><span class="o">|</span>
+   <span class="n">even_number</span> <span class="o">*</span> <span class="n">even_number</span>
+<span class="k">end</span>
+<span class="o">=&gt;</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">16</span><span class="p">]</span></code></pre></figure>
+
+<p>A number of the more complex operations can be solved by cascading
+with select calls.</p>
+
+  </div>
+
   <h1><a href="/ruby/2023/01/28/ruby-simple-reduce.html">Ruby Simple Reduce</a></h1>
   <p class="author">
     <span class="date">2023-01-28 11:54:08 -0300</span>
@@ -500,54 +557,6 @@ value of the last expression in the block.</p>
 
 <p>In Ruby, map, reduce, and select all take a code block as a parameter,
 and the code block is executed as defined by the function</p>
-
-  </div>
-
-  <h1><a href="/rust/2023/01/08/rust-hello-world-in-three-languages.html">Rust “Hello World!” in three languages</a></h1>
-  <p class="author">
-    <span class="date">2023-01-08 21:26:51 -0300</span>
-  </p>
-  <div class="content">
-    <p>For our first program, we want to write something that outputs the following text in
-multiple languages:
-Hello, world!
-Grüß Gott!
-ハロー・ワールド
-You have probably seen the first line. The other two are there to highlight a few of Rust’s features: easy iteration and built-in support for Unicode.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">fn</span> <span class="n">greet_world</span><span class="p">()</span> <span class="p">{</span> 
-  <span class="n">println!</span><span class="p">(</span><span class="s2">"Hello World"</span><span class="p">);</span>
-  <span class="n">let</span> <span class="n">southern_germany</span> <span class="o">=</span> <span class="s2">"Grüß Gott!"</span><span class="p">;</span>
-  <span class="n">let</span> <span class="n">japan</span> <span class="o">=</span> <span class="s2">"ハロー・ワールド"</span><span class="p">;</span>
-  <span class="n">let</span> <span class="n">regions</span> <span class="o">=</span> <span class="p">[</span><span class="n">southern_germany</span><span class="p">,</span> <span class="n">japan</span><span class="p">];</span>
-  <span class="k">for</span> <span class="n">region</span> <span class="k">in</span> <span class="n">regions</span><span class="p">.</span><span class="nf">iter</span><span class="p">()</span> <span class="p">{</span> 
-    <span class="n">println!</span><span class="p">(</span><span class="s2">"{}"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">region</span><span class="p">);</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="n">fn</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span> 
-  <span class="n">greet_world</span><span class="p">();</span>
-<span class="p">}</span></code></pre></figure>
-
-<p>Now that src/main.rs is updated, execute cargo run from the hello2/ directory. You
-should see three greetings appear after some output generated from cargo itself:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">cargo</span> <span class="n">run</span>
-<span class="no">Finished</span> <span class="n">dev</span> <span class="p">[</span><span class="n">unoptimized</span> <span class="o">+</span> <span class="n">debuginfo</span><span class="p">]</span> <span class="n">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">in</span> <span class="mi">0</span><span class="o">.</span><span class="mi">95</span><span class="n">s</span>
-<span class="no">Running</span> <span class="sb">`target/debug/hello-world`</span>
-<span class="no">Hello</span><span class="p">,</span> <span class="n">world!</span>
-<span class="no">Gr</span><span class="err">üß</span> <span class="no">Gott</span><span class="o">!</span>
-<span class="err">ハロー・ワールド</span></code></pre></figure>
-
-<p>Let’s take a few moments to touch on some of the interesting elements of Rust from
-One of the first things that you are likely to notice is that strings in Rust are able to include a wide range of characters. Strings are guaranteed to be encoded as UTF-8.
-This means that you can use non-English languages with relative ease.
-The one character that might look out of place is the exclamation mark after
-println. If you have programmed in Ruby, you may be used to thinking that it is used
-to signal a destructive operation. In Rust, it signals the use of a macro. Macros can be
-thought of as fancy functions for now. These offer the ability to avoid boilerplate code.
-In the case of println!, there is a lot of type detection going on under the hood so
-that arbitrary data types can be printed to the screen.</p>
 
   </div>
 

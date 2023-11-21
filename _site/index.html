@@ -88,6 +88,44 @@
   <script id="dsq-count-scr" src="//tinixgit.disqus.com/count.js" async></script>
 
 
+  <h1><a href="/rust/2023/11/21/what-are-lifetime-in-rust.html">What is lifetime in Rust</a></h1>
+  <p class="author">
+    <span class="date">2023-11-21 00:29:15 -0300</span>
+  </p>
+  <div class="content">
+    <p>In Rust, lifetime is a unique language feature used to manage the lifetime of references at compile time. They allow the compiler to perform static analysis to ensure that there are no invalid references or dangling (references to data that no longer exists) in the code.</p>
+
+<p>Lifetime are expressed using time-to-live parameters that indicate how long a reference is valid. The basic syntax is to place a name preceded by an apostrophe (‘) before the type it refers to. For example, ‘a could be a lifetime name.</p>
+
+<p>Here is a simple example to illustrate how lifetimes are used in Rust:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">fn</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="sr">//</span> <span class="no">Create</span> <span class="n">two</span> <span class="n">strings</span>
+    <span class="n">let</span> <span class="n">string1</span> <span class="o">=</span> <span class="no">String</span><span class="o">::</span><span class="n">from</span><span class="p">(</span><span class="s2">"Hello"</span><span class="p">);</span>
+    <span class="n">let</span> <span class="n">string2</span> <span class="o">=</span> <span class="no">String</span><span class="o">::</span><span class="n">from</span><span class="p">(</span><span class="s2">"World"</span><span class="p">);</span>
+
+    <span class="sr">//</span> <span class="no">Call</span> <span class="n">the</span> <span class="n">function</span> <span class="n">that</span> <span class="n">takes</span> <span class="n">two</span> <span class="n">references</span> <span class="n">to</span> <span class="n">strings</span>
+    <span class="n">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">longer_string</span><span class="p">(</span><span class="n">string1</span><span class="p">.</span><span class="nf">as_str</span><span class="p">(),</span> <span class="n">string2</span><span class="p">.</span><span class="nf">as_str</span><span class="p">());</span>
+
+    <span class="sr">//</span> <span class="no">Print</span> <span class="n">the</span> <span class="n">result</span>
+    <span class="n">println!</span><span class="p">(</span><span class="s2">"The longer string is: {}"</span><span class="p">,</span> <span class="n">result</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="sr">//</span> <span class="no">The</span> <span class="n">longer_string</span> <span class="n">function</span> <span class="n">takes</span> <span class="n">two</span> <span class="n">references</span> <span class="n">to</span> <span class="n">strings</span> <span class="n">with</span> <span class="n">different</span> <span class="n">lifetimes</span>
+<span class="n">fn</span> <span class="n">longer_string</span><span class="o">&lt;</span><span class="s1">'a, '</span><span class="n">b</span><span class="o">&gt;</span><span class="p">(</span><span class="ss">s1: </span><span class="o">&amp;</span><span class="s1">'a str, s2: &amp;'</span><span class="n">b</span> <span class="n">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="o">&amp;</span><span class="err">'</span><span class="n">a</span> <span class="n">str</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="n">s1</span><span class="p">.</span><span class="nf">len</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">s2</span><span class="p">.</span><span class="nf">len</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">s1</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">s2</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>In this example, the longer_string function takes two references to strings (&amp;’a str and ‘b str). The names ‘a and ‘b are just labels to represent the lifetimes of the references. The function returns a reference to the longer string, and the lifetime of that reference is tied to the lifetime of the shorter reference (in this case, ‘a). This ensures that the returned reference is valid as long as the shorter reference (s1) is still valid.</p>
+
+<p>It’s important to note that lifetimes do not affect the runtime of the program; they are a static analysis tool that helps the compiler ensure the safety of references at compile time.</p>
+
+  </div>
+
   <h1><a href="/rust/2023/11/18/Rust-three-fundamental-concepts.html">Rust  three fundamental concepts: ownership, borrowing, and lifetimes.</a></h1>
   <p class="author">
     <span class="date">2023-11-18 19:30:00 -0300</span>
@@ -302,63 +340,6 @@ the block operated on each element.</p>
 <p>It is important to save the result in a local variable so that you can
 return it as the last statement of the block. If you don’t, the result of the
 puts statement will be returned (usually nil).</p>
-
-  </div>
-
-  <h1><a href="/ruby/2023/02/01/ruby-select.html">Ruby Select</a></h1>
-  <p class="author">
-    <span class="date">2023-02-01 20:29:35 -0300</span>
-  </p>
-  <div class="content">
-    <p>This function of the Ruby Enumerable library is very simple. The select()
-method is applied to an array or a hash. The job of select() is to select
-elements that return true for a predicate applied to the element. (A predicate
-is an expression that returns true or false, and it runs in the block passed
-to select).
-The following trivial example has the predicate always return true,
-and therefore all members of the set are selected. In this case, the set is
-[1,2,3,4,5] and the predicate is true:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">select</span> <span class="k">do</span> <span class="o">|</span><span class="n">element</span><span class="o">|</span>
-   <span class="kp">true</span>
-<span class="k">end</span>
-<span class="o">=&gt;</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span></code></pre></figure>
-
-<p>A slightly less trivial example selects even numbers (i.e., where the
-predicate is **element % 2 == 0 ** ) from the original set of [1,2,3,4,5]:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">select</span> <span class="k">do</span> <span class="o">|</span><span class="n">element</span><span class="o">|</span>
-   <span class="n">element</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span>
-<span class="k">end</span>
-<span class="o">=&gt;</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span></code></pre></figure>
-
-<p>Selects can be cascaded. Suppose you want to find the even numbers
-between 1 and 100 starting with a 7. First, you select the even numbers.
-Then, you select the numbers starting with a 7:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">irb</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">1</span><span class="p">.</span><span class="nf">.</span><span class="mi">100</span><span class="p">).</span><span class="nf">select</span><span class="p">{</span><span class="o">|</span><span class="n">number</span><span class="o">|</span> <span class="n">number</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">}\</span>
-<span class="n">irb</span><span class="o">*&gt;</span> <span class="p">.</span><span class="nf">select</span><span class="p">{</span><span class="o">|</span><span class="n">even_number</span><span class="o">|</span> <span class="n">even_number</span><span class="p">.</span><span class="nf">to_s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"7"</span><span class="p">}</span>
-<span class="o">=&gt;</span> <span class="p">[</span><span class="mi">70</span><span class="p">,</span><span class="mi">72</span><span class="o">.</span><span class="mi">74</span><span class="p">,</span><span class="mi">76</span><span class="p">,</span><span class="mi">78</span><span class="p">]</span></code></pre></figure>
-
-<p>You could also reverse the cascade:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">irb</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">1</span><span class="p">.</span><span class="nf">.</span><span class="mi">100</span><span class="p">).</span><span class="nf">select</span><span class="p">{</span><span class="o">|</span><span class="n">number</span><span class="o">|</span> <span class="n">number</span><span class="p">.</span><span class="nf">to_s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"7"</span><span class="p">}\</span>
-<span class="n">irb</span><span class="o">*&gt;</span> <span class="p">.</span><span class="nf">select</span><span class="p">{</span><span class="o">|</span><span class="n">seven_number</span><span class="o">|</span> <span class="n">seven_number</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">}</span>
-<span class="o">=&gt;</span> <span class="p">[</span><span class="mi">70</span><span class="p">,</span><span class="mi">72</span><span class="o">.</span><span class="mi">74</span><span class="p">,</span><span class="mi">76</span><span class="p">,</span><span class="mi">78</span><span class="p">]</span></code></pre></figure>
-
-<p>Since select returns an array, you can cascade select calls. For
-example, you could have a select block select even numbers and then
-square them using a map call. For example:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">].</span><span class="nf">select</span> <span class="k">do</span> <span class="o">|</span><span class="n">number</span><span class="o">|</span>
-   <span class="n">number</span><span class="o">%</span><span class="mi">2</span><span class="o">==</span><span class="mi">0</span>
-<span class="k">end</span><span class="p">.</span><span class="nf">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">even_number</span><span class="o">|</span>
-   <span class="n">even_number</span> <span class="o">*</span> <span class="n">even_number</span>
-<span class="k">end</span>
-<span class="o">=&gt;</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">16</span><span class="p">]</span></code></pre></figure>
-
-<p>A number of the more complex operations can be solved by cascading
-with select calls.</p>
 
   </div>
 
